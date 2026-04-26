@@ -2,17 +2,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
-A Python code sample that demonstrates the **model catalog lifecycle** on [Foundry Local on Azure Local](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local). Walk through the complete flow — from querying available models to deploying one, running inference, and cleaning up — using the Kubernetes API.
+A Python code sample that demonstrates the **model catalog lifecycle** on Foundry Local on Azure Local. Walk through the complete flow — from querying available models to deploying one, running inference, and cleaning up — using the Kubernetes API.
 
 ## What This Sample Does
 
-| Step | Action | Docs Reference |
-|------|--------|----------------|
-| **1** | **Query the model catalog** — list all available models from the cluster's catalog ConfigMap | [Model Catalog > ConfigMap Format](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#configmap-format-and-structure) |
-| **2** | **Deploy a model** — create a `ModelDeployment` custom resource from a catalog entry | [Deploy from Catalog (Inline)](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#deploy-from-catalog-inline) |
-| **3** | **Wait for ready** — poll until the deployment reaches `Running` + `Ready` state | [Resource Lifecycle](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#the-two-resource-model) |
-| **4** | **Run inference** — call the OpenAI-compatible `/v1/chat/completions` endpoint | [Run Inference](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#run-inference) |
-| **5** | **Clean up** — delete the deployment | — |
+| Step | Action |
+|------|--------|
+| **1** | **Query the model catalog** — list all available models from the cluster's catalog ConfigMap |
+| **2** | **Deploy a model** — create a `ModelDeployment` custom resource from a catalog entry |
+| **3** | **Wait for ready** — poll until the deployment reaches `Running` + `Ready` state |
+| **4** | **Run inference** — call the OpenAI-compatible `/v1/chat/completions` endpoint |
+| **5** | **Clean up** — delete the deployment |
 
 ## Prerequisites
 
@@ -22,7 +22,6 @@ Before running this sample, ensure you have:
    - Azure Local with AKS or any Arc-connected Kubernetes cluster
    - The Foundry Local Inference Operator installed via Helm
    - cert-manager and trust-manager installed
-   - See: [Quick Start](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#quick-start)
 
 2. **kubectl access** configured to the cluster (`kubeconfig`)
    - Required permissions: read ConfigMaps, read Secrets, read CRDs, and create/get/delete `modeldeployments.foundrylocal.azure.com` in the `foundry-local-operator` namespace
@@ -73,26 +72,31 @@ python catalog_sample.py --model Phi-4-cuda-gpu --version 1 --compute gpu
 # Deploy and keep the model running after inference
 python catalog_sample.py --skip-cleanup
 
+# Two-step flow (running from your laptop):
+python catalog_sample.py --deploy-only                # Deploy and wait for ready
+# In another terminal: kubectl port-forward svc/phi-4-generic-cpu 5000:5000 -n foundry-local-operator
+python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecure
+
 # Use a custom prompt
 python catalog_sample.py --prompt "Explain quantum computing in two sentences."
-
-# Connect via port-forward (when running outside the cluster)
-python catalog_sample.py --endpoint https://localhost:5000 --insecure
 ```
 
 ### Running from Outside the Cluster
 
-If you're running this script from your laptop (not from within the cluster), you'll need to set up port-forwarding for the inference call:
+If you're running this script from your laptop (not from within the cluster), use the two-step flow:
 
 ```bash
-# In a separate terminal, after the deployment is running:
-kubectl port-forward svc/<deployment-name> 5000:5000 -n foundry-local-operator
+# Step 1: Deploy the model and wait for it to become ready
+python catalog_sample.py --deploy-only
 
-# Then run the sample with the local endpoint:
-python catalog_sample.py --endpoint https://localhost:5000 --insecure
+# Step 2: In a separate terminal, set up port-forwarding
+kubectl port-forward svc/phi-4-generic-cpu 5000:5000 -n foundry-local-operator
+
+# Step 3: Run inference using the local endpoint
+python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecure
 ```
 
-> **Note:** Foundry Local uses self-signed TLS certificates internally. Use `--insecure` to skip TLS verification, matching the `-k` flag used in the [official docs' curl examples](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#step-2--call-the-inference-endpoint). In production, configure proper TLS certificates via the [TLS Configuration](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#tls-configuration) guide.
+> **Note:** Foundry Local uses self-signed TLS certificates internally. Use `--insecure` to skip TLS verification, matching the `-k` flag used in the official docs' curl examples. In production, configure proper TLS certificates.
 
 ## Command-Line Options
 
@@ -107,6 +111,8 @@ python catalog_sample.py --endpoint https://localhost:5000 --insecure
 | `--prompt` | `"What is the capital of France? Reply in one sentence."` | Prompt to send |
 | `--timeout` | `600` | Deployment readiness timeout (seconds) |
 | `--catalog-only` | `false` | List catalog and exit |
+| `--deploy-only` | `false` | Deploy the model and exit (skip inference) |
+| `--infer-only` | `false` | Skip deployment, run inference against existing deployment |
 | `--skip-cleanup` | `false` | Keep deployment running after inference |
 | `--insecure` | `false` | Skip TLS certificate verification (for self-signed certs) |
 
@@ -178,31 +184,32 @@ print(response.choices[0].message.content)
 
 ## Key Concepts
 
-| Concept | Description | Docs |
-|---------|-------------|------|
-| **Inference Operator** | K8s operator that manages AI model lifecycle | [Overview](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#inference-operator) |
-| **Model Catalog** | ConfigMap caching model metadata from Azure AI Foundry | [Model Catalog](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#model-catalog) |
-| **ModelDeployment** | CRD that creates a running inference endpoint | [Deploying Models](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#deploying-models-modeldeployment) |
-| **Lazy Registration** | Operator auto-creates Model CR from catalog on first deploy | [Lazy Registration](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#lazy-model-registration) |
-| **API Key Auth** | Auto-generated primary/secondary keys in K8s Secrets | [Authentication](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#authentication) |
+| Concept | Description |
+|---------|-------------|
+| **Inference Operator** | K8s operator that manages AI model lifecycle |
+| **Model Catalog** | ConfigMap caching model metadata from Azure AI Foundry |
+| **ModelDeployment** | CRD that creates a running inference endpoint |
+| **Lazy Registration** | Operator auto-creates Model CR from catalog on first deploy |
+| **API Key Auth** | Auto-generated primary/secondary keys in K8s Secrets |
 
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| `CRD not found` | Install the Inference Operator: [Step 2](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#step-2--install-inference-operator) |
+| `CRD not found` | Install the Inference Operator via Helm |
 | `ConfigMap not found` | Trigger a catalog sync: `kubectl create job --from=cronjob/foundry-local-catalog-sync manual-sync -n foundry-local-operator` |
 | `Deployment stuck in Creating` | Model image is downloading — check pod events: `kubectl describe mdep <name> -n foundry-local-operator` |
-| `Deployment in Error state` | Check the error message and [Troubleshooting guide](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#troubleshooting) |
+| `Deployment in Error state` | Check the error message: `kubectl describe mdep <name> -n foundry-local-operator` |
 | `Connection refused on inference` | Set up port-forwarding: `kubectl port-forward svc/<name> 5000:5000 -n foundry-local-operator` |
 | `401 Unauthorized` | Verify the API key: `kubectl get secret <name>-api-keys -n foundry-local-operator -o jsonpath='{.data.primary-key}' \| base64 -d` |
 
 ## Resources
 
-- [Foundry Local on Azure Local Documentation](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local)
 - [Foundry Local (Windows)](https://github.com/microsoft/Foundry-Local)
 - [Foundry Azure Local Chat Sample](https://github.com/Azure-Samples/foundry-azure-local-chat)
 - [Microsoft AI Foundry](https://learn.microsoft.com/azure/ai-studio/)
+
+<!-- TODO: Add link to Foundry Local on Azure Local public documentation when available -->
 
 ## Contributing
 

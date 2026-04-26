@@ -30,7 +30,7 @@ Usage:
   python catalog_sample.py --skip-cleanup
 
 Documentation:
-  https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local
+  Foundry Local on Azure Local — Inference Operator docs
 
 See Also:
   - Inference Operator overview and CRD reference
@@ -44,6 +44,7 @@ import argparse
 import base64
 import json
 import re
+import signal
 import sys
 import time
 import urllib3
@@ -84,7 +85,7 @@ MODEL_PRESETS = {
         "workloadType": "generative",
         "resources": {
             "requests": {"cpu": "4", "memory": "32Gi"},
-            "limits": {"cpu": "8", "memory": "64Gi", "nvidia.com/gpu": 1},
+            "limits": {"cpu": "8", "memory": "64Gi", "gpu": 1},
         },
         "nodeSelector": {"foundry/workload": "gpu"},
     },
@@ -233,20 +234,6 @@ def resolve_variant(models: list[dict], model_name: str, version: str,
                     "fileSizeBytes": v.get("fileSizeBytes", 0),
                 }
 
-    # Fallback: match by model name prefix in variant ID
-    for m in models:
-        for v in m.get("variants", []):
-            vid = v.get("id", "")
-            if vid.startswith(model_name) and v.get("compute", "").lower() == compute.lower():
-                return {
-                    "alias": m.get("alias", ""),
-                    "model_id": vid,
-                    "compute": v.get("compute", ""),
-                    "displayName": m.get("displayName", ""),
-                    "task": m.get("task", ""),
-                    "fileSizeBytes": v.get("fileSizeBytes", 0),
-                }
-
     return None
 
 
@@ -298,6 +285,7 @@ def build_deployment_manifest(
             "compute": compute,
             "replicas": 1,
             "resources": resources,
+            "port": 5000,
         },
     }
 
@@ -546,8 +534,7 @@ def run_inference(
         raise SampleError(
             "SSL certificate verification failed.\n"
             "    Foundry Local uses self-signed certificates internally.\n"
-            "    Re-run with --insecure to skip TLS verification,\n"
-            "    or provide a CA bundle with --ca-cert."
+            "    Re-run with --insecure to skip TLS verification."
         )
     except requests.exceptions.HTTPError:
         if resp.status_code == 401:
@@ -616,7 +603,10 @@ Examples:
   python catalog_sample.py --catalog-only               # List catalog only
   python catalog_sample.py --skip-cleanup               # Keep deployment running
 
-Docs: https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local
+  # Two-step flow (running from your laptop):
+  python catalog_sample.py --deploy-only                # Step A: deploy and exit
+  # Then in another terminal: kubectl port-forward svc/<name> 5000:5000 -n foundry-local-operator
+  python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecure
 """,
     )
     parser.add_argument("--model", default="Phi-4-generic-cpu",
@@ -638,17 +628,41 @@ Docs: https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local
                         help="Deployment readiness timeout in seconds (default: 600)")
     parser.add_argument("--catalog-only", action="store_true",
                         help="Only query and display the catalog, then exit")
+    parser.add_argument("--deploy-only", action="store_true",
+                        help="Deploy the model and exit (skip inference). "
+                             "Useful for setting up port-forwarding before inference.")
+    parser.add_argument("--infer-only", action="store_true",
+                        help="Skip deployment, run inference against an existing deployment. "
+                             "Requires --endpoint if running outside the cluster.")
     parser.add_argument("--skip-cleanup", action="store_true",
                         help="Do not delete the deployment after inference")
     parser.add_argument("--insecure", action="store_true",
                         help="Skip TLS certificate verification (for self-signed certs)")
-    return parser.parse_args()
+
+    args = parser.parse_args()
+
+    # Validate flag combinations
+    if args.deploy_only and args.infer_only:
+        parser.error("--deploy-only and --infer-only are mutually exclusive")
+    if args.catalog_only and (args.deploy_only or args.infer_only):
+        parser.error("--catalog-only cannot be combined with --deploy-only or --infer-only")
+
+    return args
 
 
 def main():
     args = parse_args()
-    total_steps = 2 if args.catalog_only else 5
     namespace = args.namespace
+
+    # Determine step count based on mode
+    if args.catalog_only:
+        total_steps = 2
+    elif args.deploy_only:
+        total_steps = 3
+    elif args.infer_only:
+        total_steps = 2
+    else:
+        total_steps = 5
 
     print("\n" + "=" * 60)
     print("  Foundry Local on Azure Local — Model Catalog Sample")
@@ -677,9 +691,65 @@ def main():
     # --- Preflight checks ---
     check_crd_exists(k8s_ext)
 
+    # --- State for signal handler cleanup ---
+    cleanup_state = {"deployment_name": None, "namespace": namespace,
+                     "k8s_custom": k8s_custom, "should_cleanup": False}
+
+    def sigint_handler(signum, frame):
+        name = cleanup_state["deployment_name"]
+        if cleanup_state["should_cleanup"] and name:
+            print(f"\n\n  ⚠ Interrupted — cleaning up deployment '{name}'...")
+            try:
+                delete_deployment(cleanup_state["k8s_custom"], name,
+                                  cleanup_state["namespace"])
+            except Exception:
+                print(f"    ⚠ Cleanup failed. Manual cleanup:\n"
+                      f"      kubectl delete mdep {name} -n {cleanup_state['namespace']}")
+        else:
+            print("\n\n  Interrupted by user.")
+        sys.exit(130)
+
+    signal.signal(signal.SIGINT, sigint_handler)
+
+    # ===============================================================
+    # --infer-only: skip catalog query and deployment, go to inference
+    # ===============================================================
+    if args.infer_only:
+        deployment_name = args.deployment_name or dns_safe(args.model)
+        model_id = f"{args.model}:{args.version}"
+
+        print_step(1, total_steps, "Run Inference")
+
+        api_key = get_api_key(k8s_core, deployment_name, namespace)
+
+        if args.endpoint:
+            endpoint = args.endpoint
+        else:
+            endpoint = f"https://{deployment_name}.{namespace}.svc.cluster.local:5000"
+
+        run_inference(
+            endpoint=endpoint,
+            api_key=api_key,
+            model_id=model_id,
+            prompt=args.prompt,
+            insecure=args.insecure,
+        )
+
+        print_step(2, total_steps, "Done")
+        print(f"  Deployment '{deployment_name}' is still running.")
+        print(f"  To delete: kubectl delete mdep {deployment_name} -n {namespace}")
+
+        print(f"\n{'='*60}")
+        print("  Sample completed successfully!")
+        print(f"{'='*60}\n")
+        return
+
+    # ===============================================================
+    # Standard flow: catalog → deploy → wait → infer → cleanup
+    # ===============================================================
+
     # ---------------------------------------------------------------
     # Step 1 — Query the Model Catalog
-    # Docs: "Model Catalog > ConfigMap Format and Structure"
     # ---------------------------------------------------------------
     print_step(1, total_steps, "Query the Model Catalog")
 
@@ -710,7 +780,6 @@ def main():
 
     # ---------------------------------------------------------------
     # Step 2 — Deploy a Model from the Catalog
-    # Docs: "Deploying Models > Deploy from Catalog (Inline)"
     # ---------------------------------------------------------------
     print_step(2, total_steps, "Deploy a Model from the Catalog")
 
@@ -733,6 +802,7 @@ def main():
     print(f"  model.catalog.version: {args.version}")
     print(f"  workloadType: {manifest['spec']['workloadType']}")
     print(f"  compute: {args.compute}")
+    print(f"  port: 5000")
     print(f"  {'-'*50}\n")
 
     mdep_resource, was_created = deploy_model(
@@ -744,20 +814,32 @@ def main():
 
     # Track whether we should clean up on failure (only if we created it)
     should_cleanup = was_created and not args.skip_cleanup
+    cleanup_state["deployment_name"] = deployment_name
+    cleanup_state["should_cleanup"] = should_cleanup
 
     try:
         # ---------------------------------------------------------------
         # Step 3 — Wait for the Deployment to Become Ready
-        # Docs: "Resource Lifecycle" — wait for State=Running, Ready=true
         # ---------------------------------------------------------------
         print_step(3, total_steps, "Wait for Deployment to Become Ready")
 
         mdep = wait_for_ready(k8s_custom, deployment_name, namespace,
                               timeout_seconds=args.timeout)
 
+        # --deploy-only: stop here
+        if args.deploy_only:
+            print(f"\n  Done (--deploy-only). Deployment '{deployment_name}' is running.")
+            print(f"\n  Next steps:")
+            print(f"    1. Set up port-forwarding:")
+            print(f"       kubectl port-forward svc/{deployment_name} 5000:5000 -n {namespace}")
+            print(f"    2. Run inference:")
+            print(f"       python catalog_sample.py --infer-only "
+                  f"--endpoint https://localhost:5000 --insecure")
+            cleanup_state["should_cleanup"] = False
+            return
+
         # ---------------------------------------------------------------
         # Step 4 — Run Inference
-        # Docs: "Authentication" + "Run Inference" sections
         # ---------------------------------------------------------------
         print_step(4, total_steps, "Run Inference")
 
@@ -767,13 +849,15 @@ def main():
         if args.endpoint:
             endpoint = args.endpoint
         else:
-            # In-cluster service DNS (docs: "Getting the endpoint without ingress")
+            # In-cluster service DNS
             endpoint = f"https://{deployment_name}.{namespace}.svc.cluster.local:5000"
             print(f"\n  ℹ No --endpoint specified. Using in-cluster DNS:")
             print(f"    {endpoint}")
-            print(f"\n  If running from your workstation, set up port-forwarding first:")
+            print(f"\n  If running from your workstation, use the two-step flow instead:")
+            print(f"    python catalog_sample.py --deploy-only")
             print(f"    kubectl port-forward svc/{deployment_name} 5000:5000 -n {namespace}")
-            print(f"    Then re-run with: --endpoint https://localhost:5000 --insecure\n")
+            print(f"    python catalog_sample.py --infer-only "
+                  f"--endpoint https://localhost:5000 --insecure\n")
 
         run_inference(
             endpoint=endpoint,
@@ -783,7 +867,7 @@ def main():
             insecure=args.insecure,
         )
 
-    except (SampleError, Exception):
+    except Exception:
         # Guarantee cleanup on failure if we created the deployment
         if should_cleanup:
             print(f"\n  ⚠ Error occurred — cleaning up deployment '{deployment_name}'...")
@@ -797,13 +881,19 @@ def main():
     # ---------------------------------------------------------------
     # Step 5 — Clean Up
     # ---------------------------------------------------------------
-    if not args.skip_cleanup:
+    if not args.skip_cleanup and was_created:
         print_step(5, total_steps, "Clean Up")
         delete_deployment(k8s_custom, deployment_name, namespace)
+    elif not was_created:
+        print(f"\n  Skipping cleanup — deployment '{deployment_name}' existed before this run.")
+        print(f"  To delete manually: kubectl delete mdep {deployment_name} -n {namespace}")
     else:
         print(f"\n  Skipping cleanup (--skip-cleanup). Deployment '{deployment_name}' "
               "is still running.")
         print(f"  To delete later: kubectl delete mdep {deployment_name} -n {namespace}")
+
+    # Disable signal handler cleanup since we completed successfully
+    cleanup_state["should_cleanup"] = False
 
     print(f"\n{'='*60}")
     print("  Sample completed successfully!")
@@ -817,5 +907,6 @@ if __name__ == "__main__":
         print(f"\n  ✗ {e}\n")
         sys.exit(1)
     except KeyboardInterrupt:
+        # Fallback — signal handler should catch this first
         print("\n\n  Interrupted by user.\n")
         sys.exit(130)
