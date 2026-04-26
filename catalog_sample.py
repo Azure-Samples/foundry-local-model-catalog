@@ -21,7 +21,7 @@ Usage:
   python catalog_sample.py
 
   # Deploy a specific model on GPU
-  python catalog_sample.py --model Phi-4-cuda-gpu --version 1 --compute gpu
+  python catalog_sample.py --model Phi-4-generic-gpu --compute gpu
 
   # Query the catalog only (no deployment)
   python catalog_sample.py --catalog-only
@@ -80,7 +80,7 @@ MODEL_PRESETS = {
             "limits": {"cpu": "4", "memory": "24Gi"},
         },
     },
-    "Phi-4-cuda-gpu": {
+    "Phi-4-generic-gpu": {
         "compute": "gpu",
         "workloadType": "generative",
         "resources": {
@@ -214,25 +214,40 @@ def display_catalog(models: list[dict]):
                    tablefmt="simple"))
 
 
-def resolve_variant(models: list[dict], model_name: str, version: str,
+def resolve_variant(models: list[dict], model_name: str, version: str | None,
                     compute: str) -> dict | None:
     """Find a specific variant matching the model name, version, and compute type.
 
+    When version is None, auto-detects the latest version from the catalog.
     Avoids the brittle variants[0] assumption — explicitly matches compute type.
     """
-    target_id = f"{model_name}:{version}"
-
     for m in models:
-        for v in m.get("variants", []):
-            if v.get("id") == target_id and v.get("compute", "").lower() == compute.lower():
-                return {
-                    "alias": m.get("alias", ""),
-                    "model_id": v["id"],
-                    "compute": v.get("compute", ""),
-                    "displayName": m.get("displayName", ""),
-                    "task": m.get("task", ""),
-                    "fileSizeBytes": v.get("fileSizeBytes", 0),
-                }
+        if version is not None:
+            # Exact match: model name + version
+            target_id = f"{model_name}:{version}"
+            for v in m.get("variants", []):
+                if v.get("id") == target_id and v.get("compute", "").lower() == compute.lower():
+                    return {
+                        "alias": m.get("alias", ""),
+                        "model_id": v["id"],
+                        "compute": v.get("compute", ""),
+                        "displayName": m.get("displayName", ""),
+                        "task": m.get("task", ""),
+                        "fileSizeBytes": v.get("fileSizeBytes", 0),
+                    }
+        else:
+            # Auto-detect: match by displayName + compute, use catalog version
+            if m.get("displayName") == model_name:
+                for v in m.get("variants", []):
+                    if v.get("compute", "").lower() == compute.lower():
+                        return {
+                            "alias": m.get("alias", ""),
+                            "model_id": v["id"],
+                            "compute": v.get("compute", ""),
+                            "displayName": m.get("displayName", ""),
+                            "task": m.get("task", ""),
+                            "fileSizeBytes": v.get("fileSizeBytes", 0),
+                        }
 
     return None
 
@@ -599,7 +614,7 @@ def parse_args():
         epilog="""
 Examples:
   python catalog_sample.py                              # Phi-4 CPU (default)
-  python catalog_sample.py --model Phi-4-cuda-gpu --compute gpu
+  python catalog_sample.py --model Phi-4-generic-gpu --compute gpu
   python catalog_sample.py --catalog-only               # List catalog only
   python catalog_sample.py --skip-cleanup               # Keep deployment running
 
@@ -611,8 +626,8 @@ Examples:
     )
     parser.add_argument("--model", default="Phi-4-generic-cpu",
                         help="Catalog model name (default: Phi-4-generic-cpu)")
-    parser.add_argument("--version", default="1",
-                        help="Catalog model version (default: 1)")
+    parser.add_argument("--version", default=None,
+                        help="Catalog model version (default: auto-detect from catalog)")
     parser.add_argument("--compute", choices=["cpu", "gpu"], default="cpu",
                         help="Compute type (default: cpu)")
     parser.add_argument("--deployment-name", default=None,
@@ -716,7 +731,22 @@ def main():
     # ===============================================================
     if args.infer_only:
         deployment_name = args.deployment_name or dns_safe(args.model)
-        model_id = f"{args.model}:{args.version}"
+
+        # Resolve model_id: if version is specified, use it directly;
+        # otherwise query the catalog to auto-detect
+        if args.version is not None:
+            model_id = f"{args.model}:{args.version}"
+        else:
+            models = query_catalog(k8s_core, namespace)
+            variant = resolve_variant(models, args.model, None, args.compute)
+            if variant:
+                model_id = variant["model_id"]
+            else:
+                raise SampleError(
+                    f"Model '{args.model}' with compute='{args.compute}' not found "
+                    "in the catalog.\n"
+                    "    Specify --version explicitly, or check --catalog-only output."
+                )
 
         print_step(1, total_steps, "Run Inference")
 
@@ -763,14 +793,18 @@ def main():
     # Resolve the requested model variant
     variant = resolve_variant(models, args.model, args.version, args.compute)
     if not variant:
+        version_str = f":{args.version}" if args.version else ""
         raise SampleError(
-            f"Model '{args.model}:{args.version}' with compute='{args.compute}' "
+            f"Model '{args.model}{version_str}' with compute='{args.compute}' "
             "not found in the catalog.\n"
             "    Available models are listed above. Check the MODEL_ID column.\n"
             "    If the model was recently added, trigger a manual catalog sync:\n"
             f"      kubectl create job --from=cronjob/foundry-local-catalog-sync "
             f"manual-sync -n {namespace}"
         )
+
+    # Extract the resolved version from the model_id (format: "Name:Version")
+    resolved_version = variant["model_id"].rsplit(":", 1)[-1]
 
     print(f"\n  Selected model:")
     print(f"    Alias     : {variant['alias']}")
@@ -787,7 +821,7 @@ def main():
     manifest = build_deployment_manifest(
         deployment_name=deployment_name,
         model_name=args.model,
-        model_version=args.version,
+        model_version=resolved_version,
         compute=args.compute,
         namespace=namespace,
     )
@@ -799,7 +833,7 @@ def main():
     print(f"  kind: ModelDeployment")
     print(f"  name: {deployment_name}")
     print(f"  model.catalog.name: {args.model}")
-    print(f"  model.catalog.version: {args.version}")
+    print(f"  model.catalog.version: {resolved_version}")
     print(f"  workloadType: {manifest['spec']['workloadType']}")
     print(f"  compute: {args.compute}")
     print(f"  port: 5000")
@@ -808,7 +842,7 @@ def main():
     mdep_resource, was_created = deploy_model(
         k8s_custom, manifest, namespace,
         model_name=args.model,
-        model_version=args.version,
+        model_version=resolved_version,
         compute=args.compute,
     )
 

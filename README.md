@@ -40,6 +40,8 @@ cd foundry-azure-local-model-catalog
 ### 2. Install dependencies
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -67,7 +69,7 @@ python catalog_sample.py
 python catalog_sample.py --catalog-only
 
 # Deploy Phi-4 on GPU
-python catalog_sample.py --model Phi-4-cuda-gpu --version 1 --compute gpu
+python catalog_sample.py --model Phi-4-generic-gpu --compute gpu
 
 # Deploy and keep the model running after inference
 python catalog_sample.py --skip-cleanup
@@ -103,7 +105,7 @@ python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecu
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--model` | `Phi-4-generic-cpu` | Catalog model name |
-| `--version` | `1` | Catalog model version |
+| `--version` | *(auto-detect)* | Catalog model version |
 | `--compute` | `cpu` | Compute type (`cpu` or `gpu`) |
 | `--deployment-name` | *(derived from model)* | Custom deployment name |
 | `--namespace` | `foundry-local-operator` | Kubernetes namespace |
