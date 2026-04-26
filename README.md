@@ -25,6 +25,7 @@ Before running this sample, ensure you have:
    - See: [Quick Start](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#quick-start)
 
 2. **kubectl access** configured to the cluster (`kubeconfig`)
+   - Required permissions: read ConfigMaps, read Secrets, read CRDs, and create/get/delete `modeldeployments.foundrylocal.azure.com` in the `foundry-local-operator` namespace
 
 3. **Python 3.9+** with pip
 
@@ -76,7 +77,7 @@ python catalog_sample.py --skip-cleanup
 python catalog_sample.py --prompt "Explain quantum computing in two sentences."
 
 # Connect via port-forward (when running outside the cluster)
-python catalog_sample.py --endpoint https://localhost:5000
+python catalog_sample.py --endpoint https://localhost:5000 --insecure
 ```
 
 ### Running from Outside the Cluster
@@ -88,10 +89,10 @@ If you're running this script from your laptop (not from within the cluster), yo
 kubectl port-forward svc/<deployment-name> 5000:5000 -n foundry-local-operator
 
 # Then run the sample with the local endpoint:
-python catalog_sample.py --endpoint https://localhost:5000
+python catalog_sample.py --endpoint https://localhost:5000 --insecure
 ```
 
-> **Note:** Foundry Local uses self-signed TLS certificates internally. The sample disables SSL verification for inference calls, matching the `-k` flag used in the [official docs' curl examples](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#step-2--call-the-inference-endpoint). In production, configure proper TLS certificates via the [TLS Configuration](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#tls-configuration) guide.
+> **Note:** Foundry Local uses self-signed TLS certificates internally. Use `--insecure` to skip TLS verification, matching the `-k` flag used in the [official docs' curl examples](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#step-2--call-the-inference-endpoint). In production, configure proper TLS certificates via the [TLS Configuration](https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local#tls-configuration) guide.
 
 ## Command-Line Options
 
@@ -102,11 +103,12 @@ python catalog_sample.py --endpoint https://localhost:5000
 | `--compute` | `cpu` | Compute type (`cpu` or `gpu`) |
 | `--deployment-name` | *(derived from model)* | Custom deployment name |
 | `--namespace` | `foundry-local-operator` | Kubernetes namespace |
-| `--endpoint` | *(auto-detected)* | Inference endpoint URL override |
-| `--prompt` | `"What is the capital of France?"` | Prompt to send |
+| `--endpoint` | *(in-cluster DNS)* | Inference endpoint URL (required when running outside the cluster) |
+| `--prompt` | `"What is the capital of France? Reply in one sentence."` | Prompt to send |
 | `--timeout` | `600` | Deployment readiness timeout (seconds) |
 | `--catalog-only` | `false` | List catalog and exit |
 | `--skip-cleanup` | `false` | Keep deployment running after inference |
+| `--insecure` | `false` | Skip TLS certificate verification (for self-signed certs) |
 
 ## Architecture
 
@@ -141,7 +143,13 @@ python catalog_sample.py --endpoint https://localhost:5000
 
 ## Using the OpenAI Python SDK
 
-The inference endpoint is fully OpenAI-compatible. If you prefer to use the [OpenAI Python SDK](https://github.com/openai/openai-python) instead of raw HTTP calls, you can connect like this:
+The inference endpoint is fully OpenAI-compatible. If you prefer to use the [OpenAI Python SDK](https://github.com/openai/openai-python) instead of raw HTTP calls, install the additional dependencies first:
+
+```bash
+pip install openai httpx
+```
+
+Then connect like this:
 
 ```python
 import httpx

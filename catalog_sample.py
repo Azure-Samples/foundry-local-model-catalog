@@ -38,6 +38,8 @@ See Also:
   - Authentication > API Key Generation and Storage
 """
 
+from __future__ import annotations
+
 import argparse
 import base64
 import json
@@ -82,11 +84,20 @@ MODEL_PRESETS = {
         "workloadType": "generative",
         "resources": {
             "requests": {"cpu": "4", "memory": "32Gi"},
-            "limits": {"cpu": "8", "memory": "64Gi", "gpu": 1},
+            "limits": {"cpu": "8", "memory": "64Gi", "nvidia.com/gpu": 1},
         },
         "nodeSelector": {"foundry/workload": "gpu"},
     },
 }
+
+
+# ---------------------------------------------------------------------------
+# Exceptions
+# ---------------------------------------------------------------------------
+
+
+class SampleError(Exception):
+    """Raised for expected error conditions with user-friendly messages."""
 
 
 # ---------------------------------------------------------------------------
@@ -108,7 +119,7 @@ def print_step(step: int, total: int, msg: str):
     print(f"{'='*60}\n")
 
 
-def print_context_info(k8s_core: client.CoreV1Api):
+def print_context_info(namespace: str):
     """Print the current Kubernetes context so users know which cluster
     will be modified. Docs: always verify your kubeconfig before mutating."""
     try:
@@ -117,7 +128,7 @@ def print_context_info(k8s_core: client.CoreV1Api):
         cluster = active_context.get("context", {}).get("cluster", "unknown")
         print(f"  Kubernetes context : {ctx}")
         print(f"  Cluster            : {cluster}")
-        print(f"  Target namespace   : {FOUNDRY_NAMESPACE}")
+        print(f"  Target namespace   : {namespace}")
     except Exception:
         print("  Kubernetes context : (could not determine — using in-cluster config?)")
 
@@ -131,10 +142,11 @@ def check_crd_exists(k8s_ext: client.ApiextensionsV1Api):
         print(f"  ✓ CRD '{crd_name}' found")
     except ApiException as e:
         if e.status == 404:
-            print(f"  ✗ CRD '{crd_name}' not found.")
-            print("    Is the Inference Operator installed?")
-            print("    See docs: Quick Start > Step 2 – Install Inference Operator")
-            sys.exit(1)
+            raise SampleError(
+                f"CRD '{crd_name}' not found.\n"
+                "    Is the Inference Operator installed?\n"
+                "    See docs: Quick Start > Step 2 – Install Inference Operator"
+            )
         raise
 
 
@@ -154,19 +166,23 @@ def query_catalog(k8s_core: client.CoreV1Api, namespace: str) -> list[dict]:
         cm = k8s_core.read_namespaced_config_map(CATALOG_CONFIGMAP, namespace)
     except ApiException as e:
         if e.status == 404:
-            print(f"  ✗ ConfigMap '{CATALOG_CONFIGMAP}' not found in '{namespace}'.")
-            print("    The catalog may not have synced yet.")
-            print("    Try: kubectl create job --from=cronjob/foundry-local-catalog-sync manual-sync "
-                  f"-n {namespace}")
-            sys.exit(1)
+            raise SampleError(
+                f"ConfigMap '{CATALOG_CONFIGMAP}' not found in '{namespace}'.\n"
+                "    The catalog may not have synced yet.\n"
+                "    Try: kubectl create job --from=cronjob/foundry-local-catalog-sync "
+                f"manual-sync -n {namespace}"
+            )
         raise
 
-    raw = cm.data.get("catalog.json")
+    raw = cm.data.get("catalog.json") if cm.data else None
     if not raw:
-        print("  ✗ ConfigMap exists but 'catalog.json' key is empty.")
-        sys.exit(1)
+        raise SampleError("ConfigMap exists but 'catalog.json' key is empty.")
 
-    catalog = json.loads(raw)
+    try:
+        catalog = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise SampleError(f"Failed to parse catalog.json: {exc}")
+
     models = catalog.get("models", [])
 
     last_sync = ""
@@ -267,7 +283,7 @@ def build_deployment_manifest(
             "labels": {
                 "app.kubernetes.io/name": deployment_name,
                 "app.kubernetes.io/component": "inference",
-                f"foundry.azure.com/hardware": compute,
+                "foundry.azure.com/hardware": compute,
             },
         },
         "spec": {
@@ -291,11 +307,6 @@ def build_deployment_manifest(
         if node_selector:
             manifest["spec"]["nodeSelector"] = node_selector
 
-        # GPU resource limit (docs: "Configure GPU Workloads")
-        gpu_limit = resources.get("limits", {}).get("gpu")
-        if gpu_limit:
-            manifest["spec"]["resources"]["limits"]["nvidia.com/gpu"] = gpu_limit
-
     return manifest
 
 
@@ -303,8 +314,14 @@ def deploy_model(
     k8s_custom: client.CustomObjectsApi,
     manifest: dict,
     namespace: str,
-) -> dict:
+    model_name: str,
+    model_version: str,
+    compute: str,
+) -> tuple[dict, bool]:
     """Create the ModelDeployment custom resource.
+
+    Returns (resource, created) — created is False when reusing an existing
+    deployment that matches the requested model/version/compute.
 
     Uses inline catalog reference — the operator creates the Model CR
     automatically via lazy registration (docs: "Lazy Model Registration").
@@ -318,18 +335,41 @@ def deploy_model(
             body=manifest,
         )
         print(f"  ✓ ModelDeployment '{result['metadata']['name']}' created")
-        return result
+        return result, True
     except ApiException as e:
         if e.status == 409:
             name = manifest["metadata"]["name"]
-            print(f"  ⚠ ModelDeployment '{name}' already exists — reusing it")
-            return k8s_custom.get_namespaced_custom_object(
+            existing = k8s_custom.get_namespaced_custom_object(
                 group=FOUNDRY_API_GROUP,
                 version=FOUNDRY_API_VERSION,
                 namespace=namespace,
                 plural=FOUNDRY_PLURAL,
                 name=name,
             )
+
+            # Validate that the existing deployment matches what was requested
+            existing_spec = existing.get("spec", {})
+            existing_catalog = existing_spec.get("model", {}).get("catalog", {})
+            existing_model = existing_catalog.get("name", "")
+            existing_version = existing_catalog.get("version", "")
+            existing_compute = existing_spec.get("compute", "")
+
+            if (existing_model != model_name
+                    or existing_version != model_version
+                    or existing_compute != compute):
+                raise SampleError(
+                    f"ModelDeployment '{name}' already exists but with a different configuration:\n"
+                    f"    Existing: model={existing_model}, version={existing_version}, "
+                    f"compute={existing_compute}\n"
+                    f"    Requested: model={model_name}, version={model_version}, "
+                    f"compute={compute}\n"
+                    f"    To fix: delete the existing deployment first:\n"
+                    f"      kubectl delete mdep {name} -n {namespace}\n"
+                    f"    Or use a different --deployment-name."
+                )
+
+            print(f"  ⚠ ModelDeployment '{name}' already exists with matching config — reusing it")
+            return existing, False
         raise
 
 
@@ -382,10 +422,10 @@ def wait_for_ready(
 
         # Fail fast on Error (docs: check the message for error details)
         if state == STATE_ERROR:
-            print(f"\n  ✗ Deployment entered Error state: {message}")
-            print("    Troubleshooting: kubectl describe mdep "
-                  f"{name} -n {namespace}")
-            sys.exit(1)
+            raise SampleError(
+                f"Deployment entered Error state: {message}\n"
+                f"    Troubleshooting: kubectl describe mdep {name} -n {namespace}"
+            )
 
         # Success: Running + Ready (docs: "Wait for State=Running and Ready=true")
         if state == STATE_RUNNING and deployment_ready:
@@ -397,9 +437,10 @@ def wait_for_ready(
 
         time.sleep(poll_interval)
 
-    print(f"\n  ✗ Timed out after {timeout_seconds}s. Current state: {last_state}")
-    print(f"    Check status: kubectl describe mdep {name} -n {namespace}")
-    sys.exit(1)
+    raise SampleError(
+        f"Timed out after {timeout_seconds}s. Current state: {last_state}\n"
+        f"    Check status: kubectl describe mdep {name} -n {namespace}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -420,16 +461,24 @@ def get_api_key(k8s_core: client.CoreV1Api, deployment_name: str,
         secret = k8s_core.read_namespaced_secret(secret_name, namespace)
     except ApiException as e:
         if e.status == 404:
-            print(f"  ✗ Secret '{secret_name}' not found.")
-            print("    The deployment may not be fully ready yet.")
-            sys.exit(1)
+            raise SampleError(
+                f"Secret '{secret_name}' not found.\n"
+                "    The deployment may not be fully ready yet."
+            )
         if e.status == 403:
-            print(f"  ✗ Access denied reading Secret '{secret_name}'.")
-            print("    Your RBAC role may not include Secret read permissions.")
-            sys.exit(1)
+            raise SampleError(
+                f"Access denied reading Secret '{secret_name}'.\n"
+                "    Your RBAC role may not include Secret read permissions."
+            )
         raise
 
-    encoded = secret.data.get("primary-key", "")
+    encoded = (secret.data or {}).get("primary-key", "")
+    if not encoded:
+        raise SampleError(
+            f"Secret '{secret_name}' exists but 'primary-key' is missing.\n"
+            "    The deployment may still be initializing."
+        )
+
     api_key = base64.b64decode(encoded).decode("utf-8")
     print(f"  ✓ Retrieved API key from Secret '{secret_name}'")
     return api_key
@@ -440,6 +489,7 @@ def run_inference(
     api_key: str,
     model_id: str,
     prompt: str = "What is the capital of France? Reply in one sentence.",
+    insecure: bool = False,
 ):
     """Call the OpenAI-compatible chat completions endpoint.
 
@@ -474,29 +524,39 @@ def run_inference(
     print(f"  Model    : {model_id}")
     print(f"  Prompt   : {prompt}\n")
 
-    # Disable SSL verification for self-signed certs (docs: internal CA
-    # uses self-signed certificates — "-k flag (curl)" is used in examples)
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    # Disable SSL verification only when --insecure is set (self-signed certs).
+    # The official docs use `curl -k` for internal endpoints.
+    verify_tls = not insecure
+    if insecure:
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     try:
         resp = requests.post(url, headers=headers, json=payload,
-                             verify=False, timeout=120)
+                             verify=verify_tls, timeout=120)
         resp.raise_for_status()
     except requests.exceptions.ConnectionError:
-        print("  ✗ Could not connect to the inference endpoint.")
-        print("    If running outside the cluster, set up port-forwarding:")
-        print(f"      kubectl port-forward svc/<deployment-name> 5000:5000 "
-              f"-n {FOUNDRY_NAMESPACE}")
-        print("    Then set: --endpoint https://localhost:5000")
-        sys.exit(1)
-    except requests.exceptions.HTTPError as e:
+        raise SampleError(
+            "Could not connect to the inference endpoint.\n"
+            "    If running outside the cluster, set up port-forwarding:\n"
+            f"      kubectl port-forward svc/<deployment-name> 5000:5000 "
+            f"-n {FOUNDRY_NAMESPACE}\n"
+            "    Then re-run with: --endpoint https://localhost:5000 --insecure"
+        )
+    except requests.exceptions.SSLError:
+        raise SampleError(
+            "SSL certificate verification failed.\n"
+            "    Foundry Local uses self-signed certificates internally.\n"
+            "    Re-run with --insecure to skip TLS verification,\n"
+            "    or provide a CA bundle with --ca-cert."
+        )
+    except requests.exceptions.HTTPError:
         if resp.status_code == 401:
-            print("  ✗ Authentication failed (401 Unauthorized).")
-            print("    Verify the API key is correct.")
-            print("    Docs: Authentication > Using API Keys in Requests")
-        else:
-            print(f"  ✗ HTTP {resp.status_code}: {resp.text}")
-        sys.exit(1)
+            raise SampleError(
+                "Authentication failed (401 Unauthorized).\n"
+                "    Verify the API key is correct.\n"
+                "    Docs: Authentication > Using API Keys in Requests"
+            )
+        raise SampleError(f"HTTP {resp.status_code}: {resp.text}")
 
     result = resp.json()
 
@@ -570,7 +630,8 @@ Docs: https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local
     parser.add_argument("--namespace", default=FOUNDRY_NAMESPACE,
                         help=f"Kubernetes namespace (default: {FOUNDRY_NAMESPACE})")
     parser.add_argument("--endpoint", default=None,
-                        help="Inference endpoint URL override (e.g. https://localhost:5000)")
+                        help="Inference endpoint URL (e.g. https://localhost:5000). "
+                             "Required when running outside the cluster.")
     parser.add_argument("--prompt", default="What is the capital of France? Reply in one sentence.",
                         help="Prompt to send to the model")
     parser.add_argument("--timeout", type=int, default=600,
@@ -579,6 +640,8 @@ Docs: https://github.com/FoundryLocalOnAzureLocal/Foundry-Local-On-Azure-Local
                         help="Only query and display the catalog, then exit")
     parser.add_argument("--skip-cleanup", action="store_true",
                         help="Do not delete the deployment after inference")
+    parser.add_argument("--insecure", action="store_true",
+                        help="Skip TLS certificate verification (for self-signed certs)")
     return parser.parse_args()
 
 
@@ -596,14 +659,20 @@ def main():
         config.load_incluster_config()
         print("\n  Using in-cluster Kubernetes config")
     except config.ConfigException:
-        config.load_kube_config()
-        print("\n  Using kubeconfig from local environment")
+        try:
+            config.load_kube_config()
+            print("\n  Using kubeconfig from local environment")
+        except Exception as exc:
+            print(f"\n  ✗ Could not load Kubernetes config: {exc}")
+            print("    Ensure kubectl is configured and can reach your cluster.")
+            print("    Try: kubectl cluster-info")
+            sys.exit(1)
 
     k8s_core = client.CoreV1Api()
     k8s_custom = client.CustomObjectsApi()
     k8s_ext = client.ApiextensionsV1Api()
 
-    print_context_info(k8s_core)
+    print_context_info(namespace)
 
     # --- Preflight checks ---
     check_crd_exists(k8s_ext)
@@ -624,13 +693,14 @@ def main():
     # Resolve the requested model variant
     variant = resolve_variant(models, args.model, args.version, args.compute)
     if not variant:
-        print(f"\n  ✗ Model '{args.model}:{args.version}' with compute='{args.compute}' "
-              "not found in the catalog.")
-        print("    Available models are listed above. Check the MODEL_ID column.")
-        print("    If the model was recently added, trigger a manual catalog sync:")
-        print(f"      kubectl create job --from=cronjob/foundry-local-catalog-sync "
-              f"manual-sync -n {namespace}")
-        sys.exit(1)
+        raise SampleError(
+            f"Model '{args.model}:{args.version}' with compute='{args.compute}' "
+            "not found in the catalog.\n"
+            "    Available models are listed above. Check the MODEL_ID column.\n"
+            "    If the model was recently added, trigger a manual catalog sync:\n"
+            f"      kubectl create job --from=cronjob/foundry-local-catalog-sync "
+            f"manual-sync -n {namespace}"
+        )
 
     print(f"\n  Selected model:")
     print(f"    Alias     : {variant['alias']}")
@@ -665,43 +735,64 @@ def main():
     print(f"  compute: {args.compute}")
     print(f"  {'-'*50}\n")
 
-    deploy_model(k8s_custom, manifest, namespace)
-
-    # ---------------------------------------------------------------
-    # Step 3 — Wait for the Deployment to Become Ready
-    # Docs: "Resource Lifecycle" — wait for State=Running, Ready=true
-    # ---------------------------------------------------------------
-    print_step(3, total_steps, "Wait for Deployment to Become Ready")
-
-    mdep = wait_for_ready(k8s_custom, deployment_name, namespace,
-                          timeout_seconds=args.timeout)
-
-    # ---------------------------------------------------------------
-    # Step 4 — Run Inference
-    # Docs: "Authentication" + "Run Inference" sections
-    # ---------------------------------------------------------------
-    print_step(4, total_steps, "Run Inference")
-
-    api_key = get_api_key(k8s_core, deployment_name, namespace)
-
-    # Determine the inference endpoint
-    if args.endpoint:
-        endpoint = args.endpoint
-    else:
-        # Default: in-cluster service DNS (docs: "Getting the endpoint without ingress")
-        # Format: https://<name>.foundry-local-operator.svc.cluster.local:5000
-        endpoint = f"https://{deployment_name}.{namespace}.svc.cluster.local:5000"
-        print(f"\n  Using in-cluster endpoint: {endpoint}")
-        print(f"  If running outside the cluster, set up port-forwarding:")
-        print(f"    kubectl port-forward svc/{deployment_name} 5000:5000 -n {namespace}")
-        print(f"    Then re-run with: --endpoint https://localhost:5000\n")
-
-    run_inference(
-        endpoint=endpoint,
-        api_key=api_key,
-        model_id=variant["model_id"],
-        prompt=args.prompt,
+    mdep_resource, was_created = deploy_model(
+        k8s_custom, manifest, namespace,
+        model_name=args.model,
+        model_version=args.version,
+        compute=args.compute,
     )
+
+    # Track whether we should clean up on failure (only if we created it)
+    should_cleanup = was_created and not args.skip_cleanup
+
+    try:
+        # ---------------------------------------------------------------
+        # Step 3 — Wait for the Deployment to Become Ready
+        # Docs: "Resource Lifecycle" — wait for State=Running, Ready=true
+        # ---------------------------------------------------------------
+        print_step(3, total_steps, "Wait for Deployment to Become Ready")
+
+        mdep = wait_for_ready(k8s_custom, deployment_name, namespace,
+                              timeout_seconds=args.timeout)
+
+        # ---------------------------------------------------------------
+        # Step 4 — Run Inference
+        # Docs: "Authentication" + "Run Inference" sections
+        # ---------------------------------------------------------------
+        print_step(4, total_steps, "Run Inference")
+
+        api_key = get_api_key(k8s_core, deployment_name, namespace)
+
+        # Determine the inference endpoint
+        if args.endpoint:
+            endpoint = args.endpoint
+        else:
+            # In-cluster service DNS (docs: "Getting the endpoint without ingress")
+            endpoint = f"https://{deployment_name}.{namespace}.svc.cluster.local:5000"
+            print(f"\n  ℹ No --endpoint specified. Using in-cluster DNS:")
+            print(f"    {endpoint}")
+            print(f"\n  If running from your workstation, set up port-forwarding first:")
+            print(f"    kubectl port-forward svc/{deployment_name} 5000:5000 -n {namespace}")
+            print(f"    Then re-run with: --endpoint https://localhost:5000 --insecure\n")
+
+        run_inference(
+            endpoint=endpoint,
+            api_key=api_key,
+            model_id=variant["model_id"],
+            prompt=args.prompt,
+            insecure=args.insecure,
+        )
+
+    except (SampleError, Exception):
+        # Guarantee cleanup on failure if we created the deployment
+        if should_cleanup:
+            print(f"\n  ⚠ Error occurred — cleaning up deployment '{deployment_name}'...")
+            try:
+                delete_deployment(k8s_custom, deployment_name, namespace)
+            except Exception:
+                print(f"    ⚠ Cleanup failed. Manual cleanup:\n"
+                      f"      kubectl delete mdep {deployment_name} -n {namespace}")
+        raise
 
     # ---------------------------------------------------------------
     # Step 5 — Clean Up
@@ -720,4 +811,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SampleError as e:
+        print(f"\n  ✗ {e}\n")
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print("\n\n  Interrupted by user.\n")
+        sys.exit(130)
