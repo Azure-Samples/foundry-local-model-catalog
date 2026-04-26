@@ -2,8 +2,8 @@
   "name": "Foundry Local on Azure Local — Model Catalog Sample",
   "description": "Demonstrates the full model catalog lifecycle on Foundry Local on Azure Local: query available models, deploy from the catalog, run inference, and clean up — using the Kubernetes API.",
   "languages": ["python"],
-  "products": ["azure"],
+  "products": ["azure", "azure-ai-foundry", "azure-local"],
   "primaryTechnology": "python",
-  "tags": ["ai", "kubernetes", "foundry-local", "azure-local", "getting-started"],
+  "tags": ["ai", "kubernetes", "foundry-local", "azure-local", "getting-started", "model-deployment", "inference"],
   "authors": ["Schtechel"]
 }
