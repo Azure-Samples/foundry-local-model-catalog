@@ -100,6 +100,20 @@ python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecu
 
 > **Note:** Foundry Local uses self-signed TLS certificates internally. Use `--insecure` to skip TLS verification, matching the `-k` flag used in the official docs' curl examples. In production, configure proper TLS certificates.
 
+## Clean Up
+
+The sample deletes the deployed model automatically after inference. To keep the model running, use `--skip-cleanup`:
+
+```bash
+python catalog_sample.py --skip-cleanup
+```
+
+To manually delete a deployment later:
+
+```bash
+kubectl delete modeldeployment <deployment-name> -n foundry-local-operator
+```
+
 ## Command-Line Options
 
 | Flag | Default | Description |
@@ -210,8 +224,6 @@ print(response.choices[0].message.content)
 - [Foundry Local (Windows)](https://github.com/microsoft/Foundry-Local)
 - [Foundry Azure Local Chat Sample](https://github.com/Azure-Samples/foundry-azure-local-chat)
 - [Microsoft AI Foundry](https://learn.microsoft.com/azure/ai-studio/)
-
-<!-- TODO: Add link to Foundry Local on Azure Local public documentation when available -->
 
 ## Contributing
 
