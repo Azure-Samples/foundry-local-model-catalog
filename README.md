@@ -33,8 +33,8 @@ Before running this sample, ensure you have:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Azure-Samples/foundry-azure-local-model-catalog.git
-cd foundry-azure-local-model-catalog
+git clone https://github.com/Azure-Samples/foundry-local-model-catalog.git
+cd foundry-local-model-catalog
 ```
 
 ### 2. Install dependencies

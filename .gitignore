@@ -222,3 +222,8 @@ __marimo__/
 # Project specific
 .env
 foundry_catalog.egg-info/
+
+# Internal development documents
+CONTEXT.md
+PLAN.md
+REVIEW-NOTES.md
