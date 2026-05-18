@@ -70,15 +70,37 @@ STATE_ERROR = "Error"
 STATE_PENDING = "Pending"
 STATE_CREATING = "Creating"
 
-# Inference runtimes (docs: "ModelDeployment Reference > spec.runtime")
+# Inference runtimes
+#   - User-facing CLI tokens: 'onnx', 'vllm' (short, friendly — match the
+#     announcement and blog).
+#   - Wire values accepted by the operator CRD: 'onnx-genai', 'vllm', 'maas'.
+#     The CRD default is 'onnx-genai', so omitting spec.runtime preserves
+#     today's behavior byte-equivalently.
+#   - Catalog ConfigMap variants use a 'framework' field; older catalogs may
+#     have used 'runtime' on nested variants. Both are tolerated.
 RUNTIME_ONNX = "onnx"
 RUNTIME_VLLM = "vllm"
 RUNTIME_CHOICES = (RUNTIME_ONNX, RUNTIME_VLLM)
 DEFAULT_RUNTIME = RUNTIME_ONNX
 
+# Maps the user-facing runtime token to the operator's wire value.
+# 'onnx' is intentionally mapped to None so the manifest omits spec.runtime
+# and inherits the CRD default ('onnx-genai') — keeps existing default
+# deployments byte-equivalent and tolerant of older operator builds.
+RUNTIME_WIRE_VALUE = {
+    RUNTIME_ONNX: None,
+    RUNTIME_VLLM: "vllm",
+}
+
+# Catalog 'framework' (or legacy 'runtime') values that map to each runtime.
+# Treat missing/unknown framework as ONNX (the historical default).
+RUNTIME_FRAMEWORK_ALIASES = {
+    RUNTIME_ONNX: {"onnx-genai", "onnx"},
+    RUNTIME_VLLM: {"vllm"},
+}
+
 # Resource presets per sample model (docs: Quick Start YAML examples).
-# Each preset is keyed by the catalog model name and pins the runtime so
-# resolve_variant() can disambiguate same-named variants by runtime.
+# Preset keys must match the catalog model alias the user passes via --model.
 MODEL_PRESETS = {
     "Phi-4-generic-cpu": {
         "compute": "cpu",
@@ -101,8 +123,11 @@ MODEL_PRESETS = {
     },
     # vLLM variants — GPU-only. The operator's vLLM planner handles
     # max_model_len, KV-cache size, and batch sizing automatically, so we
-    # intentionally do not pin those here (docs: "vLLM Runtime > Planner").
-    "Phi-4-mini": {
+    # intentionally do not pin those here.
+    # Note: the catalog alias is 'Phi-4-mini-instruct' (verified against
+    # the live bug-bash cluster), not the shorter 'Phi-4-mini' that some
+    # announcement drafts use.
+    "Phi-4-mini-instruct": {
         "compute": "gpu",
         "runtime": RUNTIME_VLLM,
         "workloadType": "generative",
@@ -230,47 +255,110 @@ def query_catalog(k8s_core: client.CoreV1Api, namespace: str) -> list[dict]:
     return models
 
 
-def variant_runtime(variant: dict) -> str:
-    """Return the inference runtime for a catalog variant.
+def entry_runtime(entry: dict) -> str:
+    """Return the user-facing runtime token ('onnx' or 'vllm') for a catalog
+    entry — works for both schemas the operator has shipped:
 
-    The catalog ConfigMap exposes runtime per variant via an optional
-    'runtime' field. Older catalog snapshots predate this field — treat
-    those as ONNX, which is the historical default for Foundry Local.
+      - Flat schema (current):  model entry has a top-level 'framework' field
+      - Nested schema (legacy): variant has a 'runtime' field
 
-    Docs: "Model Catalog > ConfigMap Format and Structure > Variant Fields"
+    Unknown / missing values fall back to 'onnx', which is the historical
+    default for Foundry Local.
+
+    Docs: "Model Catalog > ConfigMap Format and Structure"
     """
-    return (variant.get("runtime") or RUNTIME_ONNX).lower()
+    framework = (entry.get("framework") or entry.get("runtime") or "").lower()
+    for user_token, wire_set in RUNTIME_FRAMEWORK_ALIASES.items():
+        if framework in wire_set:
+            return user_token
+    return DEFAULT_RUNTIME
 
 
-def _build_variant_result(model: dict, variant: dict) -> dict:
-    """Project a (model, variant) pair into the shape callers expect."""
-    return {
-        "alias": model.get("alias", ""),
-        "model_id": variant["id"],
-        "compute": variant.get("compute", ""),
-        "runtime": variant_runtime(variant),
-        "displayName": model.get("displayName", ""),
-        "task": model.get("task", ""),
-        "fileSizeBytes": variant.get("fileSizeBytes", 0),
-    }
+def _inference_model_id(model_id: str, alias: str, runtime: str) -> str:
+    """Return the model identifier the inference server expects.
+
+    Inference model-id conventions differ by runtime (verified on a live
+    Foundry Local on Azure Local operator, version 0.260517.6):
+
+      * ONNX-GenAI servers respond to '<name>:<version>'        (e.g. qwen2.5-0.5b-instruct-generic-cpu:4)
+      * vLLM servers respond to '<alias>'                       (e.g. Phi-4-mini-instruct)
+
+    Using the wrong format yields a 404 NotFoundError from the server.
+    """
+    if runtime == RUNTIME_VLLM and alias:
+        return alias
+    return model_id
+
+
+def _build_variant_result(model: dict, variant: dict | None,
+                          compute_hint: str = "") -> dict:
+    """Project a (model, variant) pair into the shape callers expect.
+
+    Pass variant=None for catalogs using the flat schema where the model
+    entry itself is the deployable unit. In that case compute is taken
+    from compute_hint (the value the user requested) because the flat
+    schema doesn't expose compute on the catalog entry.
+    """
+    if variant is not None:
+        runtime = entry_runtime(variant) if variant.get("runtime") else entry_runtime(model)
+        result = {
+            "alias": model.get("alias", ""),
+            "model_id": variant["id"],
+            "compute": variant.get("compute", "") or compute_hint,
+            "runtime": runtime,
+            "displayName": model.get("displayName", ""),
+            "task": model.get("task", ""),
+            "fileSizeBytes": variant.get("fileSizeBytes", 0),
+        }
+    else:
+        runtime = entry_runtime(model)
+        result = {
+            "alias": model.get("alias", ""),
+            "model_id": model.get("id", ""),
+            "compute": compute_hint,
+            "runtime": runtime,
+            "displayName": model.get("displayName", ""),
+            "task": model.get("task", ""),
+            "fileSizeBytes": model.get("fileSizeBytes", 0),
+        }
+    result["inference_model_id"] = _inference_model_id(
+        result["model_id"], result["alias"], result["runtime"])
+    return result
 
 
 def display_catalog(models: list[dict]):
-    """Display the catalog in a table matching the docs' expected output format.
+    """Display the catalog in a table.
 
-    Includes a RUNTIME column so ONNX and vLLM variants of the same model
-    can be told apart at a glance (docs: "Catalog > Listing Models").
+    Supports both the flat schema (current operator: each model is a single
+    deployable entry with a top-level 'framework' field) and the legacy
+    nested schema (model has a non-empty 'variants' list with per-variant
+    'compute' / 'runtime' / 'fileSizeBytes' fields). The RUNTIME column
+    surfaces ONNX vs vLLM so the two are easy to tell apart.
     """
     rows = []
     for m in models:
-        for v in m.get("variants", []):
-            size_gb = round(v.get("fileSizeBytes", 0) / (1024**3), 2)
+        variants = m.get("variants") or []
+        if variants:
+            # Legacy nested schema
+            for v in variants:
+                size_gb = round(v.get("fileSizeBytes", 0) / (1024**3), 2)
+                rows.append([
+                    m.get("alias", ""),
+                    (v.get("compute") or "").upper() or "—",
+                    entry_runtime(v) if v.get("runtime") else entry_runtime(m),
+                    f"{size_gb}GB" if size_gb else "—",
+                    v.get("id", ""),
+                ])
+        else:
+            # Flat schema — model entry is the variant
+            size_bytes = m.get("fileSizeBytes", 0)
+            size_str = f"{round(size_bytes / (1024**3), 2)}GB" if size_bytes else "—"
             rows.append([
                 m.get("alias", ""),
-                v.get("compute", "").upper(),
-                variant_runtime(v),
-                f"{size_gb}GB",
-                v.get("id", ""),
+                (m.get("compute") or "").upper() or "—",
+                entry_runtime(m),
+                size_str,
+                m.get("id", ""),
             ])
 
     print(tabulate(rows,
@@ -280,37 +368,54 @@ def display_catalog(models: list[dict]):
 
 def resolve_variant(models: list[dict], model_name: str, version: str | None,
                     compute: str, runtime: str | None = None) -> dict | None:
-    """Find a specific variant matching the model name, version, compute, and runtime.
+    """Find a catalog entry matching the requested model name, version,
+    compute, and runtime.
+
+    Handles both the flat schema (current operator) and the legacy nested
+    schema with per-variant detail. When the catalog doesn't expose
+    'compute' on its entries (flat schema), compute is not used as a
+    filter — the operator handles scheduling based on the manifest's
+    spec.compute.
 
     When version is None, auto-detects the latest version from the catalog.
-    Avoids the brittle variants[0] assumption — explicitly matches compute type.
-
-    When runtime is None, runtime is not used as a filter (backward-compatible
-    behavior for callers that don't care). When runtime is provided, variants
-    whose runtime differs are skipped — the same model may appear multiple
-    times in the catalog (once per runtime/compute combination).
     """
     runtime_filter = runtime.lower() if runtime else None
+    requested_compute = (compute or "").lower()
 
-    def _runtime_matches(variant: dict) -> bool:
-        return runtime_filter is None or variant_runtime(variant) == runtime_filter
+    def _runtime_matches(entry: dict) -> bool:
+        return runtime_filter is None or entry_runtime(entry) == runtime_filter
 
     for m in models:
-        if version is not None:
-            # Exact match: model name + version
-            target_id = f"{model_name}:{version}"
-            for v in m.get("variants", []):
-                if (v.get("id") == target_id
-                        and v.get("compute", "").lower() == compute.lower()
-                        and _runtime_matches(v)):
-                    return _build_variant_result(m, v)
+        variants = m.get("variants") or []
+        if variants:
+            # Legacy nested schema
+            if version is not None:
+                target_id = f"{model_name}:{version}"
+                for v in variants:
+                    if (v.get("id") == target_id
+                            and (v.get("compute") or "").lower() == requested_compute
+                            and _runtime_matches(v if v.get("runtime") else m)):
+                        return _build_variant_result(m, v, compute)
+            else:
+                if m.get("displayName") == model_name or m.get("alias") == model_name:
+                    for v in variants:
+                        if ((v.get("compute") or "").lower() == requested_compute
+                                and _runtime_matches(v if v.get("runtime") else m)):
+                            return _build_variant_result(m, v, compute)
         else:
-            # Auto-detect: match by displayName + compute, use catalog version
-            if m.get("displayName") == model_name:
-                for v in m.get("variants", []):
-                    if (v.get("compute", "").lower() == compute.lower()
-                            and _runtime_matches(v)):
-                        return _build_variant_result(m, v)
+            # Flat schema — match the model entry itself
+            if m.get("alias") != model_name and m.get("displayName") != model_name:
+                continue
+            if not _runtime_matches(m):
+                continue
+            if version is not None:
+                m_version = str(m.get("modelVersion") or "")
+                m_id = m.get("id", "")
+                if m_version != version and m_id != f"{model_name}:{version}":
+                    continue
+            # No compute filter — flat schema doesn't expose it on the
+            # catalog entry; the operator validates against the manifest.
+            return _build_variant_result(m, None, compute)
 
     return None
 
@@ -374,11 +479,13 @@ def build_deployment_manifest(
         },
     }
 
-    # Emit 'runtime' only for non-default runtimes — keeps existing ONNX
-    # manifests byte-equivalent and avoids surprising older operator builds
-    # that may not yet understand the field.
-    if runtime and runtime.lower() != DEFAULT_RUNTIME:
-        manifest["spec"]["runtime"] = runtime.lower()
+    # Translate the user-facing runtime token ('onnx', 'vllm') to the
+    # operator's wire value. For the default ONNX path the wire value is
+    # None — omit spec.runtime entirely so the CRD applies its own default
+    # ('onnx-genai') and existing deployments stay byte-equivalent.
+    wire_runtime = RUNTIME_WIRE_VALUE.get((runtime or "").lower())
+    if wire_runtime is not None:
+        manifest["spec"]["runtime"] = wire_runtime
 
     # GPU deployments need nodeSelector (docs: Quick Start GPU example)
     if compute == "gpu":
@@ -433,7 +540,14 @@ def deploy_model(
             existing_model = existing_catalog.get("name", "")
             existing_version = existing_catalog.get("version", "")
             existing_compute = existing_spec.get("compute", "")
-            existing_runtime = (existing_spec.get("runtime") or DEFAULT_RUNTIME).lower()
+            existing_runtime_wire = (existing_spec.get("runtime") or "").lower()
+            # Normalize wire value → user token for comparison. The CRD
+            # default is 'onnx-genai' when the field is unset.
+            existing_runtime = DEFAULT_RUNTIME
+            for user_token, wire in RUNTIME_WIRE_VALUE.items():
+                if wire is not None and existing_runtime_wire == wire:
+                    existing_runtime = user_token
+                    break
             requested_runtime = (runtime or DEFAULT_RUNTIME).lower()
 
             if (existing_model != model_name
@@ -826,15 +940,18 @@ def main():
         deployment_name = args.deployment_name or dns_safe(args.model)
 
         # Resolve model_id: if version is specified, use it directly;
-        # otherwise query the catalog to auto-detect
+        # otherwise query the catalog to auto-detect. The inference model
+        # id format depends on the runtime (see _inference_model_id):
+        # vLLM uses the bare alias, ONNX uses '<name>:<version>'.
         if args.version is not None:
-            model_id = f"{args.model}:{args.version}"
+            full_model_id = f"{args.model}:{args.version}"
+            inference_id = _inference_model_id(full_model_id, args.model, args.runtime)
         else:
             models = query_catalog(k8s_core, namespace)
             variant = resolve_variant(models, args.model, None,
                                        args.compute, runtime=args.runtime)
             if variant:
-                model_id = variant["model_id"]
+                inference_id = variant["inference_model_id"]
             else:
                 raise SampleError(
                     f"Model '{args.model}' with compute='{args.compute}', "
@@ -854,7 +971,7 @@ def main():
         run_inference(
             endpoint=endpoint,
             api_key=api_key,
-            model_id=model_id,
+            model_id=inference_id,
             prompt=args.prompt,
             insecure=args.insecure,
         )
@@ -934,7 +1051,9 @@ def main():
     print(f"  workloadType: {manifest['spec']['workloadType']}")
     print(f"  compute: {args.compute}")
     if "runtime" in manifest["spec"]:
-        print(f"  runtime: {manifest['spec']['runtime']}")
+        print(f"  runtime: {manifest['spec']['runtime']} (user-token: {args.runtime})")
+    else:
+        print(f"  runtime: (CRD default — onnx-genai)")
     print(f"  port: 5000")
     print(f"  {'-'*50}\n")
 
@@ -996,7 +1115,7 @@ def main():
         run_inference(
             endpoint=endpoint,
             api_key=api_key,
-            model_id=variant["model_id"],
+            model_id=variant["inference_model_id"],
             prompt=args.prompt,
             insecure=args.insecure,
         )

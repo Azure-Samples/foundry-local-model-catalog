@@ -72,7 +72,7 @@ python catalog_sample.py --catalog-only
 python catalog_sample.py --model Phi-4-generic-gpu --compute gpu
 
 # Deploy Phi-4-mini with the vLLM runtime on GPU
-python catalog_sample.py --model Phi-4-mini --compute gpu --runtime vllm
+python catalog_sample.py --model Phi-4-mini-instruct --compute gpu --runtime vllm
 
 # Deploy and keep the model running after inference
 python catalog_sample.py --skip-cleanup
