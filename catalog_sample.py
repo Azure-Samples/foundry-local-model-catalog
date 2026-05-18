@@ -70,10 +70,41 @@ STATE_ERROR = "Error"
 STATE_PENDING = "Pending"
 STATE_CREATING = "Creating"
 
-# Resource presets per sample model (docs: Quick Start YAML examples)
+# Inference runtimes
+#   - User-facing CLI tokens: 'onnx', 'vllm' (short, friendly — match the
+#     announcement and blog).
+#   - Wire values accepted by the operator CRD: 'onnx-genai', 'vllm', 'maas'.
+#     The CRD default is 'onnx-genai', so omitting spec.runtime preserves
+#     today's behavior byte-equivalently.
+#   - Catalog ConfigMap variants use a 'framework' field; older catalogs may
+#     have used 'runtime' on nested variants. Both are tolerated.
+RUNTIME_ONNX = "onnx"
+RUNTIME_VLLM = "vllm"
+RUNTIME_CHOICES = (RUNTIME_ONNX, RUNTIME_VLLM)
+DEFAULT_RUNTIME = RUNTIME_ONNX
+
+# Maps the user-facing runtime token to the operator's wire value.
+# 'onnx' is intentionally mapped to None so the manifest omits spec.runtime
+# and inherits the CRD default ('onnx-genai') — keeps existing default
+# deployments byte-equivalent and tolerant of older operator builds.
+RUNTIME_WIRE_VALUE = {
+    RUNTIME_ONNX: None,
+    RUNTIME_VLLM: "vllm",
+}
+
+# Catalog 'framework' (or legacy 'runtime') values that map to each runtime.
+# Treat missing/unknown framework as ONNX (the historical default).
+RUNTIME_FRAMEWORK_ALIASES = {
+    RUNTIME_ONNX: {"onnx-genai", "onnx"},
+    RUNTIME_VLLM: {"vllm"},
+}
+
+# Resource presets per sample model (docs: Quick Start YAML examples).
+# Preset keys must match the catalog model alias the user passes via --model.
 MODEL_PRESETS = {
     "Phi-4-generic-cpu": {
         "compute": "cpu",
+        "runtime": RUNTIME_ONNX,
         "workloadType": "generative",
         "resources": {
             "requests": {"cpu": "2", "memory": "8Gi"},
@@ -82,10 +113,37 @@ MODEL_PRESETS = {
     },
     "Phi-4-generic-gpu": {
         "compute": "gpu",
+        "runtime": RUNTIME_ONNX,
         "workloadType": "generative",
         "resources": {
             "requests": {"cpu": "4", "memory": "32Gi"},
             "limits": {"cpu": "8", "memory": "64Gi", "gpu": 1},
+        },
+        "nodeSelector": {"foundry/workload": "gpu"},
+    },
+    # vLLM variants — GPU-only. The operator's vLLM planner handles
+    # max_model_len, KV-cache size, and batch sizing automatically, so we
+    # intentionally do not pin those here.
+    # Note: the catalog alias is 'Phi-4-mini-instruct' (verified against
+    # the live bug-bash cluster), not the shorter 'Phi-4-mini' that some
+    # announcement drafts use.
+    "Phi-4-mini-instruct": {
+        "compute": "gpu",
+        "runtime": RUNTIME_VLLM,
+        "workloadType": "generative",
+        "resources": {
+            "requests": {"cpu": "4", "memory": "16Gi"},
+            "limits": {"cpu": "8", "memory": "32Gi", "gpu": 1},
+        },
+        "nodeSelector": {"foundry/workload": "gpu"},
+    },
+    "Phi-4": {
+        "compute": "gpu",
+        "runtime": RUNTIME_VLLM,
+        "workloadType": "generative",
+        "resources": {
+            "requests": {"cpu": "8", "memory": "32Gi"},
+            "limits": {"cpu": "16", "memory": "64Gi", "gpu": 1},
         },
         "nodeSelector": {"foundry/workload": "gpu"},
     },
@@ -197,57 +255,167 @@ def query_catalog(k8s_core: client.CoreV1Api, namespace: str) -> list[dict]:
     return models
 
 
+def entry_runtime(entry: dict) -> str:
+    """Return the user-facing runtime token ('onnx' or 'vllm') for a catalog
+    entry — works for both schemas the operator has shipped:
+
+      - Flat schema (current):  model entry has a top-level 'framework' field
+      - Nested schema (legacy): variant has a 'runtime' field
+
+    Unknown / missing values fall back to 'onnx', which is the historical
+    default for Foundry Local.
+
+    Docs: "Model Catalog > ConfigMap Format and Structure"
+    """
+    framework = (entry.get("framework") or entry.get("runtime") or "").lower()
+    for user_token, wire_set in RUNTIME_FRAMEWORK_ALIASES.items():
+        if framework in wire_set:
+            return user_token
+    return DEFAULT_RUNTIME
+
+
+def _inference_model_id(model_id: str, alias: str, runtime: str) -> str:
+    """Return the model identifier the inference server expects.
+
+    Inference model-id conventions differ by runtime (verified on a live
+    Foundry Local on Azure Local operator, version 0.260517.6):
+
+      * ONNX-GenAI servers respond to '<name>:<version>'        (e.g. qwen2.5-0.5b-instruct-generic-cpu:4)
+      * vLLM servers respond to '<alias>'                       (e.g. Phi-4-mini-instruct)
+
+    Using the wrong format yields a 404 NotFoundError from the server.
+    """
+    if runtime == RUNTIME_VLLM and alias:
+        return alias
+    return model_id
+
+
+def _build_variant_result(model: dict, variant: dict | None,
+                          compute_hint: str = "") -> dict:
+    """Project a (model, variant) pair into the shape callers expect.
+
+    Pass variant=None for catalogs using the flat schema where the model
+    entry itself is the deployable unit. In that case compute is taken
+    from compute_hint (the value the user requested) because the flat
+    schema doesn't expose compute on the catalog entry.
+    """
+    if variant is not None:
+        runtime = entry_runtime(variant) if variant.get("runtime") else entry_runtime(model)
+        result = {
+            "alias": model.get("alias", ""),
+            "model_id": variant["id"],
+            "compute": variant.get("compute", "") or compute_hint,
+            "runtime": runtime,
+            "displayName": model.get("displayName", ""),
+            "task": model.get("task", ""),
+            "fileSizeBytes": variant.get("fileSizeBytes", 0),
+        }
+    else:
+        runtime = entry_runtime(model)
+        result = {
+            "alias": model.get("alias", ""),
+            "model_id": model.get("id", ""),
+            "compute": compute_hint,
+            "runtime": runtime,
+            "displayName": model.get("displayName", ""),
+            "task": model.get("task", ""),
+            "fileSizeBytes": model.get("fileSizeBytes", 0),
+        }
+    result["inference_model_id"] = _inference_model_id(
+        result["model_id"], result["alias"], result["runtime"])
+    return result
+
+
 def display_catalog(models: list[dict]):
-    """Display the catalog in a table matching the docs' expected output format."""
+    """Display the catalog in a table.
+
+    Supports both the flat schema (current operator: each model is a single
+    deployable entry with a top-level 'framework' field) and the legacy
+    nested schema (model has a non-empty 'variants' list with per-variant
+    'compute' / 'runtime' / 'fileSizeBytes' fields). The RUNTIME column
+    surfaces ONNX vs vLLM so the two are easy to tell apart.
+    """
     rows = []
     for m in models:
-        for v in m.get("variants", []):
-            size_gb = round(v.get("fileSizeBytes", 0) / (1024**3), 2)
+        variants = m.get("variants") or []
+        if variants:
+            # Legacy nested schema
+            for v in variants:
+                size_gb = round(v.get("fileSizeBytes", 0) / (1024**3), 2)
+                rows.append([
+                    m.get("alias", ""),
+                    (v.get("compute") or "").upper() or "—",
+                    entry_runtime(v) if v.get("runtime") else entry_runtime(m),
+                    f"{size_gb}GB" if size_gb else "—",
+                    v.get("id", ""),
+                ])
+        else:
+            # Flat schema — model entry is the variant
+            size_bytes = m.get("fileSizeBytes", 0)
+            size_str = f"{round(size_bytes / (1024**3), 2)}GB" if size_bytes else "—"
             rows.append([
                 m.get("alias", ""),
-                v.get("compute", "").upper(),
-                f"{size_gb}GB",
-                v.get("id", ""),
+                (m.get("compute") or "").upper() or "—",
+                entry_runtime(m),
+                size_str,
+                m.get("id", ""),
             ])
 
-    print(tabulate(rows, headers=["ALIAS", "DEVICE", "SIZE", "MODEL_ID"],
+    print(tabulate(rows,
+                   headers=["ALIAS", "DEVICE", "RUNTIME", "SIZE", "MODEL_ID"],
                    tablefmt="simple"))
 
 
 def resolve_variant(models: list[dict], model_name: str, version: str | None,
-                    compute: str) -> dict | None:
-    """Find a specific variant matching the model name, version, and compute type.
+                    compute: str, runtime: str | None = None) -> dict | None:
+    """Find a catalog entry matching the requested model name, version,
+    compute, and runtime.
+
+    Handles both the flat schema (current operator) and the legacy nested
+    schema with per-variant detail. When the catalog doesn't expose
+    'compute' on its entries (flat schema), compute is not used as a
+    filter — the operator handles scheduling based on the manifest's
+    spec.compute.
 
     When version is None, auto-detects the latest version from the catalog.
-    Avoids the brittle variants[0] assumption — explicitly matches compute type.
     """
+    runtime_filter = runtime.lower() if runtime else None
+    requested_compute = (compute or "").lower()
+
+    def _runtime_matches(entry: dict) -> bool:
+        return runtime_filter is None or entry_runtime(entry) == runtime_filter
+
     for m in models:
-        if version is not None:
-            # Exact match: model name + version
-            target_id = f"{model_name}:{version}"
-            for v in m.get("variants", []):
-                if v.get("id") == target_id and v.get("compute", "").lower() == compute.lower():
-                    return {
-                        "alias": m.get("alias", ""),
-                        "model_id": v["id"],
-                        "compute": v.get("compute", ""),
-                        "displayName": m.get("displayName", ""),
-                        "task": m.get("task", ""),
-                        "fileSizeBytes": v.get("fileSizeBytes", 0),
-                    }
+        variants = m.get("variants") or []
+        if variants:
+            # Legacy nested schema
+            if version is not None:
+                target_id = f"{model_name}:{version}"
+                for v in variants:
+                    if (v.get("id") == target_id
+                            and (v.get("compute") or "").lower() == requested_compute
+                            and _runtime_matches(v if v.get("runtime") else m)):
+                        return _build_variant_result(m, v, compute)
+            else:
+                if m.get("displayName") == model_name or m.get("alias") == model_name:
+                    for v in variants:
+                        if ((v.get("compute") or "").lower() == requested_compute
+                                and _runtime_matches(v if v.get("runtime") else m)):
+                            return _build_variant_result(m, v, compute)
         else:
-            # Auto-detect: match by displayName + compute, use catalog version
-            if m.get("displayName") == model_name:
-                for v in m.get("variants", []):
-                    if v.get("compute", "").lower() == compute.lower():
-                        return {
-                            "alias": m.get("alias", ""),
-                            "model_id": v["id"],
-                            "compute": v.get("compute", ""),
-                            "displayName": m.get("displayName", ""),
-                            "task": m.get("task", ""),
-                            "fileSizeBytes": v.get("fileSizeBytes", 0),
-                        }
+            # Flat schema — match the model entry itself
+            if m.get("alias") != model_name and m.get("displayName") != model_name:
+                continue
+            if not _runtime_matches(m):
+                continue
+            if version is not None:
+                m_version = str(m.get("modelVersion") or "")
+                m_id = m.get("id", "")
+                if m_version != version and m_id != f"{model_name}:{version}":
+                    continue
+            # No compute filter — flat schema doesn't expose it on the
+            # catalog entry; the operator validates against the manifest.
+            return _build_variant_result(m, None, compute)
 
     return None
 
@@ -264,10 +432,17 @@ def build_deployment_manifest(
     model_version: str,
     compute: str,
     namespace: str,
+    runtime: str = DEFAULT_RUNTIME,
 ) -> dict:
     """Build a ModelDeployment manifest grounded to the official YAML schema.
 
     Docs reference: "ModelDeployment Reference > Spec Fields" table.
+
+    The optional 'runtime' field selects the inference runtime (ONNX-GenAI
+    or vLLM). It is omitted from the manifest when it equals the operator's
+    default (ONNX) so existing deployments stay byte-equivalent. For vLLM,
+    the operator's planner handles max_model_len, KV-cache size, and batch
+    tuning automatically — this sample intentionally does not pin those.
     """
     preset = MODEL_PRESETS.get(model_name, {})
     workload_type = preset.get("workloadType", "generative")
@@ -304,6 +479,14 @@ def build_deployment_manifest(
         },
     }
 
+    # Translate the user-facing runtime token ('onnx', 'vllm') to the
+    # operator's wire value. For the default ONNX path the wire value is
+    # None — omit spec.runtime entirely so the CRD applies its own default
+    # ('onnx-genai') and existing deployments stay byte-equivalent.
+    wire_runtime = RUNTIME_WIRE_VALUE.get((runtime or "").lower())
+    if wire_runtime is not None:
+        manifest["spec"]["runtime"] = wire_runtime
+
     # GPU deployments need nodeSelector (docs: Quick Start GPU example)
     if compute == "gpu":
         node_selector = preset.get("nodeSelector", {})
@@ -320,11 +503,12 @@ def deploy_model(
     model_name: str,
     model_version: str,
     compute: str,
+    runtime: str = DEFAULT_RUNTIME,
 ) -> tuple[dict, bool]:
     """Create the ModelDeployment custom resource.
 
     Returns (resource, created) — created is False when reusing an existing
-    deployment that matches the requested model/version/compute.
+    deployment that matches the requested model/version/compute/runtime.
 
     Uses inline catalog reference — the operator creates the Model CR
     automatically via lazy registration (docs: "Lazy Model Registration").
@@ -356,16 +540,26 @@ def deploy_model(
             existing_model = existing_catalog.get("name", "")
             existing_version = existing_catalog.get("version", "")
             existing_compute = existing_spec.get("compute", "")
+            existing_runtime_wire = (existing_spec.get("runtime") or "").lower()
+            # Normalize wire value → user token for comparison. The CRD
+            # default is 'onnx-genai' when the field is unset.
+            existing_runtime = DEFAULT_RUNTIME
+            for user_token, wire in RUNTIME_WIRE_VALUE.items():
+                if wire is not None and existing_runtime_wire == wire:
+                    existing_runtime = user_token
+                    break
+            requested_runtime = (runtime or DEFAULT_RUNTIME).lower()
 
             if (existing_model != model_name
                     or existing_version != model_version
-                    or existing_compute != compute):
+                    or existing_compute != compute
+                    or existing_runtime != requested_runtime):
                 raise SampleError(
                     f"ModelDeployment '{name}' already exists but with a different configuration:\n"
                     f"    Existing: model={existing_model}, version={existing_version}, "
-                    f"compute={existing_compute}\n"
+                    f"compute={existing_compute}, runtime={existing_runtime}\n"
                     f"    Requested: model={model_name}, version={model_version}, "
-                    f"compute={compute}\n"
+                    f"compute={compute}, runtime={requested_runtime}\n"
                     f"    To fix: delete the existing deployment first:\n"
                     f"      kubectl delete mdep {name} -n {namespace}\n"
                     f"    Or use a different --deployment-name."
@@ -630,6 +824,10 @@ Examples:
                         help="Catalog model version (default: auto-detect from catalog)")
     parser.add_argument("--compute", choices=["cpu", "gpu"], default="cpu",
                         help="Compute type (default: cpu)")
+    parser.add_argument("--runtime", choices=list(RUNTIME_CHOICES),
+                        default=DEFAULT_RUNTIME,
+                        help=f"Inference runtime (default: {DEFAULT_RUNTIME}). "
+                             f"'{RUNTIME_VLLM}' requires --compute gpu.")
     parser.add_argument("--deployment-name", default=None,
                         help="Deployment name (default: derived from model name)")
     parser.add_argument("--namespace", default=FOUNDRY_NAMESPACE,
@@ -661,6 +859,15 @@ Examples:
         parser.error("--deploy-only and --infer-only are mutually exclusive")
     if args.catalog_only and (args.deploy_only or args.infer_only):
         parser.error("--catalog-only cannot be combined with --deploy-only or --infer-only")
+
+    # vLLM requires GPU — validated up front so the user gets a clear error
+    # before any cluster calls are made (docs: "vLLM Runtime > Requirements").
+    if args.runtime == RUNTIME_VLLM and args.compute != "gpu":
+        raise SampleError(
+            f"--runtime {RUNTIME_VLLM} requires --compute gpu.\n"
+            f"    The vLLM runtime is GPU-only on Foundry Local.\n"
+            f"    Re-run with: --runtime {RUNTIME_VLLM} --compute gpu"
+        )
 
     return args
 
@@ -733,18 +940,22 @@ def main():
         deployment_name = args.deployment_name or dns_safe(args.model)
 
         # Resolve model_id: if version is specified, use it directly;
-        # otherwise query the catalog to auto-detect
+        # otherwise query the catalog to auto-detect. The inference model
+        # id format depends on the runtime (see _inference_model_id):
+        # vLLM uses the bare alias, ONNX uses '<name>:<version>'.
         if args.version is not None:
-            model_id = f"{args.model}:{args.version}"
+            full_model_id = f"{args.model}:{args.version}"
+            inference_id = _inference_model_id(full_model_id, args.model, args.runtime)
         else:
             models = query_catalog(k8s_core, namespace)
-            variant = resolve_variant(models, args.model, None, args.compute)
+            variant = resolve_variant(models, args.model, None,
+                                       args.compute, runtime=args.runtime)
             if variant:
-                model_id = variant["model_id"]
+                inference_id = variant["inference_model_id"]
             else:
                 raise SampleError(
-                    f"Model '{args.model}' with compute='{args.compute}' not found "
-                    "in the catalog.\n"
+                    f"Model '{args.model}' with compute='{args.compute}', "
+                    f"runtime='{args.runtime}' not found in the catalog.\n"
                     "    Specify --version explicitly, or check --catalog-only output."
                 )
 
@@ -760,7 +971,7 @@ def main():
         run_inference(
             endpoint=endpoint,
             api_key=api_key,
-            model_id=model_id,
+            model_id=inference_id,
             prompt=args.prompt,
             insecure=args.insecure,
         )
@@ -791,13 +1002,14 @@ def main():
         return
 
     # Resolve the requested model variant
-    variant = resolve_variant(models, args.model, args.version, args.compute)
+    variant = resolve_variant(models, args.model, args.version, args.compute,
+                              runtime=args.runtime)
     if not variant:
         version_str = f":{args.version}" if args.version else ""
         raise SampleError(
-            f"Model '{args.model}{version_str}' with compute='{args.compute}' "
-            "not found in the catalog.\n"
-            "    Available models are listed above. Check the MODEL_ID column.\n"
+            f"Model '{args.model}{version_str}' with compute='{args.compute}', "
+            f"runtime='{args.runtime}' not found in the catalog.\n"
+            "    Available models are listed above. Check the MODEL_ID and RUNTIME columns.\n"
             "    If the model was recently added, trigger a manual catalog sync:\n"
             f"      kubectl create job --from=cronjob/foundry-local-catalog-sync "
             f"manual-sync -n {namespace}"
@@ -810,6 +1022,7 @@ def main():
     print(f"    Alias     : {variant['alias']}")
     print(f"    Model ID  : {variant['model_id']}")
     print(f"    Compute   : {variant['compute'].upper()}")
+    print(f"    Runtime   : {variant['runtime']}")
     print(f"    Size      : {variant['fileSizeBytes'] / (1024**3):.2f} GB")
 
     # ---------------------------------------------------------------
@@ -824,6 +1037,7 @@ def main():
         model_version=resolved_version,
         compute=args.compute,
         namespace=namespace,
+        runtime=args.runtime,
     )
 
     # Show the manifest (users can copy it for their own deployments)
@@ -836,6 +1050,10 @@ def main():
     print(f"  model.catalog.version: {resolved_version}")
     print(f"  workloadType: {manifest['spec']['workloadType']}")
     print(f"  compute: {args.compute}")
+    if "runtime" in manifest["spec"]:
+        print(f"  runtime: {manifest['spec']['runtime']} (user-token: {args.runtime})")
+    else:
+        print(f"  runtime: (CRD default — onnx-genai)")
     print(f"  port: 5000")
     print(f"  {'-'*50}\n")
 
@@ -844,6 +1062,7 @@ def main():
         model_name=args.model,
         model_version=resolved_version,
         compute=args.compute,
+        runtime=args.runtime,
     )
 
     # Track whether we should clean up on failure (only if we created it)
@@ -896,7 +1115,7 @@ def main():
         run_inference(
             endpoint=endpoint,
             api_key=api_key,
-            model_id=variant["model_id"],
+            model_id=variant["inference_model_id"],
             prompt=args.prompt,
             insecure=args.insecure,
         )

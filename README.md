@@ -71,6 +71,9 @@ python catalog_sample.py --catalog-only
 # Deploy Phi-4 on GPU
 python catalog_sample.py --model Phi-4-generic-gpu --compute gpu
 
+# Deploy Phi-4-mini with the vLLM runtime on GPU
+python catalog_sample.py --model Phi-4-mini-instruct --compute gpu --runtime vllm
+
 # Deploy and keep the model running after inference
 python catalog_sample.py --skip-cleanup
 
@@ -82,6 +85,10 @@ python catalog_sample.py --infer-only --endpoint https://localhost:5000 --insecu
 # Use a custom prompt
 python catalog_sample.py --prompt "Explain quantum computing in two sentences."
 ```
+
+### Choosing a runtime
+
+Use ONNX-GenAI on CPU-only nodes, for compact models, or for single-application workloads. Use vLLM on GPU nodes for high-throughput, multi-user serving of larger models. Both runtimes expose the same OpenAI-compatible REST endpoint — your client code does not change.
 
 ### Running from Outside the Cluster
 
@@ -121,6 +128,7 @@ kubectl delete modeldeployment <deployment-name> -n foundry-local-operator
 | `--model` | `Phi-4-generic-cpu` | Catalog model name |
 | `--version` | *(auto-detect)* | Catalog model version |
 | `--compute` | `cpu` | Compute type (`cpu` or `gpu`) |
+| `--runtime` | `onnx` | Inference runtime (`onnx` or `vllm`). `vllm` requires `--compute gpu`. |
 | `--deployment-name` | *(derived from model)* | Custom deployment name |
 | `--namespace` | `foundry-local-operator` | Kubernetes namespace |
 | `--endpoint` | *(in-cluster DNS)* | Inference endpoint URL (required when running outside the cluster) |
