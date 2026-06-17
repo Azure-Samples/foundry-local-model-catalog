@@ -28,11 +28,11 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | **Execution Provider** | `models[].variants[].executionProvider` | ONNX execution provider |
 | **Model ID** | `models[].variants[].id` | Use this as `spec.model.catalog.name` in your `ModelDeployment` |
 | **(Disconnected) Supported Foundry Extension Version** | N/A | The miminum foundry local arc extension version that supports this model |
-| **(Disconnected) Model Download Link** | N/A | A download link for the expansion pack |
+| **(Disconnected) Model Expansion Pack Download Link** | N/A | A download link for the expansion pack |
 
 ## Models
 
-| Alias | Display Name | Publisher | Task | Framework | Compute | Execution Provider | Model ID | Supported Foundry Extension Version | Model Download Link |
+| Alias | Display Name | Publisher | Task | Framework | Compute | Execution Provider | Model ID | (Disconnected) Supported Foundry Extension Version | (Disconnected) Model Expansion Pack Download Link |
 |-------|--------------|-----------|------|-----------|---------|--------------------|----------|-------------------------------------|---------------------|
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:3 | 0.260602.2 | [3.0.0](aka.ms/azurelocal.pxp.foundrylocal.nemotron-3.5-asr-streaming-0.6b.cpu.model) |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:2 | 0.260602.2 | [2.0.0](aka.ms/azurelocal.pxp.foundrylocal.nemotron-3.5-asr-streaming-0.6b.gpu.model) |
