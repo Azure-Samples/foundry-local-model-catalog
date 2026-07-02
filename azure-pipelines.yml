@@ -50,9 +50,10 @@ steps:
       set -euo pipefail
 
       az extension add --name aksarc --upgrade --yes
-      az aksarc get-credentials \
+      az aks get-credentials \
         --resource-group "$(aksArcResourceGroup)" \
         --name "$(aksArcClusterName)" \
+        --admin \
         --overwrite-existing
 
       kubectl get po -A
