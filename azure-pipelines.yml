@@ -50,7 +50,7 @@ steps:
       set -euo pipefail
 
       az extension add --name aksarc --upgrade --yes
-      az aks install-cli --install-kubelogin
+      az aks install-cli
       az aks get-credentials \
         --resource-group "$(aksArcResourceGroup)" \
         --name "$(aksArcClusterName)" \
