@@ -210,4 +210,3 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen3-8b | Qwen-Qwen3-8B | — | chat-completion | vllm | — | — | Qwen-Qwen3-8B:1 |
 | qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 |
 | smollm3-3b | HuggingFaceTB-SmolLM3-3B | — | chat-completion | vllm | — | — | HuggingFaceTB-SmolLM3-3B:1 |
-
