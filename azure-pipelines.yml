@@ -40,51 +40,75 @@ steps:
     git push -u origin "$BRANCH"
   displayName: Create smoke file branch and push to GitHub
 
-# - bash: |
-#     set -euo pipefail
+- bash: |
+    set -euo pipefail
 
-#     BRANCH="$(SmokeBranchName)"
-#     REPO="Azure-Samples/foundry-local-model-catalog"
+    REPO="Azure-Samples/foundry-local-model-catalog"
+    BASE="main"
+    HEAD_BRANCH="$(SmokeBranchName)"
+    HEAD_REF="Azure-Samples:${HEAD_BRANCH}"
 
-#     # Reuse credentials that checkout persisted for github.com.
-#     AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
-#     if [[ -z "$AUTH_HEADER" ]]; then
-#       echo "Could not find GitHub auth header from persisted credentials."
-#       echo "Compare URL for manual PR creation:"
-#       echo "https://github.com/${REPO}/compare/main...${BRANCH}?expand=1"
-#       exit 1
-#     fi
+    # Reuse auth configured by checkout with persistCredentials.
+    AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
+    if [[ -z "$AUTH_HEADER" ]]; then
+      echo "Could not find GitHub auth header from persisted credentials."
+      exit 1
+    fi
 
-#     payload=$(cat <<JSON
-#     {
-#       "title": "ADO smoke PR: build $(Build.BuildId)",
-#       "head": "${BRANCH}",
-#       "base": "main",
-#       "body": "Automated PR created by Azure DevOps pipeline smoke test."
-#     }
-# JSON
-#     )
+    # Idempotency: if an open PR already exists for this branch, reuse it.
+    existing_response=$(curl -sS \
+      -H "$AUTH_HEADER" \
+      -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/${REPO}/pulls?state=open&head=${HEAD_REF}")
 
-#     response=$(curl -sS -X POST \
-#       -H "$AUTH_HEADER" \
-#       -H "Accept: application/vnd.github+json" \
-#       -H "Content-Type: application/json" \
-#       "https://api.github.com/repos/${REPO}/pulls" \
-#       -d "$payload")
+    existing_pr_url=$(python3 - <<'PY' "$existing_response"
+import json
+import sys
+data = json.loads(sys.argv[1])
+if isinstance(data, list) and data:
+    print(data[0].get("html_url", ""))
+else:
+    print("")
+PY
+    )
 
-#     pr_url=$(python3 - <<'PY' "$response"
-# import json
-# import sys
-# data = json.loads(sys.argv[1])
-# print(data.get("html_url", ""))
-# PY
-#     )
+    if [[ -n "$existing_pr_url" ]]; then
+      echo "PR already exists: $existing_pr_url"
+      echo "##vso[task.setvariable variable=SmokePrUrl]$existing_pr_url"
+      exit 0
+    fi
 
-#     if [[ -z "$pr_url" ]]; then
-#       echo "Failed to create PR. API response:"
-#       echo "$response"
-#       exit 1
-#     fi
+    payload=$(cat <<JSON
+    {
+      "title": "ADO smoke PR: build $(Build.BuildId)",
+      "head": "${HEAD_REF}",
+      "base": "${BASE}",
+      "body": "Automated PR created by Azure DevOps pipeline smoke test."
+    }
+JSON
+    )
 
-#     echo "PR created: $pr_url"
-#   displayName: Open GitHub PR from smoke branch (curl)
+    create_response=$(curl -sS -X POST \
+      -H "$AUTH_HEADER" \
+      -H "Accept: application/vnd.github+json" \
+      -H "Content-Type: application/json" \
+      "https://api.github.com/repos/${REPO}/pulls" \
+      -d "$payload")
+
+    pr_url=$(python3 - <<'PY' "$create_response"
+import json
+import sys
+data = json.loads(sys.argv[1])
+print(data.get("html_url", ""))
+PY
+    )
+
+    if [[ -z "$pr_url" ]]; then
+      echo "Failed to create PR. API response:"
+      echo "$create_response"
+      exit 1
+    fi
+
+    echo "PR created: $pr_url"
+    echo "##vso[task.setvariable variable=SmokePrUrl]$pr_url"
+  displayName: Create GitHub PR automatically
