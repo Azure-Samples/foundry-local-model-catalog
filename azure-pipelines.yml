@@ -6,8 +6,7 @@ variables:
   LinuxContainerImage: 'mcr.microsoft.com/onebranch/azurelinux/build:3.0'
 
 pool:
-  type: linux
-  #vmImage: ubuntu-latest
+  vmImage: ubuntu-latest
 
 steps:
 - checkout: self
