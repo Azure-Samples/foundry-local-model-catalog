@@ -44,8 +44,22 @@ steps:
 
     # Reuse auth configured by checkout with persistCredentials.
     AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
+
+    # Fallback: Azure Pipelines App auth may be exposed through git credential helper, not extraheader.
     if [[ -z "$AUTH_HEADER" ]]; then
-      echo "Could not find GitHub auth header from persisted credentials."
+      cred_output="$(printf 'protocol=https\nhost=github.com\n\n' | git credential fill || true)"
+      GH_USER="$(echo "$cred_output" | awk -F= '/^username=/{print $2; exit}')"
+      GH_PASS="$(echo "$cred_output" | awk -F= '/^password=/{print $2; exit}')"
+
+      if [[ -n "$GH_USER" && -n "$GH_PASS" ]]; then
+        basic_b64="$(printf '%s' "${GH_USER}:${GH_PASS}" | python3 -c 'import base64,sys; print(base64.b64encode(sys.stdin.buffer.read()).decode())')"
+        AUTH_HEADER="Authorization: Basic ${basic_b64}"
+      fi
+    fi
+
+    if [[ -z "$AUTH_HEADER" ]]; then
+      echo "Could not resolve GitHub credentials from persisted checkout auth."
+      echo "Ensure checkout uses persistCredentials: true and repo is connected via GitHub service connection."
       exit 1
     fi
 
