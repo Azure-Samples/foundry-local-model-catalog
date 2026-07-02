@@ -50,11 +50,14 @@ steps:
       set -euo pipefail
 
       az extension add --name aksarc --upgrade --yes
+      az aks install-cli --install-kubelogin
       az aks get-credentials \
         --resource-group "$(aksArcResourceGroup)" \
         --name "$(aksArcClusterName)" \
-        --admin \
         --overwrite-existing
+
+      # Use the Azure CLI login from AzureCLI@2 task for AAD-enabled clusters.
+      kubelogin convert-kubeconfig -l azurecli
 
       kubectl get po -A
 
