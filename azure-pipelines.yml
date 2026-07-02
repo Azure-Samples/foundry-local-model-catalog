@@ -49,22 +49,9 @@ steps:
       exit 1
     fi
 
-    payload=$(cat <<JSON
-    {
-      "title": "ADO smoke PR: build $(Build.BuildId)",
-      "head": "${HEAD_REF}",
-      "base": "main",
-      "body": "Automated PR created by Azure DevOps pipeline smoke test."
-    }
-JSON
-    )
+    payload="{\"title\":\"ADO smoke PR: build $(Build.BuildId)\",\"head\":\"${HEAD_REF}\",\"base\":\"main\",\"body\":\"Automated PR created by Azure DevOps pipeline smoke test.\"}"
 
-    create_response=$(curl -sS -X POST \
-      -H "$AUTH_HEADER" \
-      -H "Accept: application/vnd.github+json" \
-      -H "Content-Type: application/json" \
-      "https://api.github.com/repos/${REPO}/pulls" \
-      -d "$payload")
+    create_response=$(curl -sS -X POST -H "$AUTH_HEADER" -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" "https://api.github.com/repos/${REPO}/pulls" -d "$payload")
 
     pr_url=$(echo "$create_response" | python3 -c 'import sys, json; print(json.load(sys.stdin).get("html_url", ""))')
 
