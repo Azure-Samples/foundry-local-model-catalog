@@ -40,22 +40,51 @@ steps:
     git push -u origin "$BRANCH"
   displayName: Create smoke file branch and push to GitHub
 
-- task: InvokeRESTAPI@1
-  displayName: Open GitHub PR from smoke branch
-  inputs:
-    connectionType: connectedServiceName
-    serviceConnection: '$(githubServiceConnection)'
-    method: POST
-    headers: |
-      {
-        "Content-Type": "application/json",
-        "Accept": "application/vnd.github+json"
-      }
-    urlSuffix: '/repos/Azure-Samples/foundry-local-model-catalog/pulls'
-    body: |
-      {
-        "title": "ADO smoke PR: build $(Build.BuildId)",
-        "head": "Azure-Samples:$(SmokeBranchName)",
-        "base": "main",
-        "body": "Automated PR created by Azure DevOps pipeline smoke test."
-      }
+# - bash: |
+#     set -euo pipefail
+
+#     BRANCH="$(SmokeBranchName)"
+#     REPO="Azure-Samples/foundry-local-model-catalog"
+
+#     # Reuse credentials that checkout persisted for github.com.
+#     AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
+#     if [[ -z "$AUTH_HEADER" ]]; then
+#       echo "Could not find GitHub auth header from persisted credentials."
+#       echo "Compare URL for manual PR creation:"
+#       echo "https://github.com/${REPO}/compare/main...${BRANCH}?expand=1"
+#       exit 1
+#     fi
+
+#     payload=$(cat <<JSON
+#     {
+#       "title": "ADO smoke PR: build $(Build.BuildId)",
+#       "head": "${BRANCH}",
+#       "base": "main",
+#       "body": "Automated PR created by Azure DevOps pipeline smoke test."
+#     }
+# JSON
+#     )
+
+#     response=$(curl -sS -X POST \
+#       -H "$AUTH_HEADER" \
+#       -H "Accept: application/vnd.github+json" \
+#       -H "Content-Type: application/json" \
+#       "https://api.github.com/repos/${REPO}/pulls" \
+#       -d "$payload")
+
+#     pr_url=$(python3 - <<'PY' "$response"
+# import json
+# import sys
+# data = json.loads(sys.argv[1])
+# print(data.get("html_url", ""))
+# PY
+#     )
+
+#     if [[ -z "$pr_url" ]]; then
+#       echo "Failed to create PR. API response:"
+#       echo "$response"
+#       exit 1
+#     fi
+
+#     echo "PR created: $pr_url"
+#   displayName: Open GitHub PR from smoke branch (curl)
