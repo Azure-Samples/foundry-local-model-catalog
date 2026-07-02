@@ -1,11 +1,13 @@
-trigger:
-- main
+trigger: none
 
-pr:
-- main
+pr: none
+
+variables:
+  LinuxContainerImage: 'mcr.microsoft.com/onebranch/azurelinux/build:3.0'
 
 pool:
-  vmImage: ubuntu-latest
+  type: linux
+  #vmImage: ubuntu-latest
 
 steps:
 - checkout: self
@@ -33,7 +35,17 @@ steps:
 
     git add pipeline-smoke/pr-smoke.txt
     git commit -m "chore: add ADO PR smoke file (build $(Build.BuildId))"
-    git push -u origin "$BRANCH"
+
+    # Find checkout-persisted auth header (may be repo-specific, not only github.com root).
+    AUTH_HEADER="$(git config --get-regexp '^http\\..*\\.extraheader$' | awk '{$1=""; sub(/^ /, ""); print}' | grep -im1 '^AUTHORIZATION:' || true)"
+    if [[ -z "$AUTH_HEADER" ]]; then
+      echo "Could not find persisted GitHub auth header for push."
+      echo "Detected extraheader entries:"
+      git config --get-regexp '^http\..*\.extraheader$' || true
+      exit 1
+    fi
+
+    git -c http.https://github.com/.extraheader="$AUTH_HEADER" push -u origin "$BRANCH"
   displayName: Create smoke file branch and push to GitHub
 
 - bash: |
@@ -43,7 +55,7 @@ steps:
     HEAD_REF="Azure-Samples:$(SmokeBranchName)"
 
     # Reuse auth configured by checkout with persistCredentials.
-    AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
+    AUTH_HEADER="$(git config --get-regexp '^http\\..*\\.extraheader$' | awk '{$1=""; sub(/^ /, ""); print}' | grep -im1 '^AUTHORIZATION:' || true)"
 
     # Fallback: Azure Pipelines App auth may be exposed through git credential helper, not extraheader.
     if [[ -z "$AUTH_HEADER" ]]; then
