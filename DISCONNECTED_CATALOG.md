@@ -1,6 +1,6 @@
 # Foundry Local On Azure Local Disconnected Operations
 
-This document is a snapshot of the foundry local extension expansion packs.
+This document provides a snapshot of the Foundry Local extension expansion packs for Azure Local disconnected operations. The Foundry Local extension is designed for disconnected environments where internet access is limited or unavailable. The ability to create and use the Foundry Local extension becomes available after installing the expansion pack on the Azure Local disconnected operations VM. See [Documentation](https://learn.microsoft.com/en-us/azure/azure-sovereign-clouds/private/foundry-local/disconnected-operations/concept-overview) for additional infromation.
 
 ## Foundry Extension Expansion Packs
 
