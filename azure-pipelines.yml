@@ -4,6 +4,9 @@ pr: none
 
 variables:
   LinuxContainerImage: 'mcr.microsoft.com/onebranch/azurelinux/build:3.0'
+  azureServiceConnection: 'MSC Edge FoundryOnArc Dev SP CORP'
+  aksArcResourceGroup: 'rg-foundry-mnbugbash05-weu'
+  aksArcClusterName: 'aks-foundry-mnbugbash05-weu'
 
 pool:
   vmImage: ubuntu-latest
@@ -34,62 +37,23 @@ steps:
 
     git add pipeline-smoke/pr-smoke.txt
     git commit -m "chore: add ADO PR smoke file (build $(Build.BuildId))"
-
-    # Find checkout-persisted auth header (repo-specific key + value).
-    AUTH_KV="$(git config --get-regexp '^http\\..*\\.extraheader$' | grep -im1 'AUTHORIZATION:' || true)"
-    AUTH_KEY="$(echo "$AUTH_KV" | awk '{print $1}')"
-    AUTH_HEADER="$(echo "$AUTH_KV" | sed -E 's/^[^[:space:]]+[[:space:]]+//')"
-
-    if [[ -z "$AUTH_KEY" || -z "$AUTH_HEADER" ]]; then
-      echo "Could not find persisted GitHub auth header for push."
-      echo "Detected extraheader entries:"
-      git config --get-regexp '^http\..*\.extraheader$' || true
-      exit 1
-    fi
-
-    git -c "${AUTH_KEY}=${AUTH_HEADER}" push -u origin "$BRANCH"
+    git push -u origin "$BRANCH"
   displayName: Create smoke file branch and push to GitHub
 
-- bash: |
-    set -euo pipefail
+- task: AzureCLI@2
+  displayName: Connect to AKS Arc cluster and list all pods
+  inputs:
+    azureSubscription: '$(azureServiceConnection)'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      set -euo pipefail
 
-    REPO="Azure-Samples/foundry-local-model-catalog"
-    HEAD_REF="Azure-Samples:$(SmokeBranchName)"
+      az extension add --name aksarc --upgrade --yes
+      az aksarc get-credentials \
+        --resource-group "$(aksArcResourceGroup)" \
+        --name "$(aksArcClusterName)" \
+        --overwrite-existing
 
-    # Reuse auth configured by checkout with persistCredentials.
-    AUTH_KV="$(git config --get-regexp '^http\\..*\\.extraheader$' | grep -im1 'AUTHORIZATION:' || true)"
-    AUTH_HEADER="$(echo "$AUTH_KV" | sed -E 's/^[^[:space:]]+[[:space:]]+//')"
+      kubectl get po -A
 
-    # Fallback: Azure Pipelines App auth may be exposed through git credential helper, not extraheader.
-    if [[ -z "$AUTH_HEADER" ]]; then
-      cred_output="$(printf 'protocol=https\nhost=github.com\n\n' | git credential fill || true)"
-      GH_USER="$(echo "$cred_output" | awk -F= '/^username=/{print $2; exit}')"
-      GH_PASS="$(echo "$cred_output" | awk -F= '/^password=/{print $2; exit}')"
-
-      if [[ -n "$GH_USER" && -n "$GH_PASS" ]]; then
-        basic_b64="$(printf '%s' "${GH_USER}:${GH_PASS}" | python3 -c 'import base64,sys; print(base64.b64encode(sys.stdin.buffer.read()).decode())')"
-        AUTH_HEADER="Authorization: Basic ${basic_b64}"
-      fi
-    fi
-
-    if [[ -z "$AUTH_HEADER" ]]; then
-      echo "Could not resolve GitHub credentials from persisted checkout auth."
-      echo "Ensure checkout uses persistCredentials: true and repo is connected via GitHub service connection."
-      exit 1
-    fi
-
-    payload="{\"title\":\"ADO smoke PR: build $(Build.BuildId)\",\"head\":\"${HEAD_REF}\",\"base\":\"main\",\"body\":\"Automated PR created by Azure DevOps pipeline smoke test.\"}"
-
-    create_response=$(curl -sS -X POST -H "$AUTH_HEADER" -H "Accept: application/vnd.github+json" -H "Content-Type: application/json" "https://api.github.com/repos/${REPO}/pulls" -d "$payload")
-
-    pr_url=$(echo "$create_response" | python3 -c 'import sys, json; print(json.load(sys.stdin).get("html_url", ""))')
-
-    if [[ -z "$pr_url" ]]; then
-      echo "Failed to create PR. API response:"
-      echo "$create_response"
-      exit 1
-    fi
-
-    echo "PR created: $pr_url"
-    echo "##vso[task.setvariable variable=SmokePrUrl]$pr_url"
-  displayName: Create GitHub PR automatically
