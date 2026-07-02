@@ -4,10 +4,6 @@ trigger:
 pr:
 - main
 
-variables:
-- name: githubServiceConnection
-  value: "github.com_Azure-Samples (1)"
-
 pool:
   vmImage: ubuntu-latest
 
@@ -44,9 +40,7 @@ steps:
     set -euo pipefail
 
     REPO="Azure-Samples/foundry-local-model-catalog"
-    BASE="main"
-    HEAD_BRANCH="$(SmokeBranchName)"
-    HEAD_REF="Azure-Samples:${HEAD_BRANCH}"
+    HEAD_REF="Azure-Samples:$(SmokeBranchName)"
 
     # Reuse auth configured by checkout with persistCredentials.
     AUTH_HEADER="$(git config --get-all http.https://github.com/.extraheader | grep -im1 '^AUTHORIZATION:' || true)"
@@ -55,34 +49,11 @@ steps:
       exit 1
     fi
 
-    # Idempotency: if an open PR already exists for this branch, reuse it.
-    existing_response=$(curl -sS \
-      -H "$AUTH_HEADER" \
-      -H "Accept: application/vnd.github+json" \
-      "https://api.github.com/repos/${REPO}/pulls?state=open&head=${HEAD_REF}")
-
-    existing_pr_url=$(python3 - <<'PY' "$existing_response"
-import json
-import sys
-data = json.loads(sys.argv[1])
-if isinstance(data, list) and data:
-    print(data[0].get("html_url", ""))
-else:
-    print("")
-PY
-    )
-
-    if [[ -n "$existing_pr_url" ]]; then
-      echo "PR already exists: $existing_pr_url"
-      echo "##vso[task.setvariable variable=SmokePrUrl]$existing_pr_url"
-      exit 0
-    fi
-
     payload=$(cat <<JSON
     {
       "title": "ADO smoke PR: build $(Build.BuildId)",
       "head": "${HEAD_REF}",
-      "base": "${BASE}",
+      "base": "main",
       "body": "Automated PR created by Azure DevOps pipeline smoke test."
     }
 JSON
@@ -95,13 +66,7 @@ JSON
       "https://api.github.com/repos/${REPO}/pulls" \
       -d "$payload")
 
-    pr_url=$(python3 - <<'PY' "$create_response"
-import json
-import sys
-data = json.loads(sys.argv[1])
-print(data.get("html_url", ""))
-PY
-    )
+    pr_url=$(echo "$create_response" | python3 -c 'import sys, json; print(json.load(sys.stdin).get("html_url", ""))')
 
     if [[ -z "$pr_url" ]]; then
       echo "Failed to create PR. API response:"
