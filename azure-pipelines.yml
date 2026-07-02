@@ -6,7 +6,7 @@ pr:
 
 variables:
 - name: githubServiceConnection
-  value: CHANGE_ME_GITHUB_SERVICE_CONNECTION
+  value: "github.com_Azure-Samples (1)"
 
 pool:
   vmImage: ubuntu-latest
@@ -40,12 +40,22 @@ steps:
     git push -u origin "$BRANCH"
   displayName: Create smoke file branch and push to GitHub
 
-- task: GitHubCreatePullRequest@0
+- task: InvokeRESTAPI@1
   displayName: Open GitHub PR from smoke branch
   inputs:
-    gitHubConnection: '$(githubServiceConnection)'
-    repositoryName: 'Azure-Samples/foundry-local-model-catalog'
-    sourceBranch: '$(SmokeBranchName)'
-    targetBranch: 'main'
-    title: 'ADO smoke PR: build $(Build.BuildId)'
-    description: 'Automated PR created by Azure DevOps pipeline smoke test.'
+    connectionType: connectedServiceName
+    serviceConnection: '$(githubServiceConnection)'
+    method: POST
+    headers: |
+      {
+        "Content-Type": "application/json",
+        "Accept": "application/vnd.github+json"
+      }
+    urlSuffix: '/repos/Azure-Samples/foundry-local-model-catalog/pulls'
+    body: |
+      {
+        "title": "ADO smoke PR: build $(Build.BuildId)",
+        "head": "Azure-Samples:$(SmokeBranchName)",
+        "base": "main",
+        "body": "Automated PR created by Azure DevOps pipeline smoke test."
+      }
