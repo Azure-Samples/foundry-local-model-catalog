@@ -2,15 +2,15 @@
 
 This document provides a snapshot of the Foundry Local extension expansion packs for Azure Local disconnected operations. The Foundry Local extension is designed for disconnected environments where internet access is limited or unavailable. The ability to create and use the Foundry Local extension becomes available after installing the expansion pack on the Azure Local disconnected operations VM. See [Documentation](https://learn.microsoft.com/en-us/azure/azure-sovereign-clouds/private/foundry-local/disconnected-operations/concept-overview) for additional infromation.
 
-## Foundry Extension Expansion Packs
+## Foundry Local Extension Expansion Packs
 
-### Latest Version
+### Foundry Local Expansion Pack Latest Version
 
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
 | 0.260630.27 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/0.260630.27/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)  | - Model Catalog support<br>- Ingress deprecation and support in Gateway API<br>- Tool Calling Support          |
 
-### Older Versions
+### Foundry Local Expansion Pack Older Versions
 
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
@@ -99,3 +99,17 @@ This document provides a snapshot of the Foundry Local extension expansion packs
 | whisper-tiny | ONNX | CPU | openai-whisper-tiny-generic-cpu:3 | 0.260630.27 | [3.0.0](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalModels/3.0.0-azurelocal.pxp.foundrylocal.whisper-tiny.cpu.model/azurelocal.pxp.foundrylocal.whisper-tiny.cpu.model.3.0.0.zip) |
 | whisper-tiny | ONNX | GPU | openai-whisper-tiny-cuda-gpu:2 | 0.260630.27 | [2.0.0](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalModels/2.0.0-azurelocal.pxp.foundrylocal.whisper-tiny.gpu.model/azurelocal.pxp.foundrylocal.whisper-tiny.gpu.model.2.0.0.zip) |
 
+## Agentic Retrieval on Foundry Local Extension Expansion Packs
+
+Agentic Retrieval brings agentic AI capabilities to disconnected edge and hybrid environments on Azure Local. You can deploy a secure, scalable, and intelligent AI agent platform that uses your own data in environments with limited or no internet connectivity. Based on your requirements, you can deploy the full Agentic Retrieval platform or independently deploy only the Agentic Layer or Knowledge Layer. See [Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/agents-tools-foundry-local/disconnected-operations/deploy-disconnected) for additional information.
+
+### Agentic Retrieval Expansion Pack Latest Version
+
+|   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
+|----------------|--------------|-----------------------|---------------|--------|
+| 1.2607.36 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2607.36/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2607.36.zip)  |         |
+
+### Agentic Retrieval Expansion Pack Older Versions
+
+|   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
+|----------------|--------------|-----------------------|---------------|--------|
