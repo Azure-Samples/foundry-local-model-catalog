@@ -4,9 +4,9 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-02 |
-| **Catalog version** | `2026-07-02T11:38:41.312069+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-02T11:38:14.041934+00:00` |
+| **Snapshot date (UTC)** | 2026-07-06 |
+| **Catalog version** | `2026-07-06T11:38:42.339800+00:00` |
+| **Catalog last sync (UTC)** | `2026-07-06T11:38:14.912459+00:00` |
 | **Total entries** | 186 |
 | **ONNX entries** | 70 |
 | **vLLM entries** | 116 |
@@ -175,9 +175,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:2 |
 | openreasoning-nemotron-32b | nvidia-OpenReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-32B:2 |
 | nemotron-3-super-120b-a12b-fp8 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8:2 |
-| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:2 |
 | mathstral-7b-v0.1 | mistralai-Mathstral-7B-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mathstral-7B-v0.1:2 |
-| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:2 |
 | openreasoning-nemotron-7b | nvidia-OpenReasoning-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-7B:2 |
 | mistral-nemo-instruct-fp8-2407 | mistralai-Mistral-Nemo-Instruct-FP8-2407 | — | chat-completion | vllm | — | — | mistralai-Mistral-Nemo-Instruct-FP8-2407:2 |
 | openmath-nemotron-7b | nvidia-OpenMath-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-7B:2 |
@@ -187,10 +185,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:2 |
 | nemotron-3-super-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16:2 |
 | mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:2 |
-| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:2 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-Mistral-Small-3.2-24B-Instruct-2506 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3.2-24B-Instruct-2506:2 |
 | mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:2 |
-| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:2 |
 | magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:2 |
 | deepseek-v3-0324 | deepseek-ai-DeepSeek-V3-0324 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3-0324:4 |
 | deepseek-v3.1 | deepseek-ai-DeepSeek-V3.1 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.1:4 |
@@ -218,3 +214,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:7 |
 | mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:3 |
+| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:3 |
+| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:3 |
+| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:3 |
+| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:3 |
