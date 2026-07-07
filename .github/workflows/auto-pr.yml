@@ -1,4 +1,4 @@
-name: Auto PR
+name: Catalog Update Notification
 
 on:
   push:
@@ -6,37 +6,62 @@ on:
       - 'update-catalog-*'
 
 jobs:
-  create-pr:
+  notify-owners:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
+      issues: write
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Create PR
+      - name: Notify Repo Owners
+        uses: actions/github-script@v7
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ github.ref_name }}
-        run: |
-          existing_pr_url="$(gh pr list \
-            --head "$BRANCH_NAME" \
-            --base main \
-            --state open \
-            --json url \
-            --jq '.[0].url')"
+          OWNER_MENTION: ${{ vars.OWNER_MENTION }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = context.ref.replace('refs/heads/', '');
+            const ownerLogin = context.payload.repository.owner.login;
+            const mention = process.env.OWNER_MENTION && process.env.OWNER_MENTION.trim()
+              ? process.env.OWNER_MENTION.trim()
+              : `@${ownerLogin}`;
 
-          if [[ -n "$existing_pr_url" && "$existing_pr_url" != "null" ]]; then
-            echo "PR already exists: $existing_pr_url"
-            exit 0
-          fi
+            const title = `Catalog update notification: ${branch}`;
+            const body = [
+              `${mention}`,
+              '',
+              'A model catalog update branch was pushed and needs owner attention.',
+              '',
+              `- Branch: \`${branch}\``,
+              `- Commit: ${context.sha}`,
+              `- Workflow run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            ].join('\n');
 
-          gh pr create \
-            --base main \
-            --head "$BRANCH_NAME" \
-            --title "Automatic Catalog Update PR: $BRANCH_NAME" \
-            --body "Automatically created when the Model Catalog was updated. Please review the changes and merge if everything looks good."
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              creator: 'github-actions[bot]',
+              per_page: 100
+            });
+
+            const existing = issues.find(i => i.title === title);
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body
+              });
+              core.info(`Updated existing notification issue: #${existing.number}`);
+            } else {
+              const created = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body
+              });
+              core.info(`Created notification issue: #${created.data.number}`);
+            }
