@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
 
     steps:
@@ -19,24 +19,31 @@ jobs:
           fetch-depth: 0
 
       - name: Create PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ github.ref_name }}
-        run: |
-          existing_pr_url="$(gh pr list \
-            --head "$BRANCH_NAME" \
-            --base main \
-            --state open \
-            --json url \
-            --jq '.[0].url')"
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "Automatic Catalog Update PR: ${{ github.ref_name }}"
+          body: "Automatically created when the Model Catalog was updated. Please review the changes and merge if everything looks good."
+          base: main
 
-          if [[ -n "$existing_pr_url" && "$existing_pr_url" != "null" ]]; then
-            echo "PR already exists: $existing_pr_url"
-            exit 0
-          fi
+      # - name: Create PR
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     BRANCH_NAME: ${{ github.ref_name }}
+      #   run: |
+      #     existing_pr_url="$(gh pr list \
+      #       --head "$BRANCH_NAME" \
+      #       --base main \
+      #       --state open \
+      #       --json url \
+      #       --jq '.[0].url')"
 
-          gh pr create \
-            --base main \
-            --head "$BRANCH_NAME" \
-            --title "Automatic Catalog Update PR: $BRANCH_NAME" \
-            --body "Automatically created when the Model Catalog was updated. Please review the changes and merge if everything looks good."
+      #     if [[ -n "$existing_pr_url" && "$existing_pr_url" != "null" ]]; then
+      #       echo "PR already exists: $existing_pr_url"
+      #       exit 0
+      #     fi
+
+      #     gh pr create \
+      #       --base main \
+      #       --head "$BRANCH_NAME" \
+      #       --title "Automatic Catalog Update PR: $BRANCH_NAME" \
+      #       --body "Automatically created when the Model Catalog was updated. Please review the changes and merge if everything looks good."
