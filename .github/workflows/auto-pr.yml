@@ -24,6 +24,7 @@ jobs:
           title: "Automatic Catalog Update PR: ${{ github.ref_name }}"
           body: "Automatically created when the Model Catalog was updated. Please review the changes and merge if everything looks good."
           base: main
+          branch: ${{ github.ref_name }}
 
       # - name: Create PR
       #   env:
