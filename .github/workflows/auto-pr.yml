@@ -23,13 +23,25 @@ jobs:
           script: |
             const branch = context.ref.replace('refs/heads/', '');
             const ownerLogin = context.payload.repository.owner.login;
-            const mention = process.env.OWNER_MENTION && process.env.OWNER_MENTION.trim()
-              ? process.env.OWNER_MENTION.trim()
-              : `@${ownerLogin}`;
+            const rawOwnerMention = process.env.OWNER_MENTION || '';
+            const mentionTargets = rawOwnerMention
+              .split(/[\s,]+/)
+              .map(value => value.trim())
+              .filter(Boolean)
+              .map(value => value.replace(/^@+/, ''));
+
+            const mentions = mentionTargets.length > 0
+              ? mentionTargets.map(value => `@${value}`)
+              : [`@${ownerLogin}`];
+
+            // Issue assignees must be user logins (no org/team mentions).
+            const assignees = mentionTargets
+              .filter(value => !value.includes('/'))
+              .filter(value => /^[A-Za-z0-9-]+$/.test(value));
 
             const title = `Catalog update notification: ${branch}`;
             const body = [
-              `${mention}`,
+              mentions.join(' '),
               '',
               'A model catalog update branch was pushed and needs owner attention.',
               '',
@@ -55,6 +67,20 @@ jobs:
                 issue_number: existing.number,
                 body
               });
+
+              if (assignees.length > 0) {
+                try {
+                  await github.rest.issues.addAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: existing.number,
+                    assignees
+                  });
+                } catch (error) {
+                  core.warning(`Failed to assign issue #${existing.number}: ${error.message}`);
+                }
+              }
+
               core.info(`Updated existing notification issue: #${existing.number}`);
             } else {
               const created = await github.rest.issues.create({
@@ -63,5 +89,19 @@ jobs:
                 title,
                 body
               });
+
+              if (assignees.length > 0) {
+                try {
+                  await github.rest.issues.addAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: created.data.number,
+                    assignees
+                  });
+                } catch (error) {
+                  core.warning(`Failed to assign issue #${created.data.number}: ${error.message}`);
+                }
+              }
+
               core.info(`Created notification issue: #${created.data.number}`);
             }
