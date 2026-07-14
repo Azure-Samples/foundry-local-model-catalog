@@ -4,13 +4,13 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-06 |
-| **Catalog version** | `2026-07-06T11:38:42.339800+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-06T11:38:14.912459+00:00` |
-| **Total entries** | 186 |
+| **Snapshot date (UTC)** | 2026-07-14 |
+| **Catalog version** | `2026-07-13T23:13:30.740367+00:00` |
+| **Catalog last sync (UTC)** | `2026-07-13T23:13:25.471632+00:00` |
+| **Total entries** | 173 |
 | **ONNX entries** | 70 |
-| **vLLM entries** | 116 |
-| **Chat-completion models** | 164 |
+| **vLLM entries** | 103 |
+| **Chat-completion models** | 151 |
 | **Automatic-speech-recognition models** | 22 |
 
 ## Catalog Schema
@@ -102,14 +102,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:2 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:1 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:1 |
-| Phi-3.5-mini-instruct | Phi-3.5-mini instruct (128k) | Microsoft | chat-completion | vllm | — | — | Phi-3.5-mini-instruct:6 |
-| Phi-4-mini-instruct | Phi-4-mini-instruct | Microsoft | chat-completion | vllm | — | — | Phi-4-mini-instruct:1 |
-| Phi-4-mini-reasoning | Phi-4-mini-reasoning | Microsoft | chat-completion | vllm | — | — | Phi-4-mini-reasoning:1 |
-| Phi-4-reasoning | Phi-4-reasoning | Microsoft | chat-completion | vllm | — | — | Phi-4-reasoning:1 |
-| Phi-4 | Phi-4 | Microsoft | chat-completion | vllm | — | — | Phi-4:8 |
-| gpt-oss-120b | gpt-oss-120b | OpenAI | chat-completion | vllm | — | — | gpt-oss-120b:4 |
-| gpt-oss-20b | gpt-oss-20b | OpenAI | chat-completion | vllm | — | — | gpt-oss-20b:11 |
-| mistralai-Mistral-7B-Instruct-v0-2 | mistralai-Mistral-7B-Instruct-v0-2 | Mistral AI | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:9 |
 | deepseek-r1-distill-qwen-1.5b | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B:1 |
 | deepseek-r1-distill-qwen-7b | deepseek-ai-DeepSeek-R1-Distill-Qwen-7B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-7B:4 |
 | whisper-tiny | openai-whisper-tiny | — | automatic-speech-recognition | vllm | — | — | openai-whisper-tiny:1 |
@@ -129,7 +121,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | smollm3-3b | HuggingFaceTB-SmolLM3-3B | — | chat-completion | vllm | — | — | HuggingFaceTB-SmolLM3-3B:1 |
 | qwen3-8b | Qwen-Qwen3-8B | — | chat-completion | vllm | — | — | Qwen-Qwen3-8B:1 |
 | openmath-nemotron-1.5b | nvidia-OpenMath-Nemotron-1.5B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-1.5B:1 |
-| nemotron-3-nano-30b-a3b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8:1 |
 | nemotron-nano-12b-v2 | nvidia-NVIDIA-Nemotron-Nano-12B-v2 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Nano-12B-v2:1 |
 | olmo-3-7b-instruct | allenai-Olmo-3-7B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3-7B-Instruct:1 |
 | qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 |
@@ -141,7 +132,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-7b-instruct | Qwen-Qwen2.5-7B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-7B-Instruct:1 |
 | nemotron-3-nano-4b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8:1 |
 | qwen2.5-coder-14b-instruct | Qwen-Qwen2.5-Coder-14B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-Coder-14B-Instruct:1 |
-| nemotron-3-nano-4b-gguf | nvidia-NVIDIA-Nemotron-3-Nano-4B-GGUF | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-4B-GGUF:1 |
 | acereason-nemotron-7b | nvidia-AceReason-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-AceReason-Nemotron-7B:1 |
 | nemotron-nano-9b-v2-nvfp4 | nvidia-NVIDIA-Nemotron-Nano-9B-v2-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Nano-9B-v2-NVFP4:1 |
 | acereason-nemotron-1.1-7b | nvidia-AceReason-Nemotron-1.1-7B | — | chat-completion | vllm | — | — | nvidia-AceReason-Nemotron-1.1-7B:1 |
@@ -163,19 +153,26 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-3-nano-omni-30b-a3b-reasoning-nvfp4 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4:1 |
 | pixtral-12b-2409 | mistralai-Pixtral-12B-2409 | — | chat-completion | vllm | — | — | mistralai-Pixtral-12B-2409:1 |
 | nemotron-mini-4b-instruct | nvidia-Nemotron-Mini-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-Mini-4B-Instruct:4 |
+| acereason-nemotron-14b | nvidia-AceReason-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-AceReason-Nemotron-14B:3 |
 | whisper-medium | openai-whisper-medium | — | automatic-speech-recognition | vllm | — | — | openai-whisper-medium:2 |
+| openmath-nemotron-14b-kaggle | nvidia-OpenMath-Nemotron-14B-Kaggle | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-14B-Kaggle:3 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:2 |
 | olmo-3.1-32b-instruct | allenai-Olmo-3.1-32B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3.1-32B-Instruct:2 |
 | nemotron-terminal-32b | nvidia-Nemotron-Terminal-32B | — | chat-completion | vllm | — | — | nvidia-Nemotron-Terminal-32B:2 |
 | openmath-nemotron-32b | nvidia-OpenMath-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-32B:2 |
 | opencodereasoning-nemotron-32b | nvidia-OpenCodeReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B:2 |
+| deepseek-r1-distill-qwen-14b | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B:3 |
+| openreasoning-nemotron-14b | nvidia-OpenReasoning-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-14B:3 |
 | opencodereasoning-nemotron-1.1-32b | nvidia-OpenCodeReasoning-Nemotron-1.1-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-1.1-32B:2 |
 | mistral-small-4-119b-2603-nvfp4 | mistralai-Mistral-Small-4-119B-2603-NVFP4 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603-NVFP4:2 |
 | opencodereasoning-nemotron-32b-ioi | nvidia-OpenCodeReasoning-Nemotron-32B-IOI | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B-IOI:2 |
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:2 |
 | openreasoning-nemotron-32b | nvidia-OpenReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-32B:2 |
+| openmath-nemotron-14b | nvidia-OpenMath-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-14B:3 |
 | nemotron-3-super-120b-a12b-fp8 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8:2 |
+| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:4 |
 | mathstral-7b-v0.1 | mistralai-Mathstral-7B-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mathstral-7B-v0.1:2 |
+| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:4 |
 | openreasoning-nemotron-7b | nvidia-OpenReasoning-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-7B:2 |
 | mistral-nemo-instruct-fp8-2407 | mistralai-Mistral-Nemo-Instruct-FP8-2407 | — | chat-completion | vllm | — | — | mistralai-Mistral-Nemo-Instruct-FP8-2407:2 |
 | openmath-nemotron-7b | nvidia-OpenMath-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-7B:2 |
@@ -185,24 +182,18 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:2 |
 | nemotron-3-super-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16:2 |
 | mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:2 |
-| mistral-small-3.2-24b-instruct-2506 | mistralai-Mistral-Small-3.2-24B-Instruct-2506 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3.2-24B-Instruct-2506:2 |
+| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:4 |
 | mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:2 |
-| magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:2 |
+| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:4 |
+| magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:3 |
 | deepseek-v3-0324 | deepseek-ai-DeepSeek-V3-0324 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3-0324:4 |
 | deepseek-v3.1 | deepseek-ai-DeepSeek-V3.1 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.1:4 |
 | deepseek-v3.2 | deepseek-ai-DeepSeek-V3.2 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2:4 |
 | deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:4 |
-| nemotron-4-340b-reward | nvidia-Nemotron-4-340B-Reward | — | chat-completion | vllm | — | — | nvidia-Nemotron-4-340B-Reward:5 |
-| nemotron-4-340b-instruct | nvidia-Nemotron-4-340B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-4-340B-Instruct:5 |
 | mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:5 |
 | nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:4 |
-| mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:5 |
 | ministral-3-14b-reasoning-2512 | mistralai-Ministral-3-14B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Reasoning-2512:3 |
-| acereason-nemotron-14b | nvidia-AceReason-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-AceReason-Nemotron-14B:3 |
-| openmath-nemotron-14b-kaggle | nvidia-OpenMath-Nemotron-14B-Kaggle | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-14B-Kaggle:3 |
-| openreasoning-nemotron-14b | nvidia-OpenReasoning-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-14B:3 |
-| deepseek-r1-distill-qwen-14b | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B:3 |
-| openmath-nemotron-14b | nvidia-OpenMath-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-14B:3 |
+| mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:5 |
 | mistral-nemo-instruct-2407 | mistralai-Mistral-Nemo-Instruct-2407 | — | chat-completion | vllm | — | — | mistralai-Mistral-Nemo-Instruct-2407:4 |
 | phi-4-mini-instruct | microsoft-Phi-4-mini-instruct | — | chat-completion | vllm | — | — | microsoft-Phi-4-mini-instruct:1 |
 | phi-3.5-mini-instruct | microsoft-Phi-3-5-mini-instruct | — | chat-completion | vllm | — | — | microsoft-Phi-3-5-mini-instruct:1 |
@@ -212,9 +203,5 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | gpt-oss-20b | openai-gpt-oss-20b | — | chat-completion | vllm | — | — | openai-gpt-oss-20b:1 |
 | mistral-7b-instruct-v0.2 | mistralai-Mistral-7B-Instruct-v0-2 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:2 |
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
-| mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:7 |
-| mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:3 |
-| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:3 |
-| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:3 |
-| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:3 |
-| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:3 |
+| mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:8 |
+| mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:4 |
