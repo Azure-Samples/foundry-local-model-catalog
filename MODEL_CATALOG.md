@@ -4,13 +4,13 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-14 |
-| **Catalog version** | `2026-07-13T23:13:30.740367+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-13T23:13:25.471632+00:00` |
-| **Total entries** | 173 |
+| **Snapshot date (UTC)** | 2026-07-15 |
+| **Catalog version** | `2026-07-15T06:40:24.764507+00:00` |
+| **Catalog last sync (UTC)** | `2026-07-15T06:40:20.617291+00:00` |
+| **Total entries** | 170 |
 | **ONNX entries** | 70 |
-| **vLLM entries** | 103 |
-| **Chat-completion models** | 151 |
+| **vLLM entries** | 100 |
+| **Chat-completion models** | 148 |
 | **Automatic-speech-recognition models** | 22 |
 
 ## Catalog Schema
@@ -123,7 +123,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | openmath-nemotron-1.5b | nvidia-OpenMath-Nemotron-1.5B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-1.5B:1 |
 | nemotron-nano-12b-v2 | nvidia-NVIDIA-Nemotron-Nano-12B-v2 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Nano-12B-v2:1 |
 | olmo-3-7b-instruct | allenai-Olmo-3-7B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3-7B-Instruct:1 |
-| qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 |
 | nemotron-nano-9b-v2 | nvidia-NVIDIA-Nemotron-Nano-9B-v2 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Nano-9B-v2:1 |
 | nemotron-nano-12b-v2-vl-bf16 | nvidia-NVIDIA-Nemotron-Nano-12B-v2-VL-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Nano-12B-v2-VL-BF16:1 |
 | qwen2.5-coder-7b-instruct | Qwen-Qwen2.5-Coder-7B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-Coder-7B-Instruct:1 |
@@ -152,7 +151,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | opencodereasoning-nemotron-1.1-14b | nvidia-OpenCodeReasoning-Nemotron-1.1-14B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-1.1-14B:1 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-nvfp4 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4:1 |
 | pixtral-12b-2409 | mistralai-Pixtral-12B-2409 | — | chat-completion | vllm | — | — | mistralai-Pixtral-12B-2409:1 |
-| nemotron-mini-4b-instruct | nvidia-Nemotron-Mini-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-Mini-4B-Instruct:4 |
 | acereason-nemotron-14b | nvidia-AceReason-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-AceReason-Nemotron-14B:3 |
 | whisper-medium | openai-whisper-medium | — | automatic-speech-recognition | vllm | — | — | openai-whisper-medium:2 |
 | openmath-nemotron-14b-kaggle | nvidia-OpenMath-Nemotron-14B-Kaggle | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-14B-Kaggle:3 |
@@ -179,10 +177,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | mistral-7b-instruct-v0.3 | mistralai-Mistral-7B-Instruct-v0.3 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0.3:4 |
 | mixtral-8x7b-instruct-v0.1 | mistralai-Mixtral-8x7B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x7B-Instruct-v0.1:2 |
 | ministral-3-8b-instruct-2512 | mistralai-Ministral-3-8B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-8B-Instruct-2512:2 |
-| ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:2 |
 | nemotron-3-super-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16:2 |
 | mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:2 |
-| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:4 |
 | mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:2 |
 | magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:4 |
 | magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:3 |
@@ -205,3 +201,4 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:8 |
 | mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:4 |
+| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:4 |
