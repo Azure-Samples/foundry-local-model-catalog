@@ -4,9 +4,9 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-06 |
-| **Catalog version** | `2026-07-06T11:38:42.339800+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-06T11:38:14.912459+00:00` |
+| **Snapshot date (UTC)** | 2026-07-13 |
+| **Catalog version** | `2026-07-12T23:38:44.162898+00:00` |
+| **Catalog last sync (UTC)** | `2026-07-12T23:38:14.942090+00:00` |
 | **Total entries** | 186 |
 | **ONNX entries** | 70 |
 | **vLLM entries** | 116 |
@@ -187,7 +187,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:2 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-Mistral-Small-3.2-24B-Instruct-2506 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3.2-24B-Instruct-2506:2 |
 | mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:2 |
-| magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:2 |
 | deepseek-v3-0324 | deepseek-ai-DeepSeek-V3-0324 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3-0324:4 |
 | deepseek-v3.1 | deepseek-ai-DeepSeek-V3.1 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.1:4 |
 | deepseek-v3.2 | deepseek-ai-DeepSeek-V3.2 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2:4 |
@@ -212,9 +211,10 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | gpt-oss-20b | openai-gpt-oss-20b | — | chat-completion | vllm | — | — | openai-gpt-oss-20b:1 |
 | mistral-7b-instruct-v0.2 | mistralai-Mistral-7B-Instruct-v0-2 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:2 |
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
-| mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:7 |
-| mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:3 |
-| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:3 |
-| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:3 |
-| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:3 |
-| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:3 |
+| devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:4 |
+| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:4 |
+| magistral-small-2509 | mistralai-Magistral-Small-2509 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2509:4 |
+| mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:4 |
+| devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:4 |
+| magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:3 |
+| mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:8 |
