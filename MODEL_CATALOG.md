@@ -4,9 +4,9 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-15 |
-| **Catalog version** | `2026-07-15T06:40:24.764507+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-15T06:40:20.617291+00:00` |
+| **Snapshot date (UTC)** | 2026-07-28 |
+| **Catalog version** | `2026-07-28T00:52:21.181563+00:00` |
+| **Catalog last sync (UTC)** | `2026-07-28T00:52:15.362476+00:00` |
 | **Total entries** | 170 |
 | **ONNX entries** | 70 |
 | **vLLM entries** | 100 |
@@ -188,7 +188,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:4 |
 | mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:5 |
 | nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:4 |
-| ministral-3-14b-reasoning-2512 | mistralai-Ministral-3-14B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Reasoning-2512:3 |
+| ministral-3-14b-reasoning-2512 | mistralai-Ministral-3-14B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Reasoning-2512:4 |
 | mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:5 |
 | mistral-nemo-instruct-2407 | mistralai-Mistral-Nemo-Instruct-2407 | — | chat-completion | vllm | — | — | mistralai-Mistral-Nemo-Instruct-2407:4 |
 | phi-4-mini-instruct | microsoft-Phi-4-mini-instruct | — | chat-completion | vllm | — | — | microsoft-Phi-4-mini-instruct:1 |
@@ -196,7 +196,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | phi-4-mini-reasoning | microsoft-Phi-4-mini-reasoning | — | chat-completion | vllm | — | — | microsoft-Phi-4-mini-reasoning:1 |
 | phi-4 | microsoft-phi-4 | — | chat-completion | vllm | — | — | microsoft-phi-4:1 |
 | phi-4-reasoning | microsoft-Phi-4-reasoning | — | chat-completion | vllm | — | — | microsoft-Phi-4-reasoning:1 |
-| gpt-oss-20b | openai-gpt-oss-20b | — | chat-completion | vllm | — | — | openai-gpt-oss-20b:1 |
+| gpt-oss-20b | openai-gpt-oss-20b | — | chat-completion | vllm | — | — | openai-gpt-oss-20b:3 |
 | mistral-7b-instruct-v0.2 | mistralai-Mistral-7B-Instruct-v0-2 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:2 |
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:8 |
