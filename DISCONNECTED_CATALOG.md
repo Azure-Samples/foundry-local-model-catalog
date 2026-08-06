@@ -19,7 +19,6 @@ This document provides a snapshot of the Foundry Local extension expansion packs
 ## Model Catalog for Azure Local Disconnected Operations
 
 | Alias       | Framework | Compute | Model ID | Supported Foundry Extension Version | Model Download Link |
-| Alias       | Framework | Compute | Model ID | Supported Foundry Extension Version | Model Download Link |
 |-------------|-----------|---------|----------|-------------------------------------|---------------------|
 | deepseek-r1-14b | ONNX | GPU | deepseek-r1-distill-qwen-14b-cuda-gpu:4 | 0.260630.27 | [4.0.0](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalModels/4.0.0-azurelocal.pxp.foundrylocal.deepseek-r1-14b.gpu.model/azurelocal.pxp.foundrylocal.deepseek-r1-14b.gpu.model.4.0.0.zip) |
 | deepseek-r1-14b | ONNX | CPU | deepseek-r1-distill-qwen-14b-generic-cpu:4 | 0.260630.27 | [4.0.0](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalModels/4.0.0-azurelocal.pxp.foundrylocal.deepseek-r1-14b.cpu.model/azurelocal.pxp.foundrylocal.deepseek-r1-14b.cpu.model.4.0.0.zip) |
