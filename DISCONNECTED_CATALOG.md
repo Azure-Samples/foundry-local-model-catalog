@@ -6,7 +6,7 @@ This document provides a snapshot of the Foundry Local extension expansion packs
 
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
-| 1.260810.7     | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/1.260810.7/azurelocal.pxp.microsoft.foundrylocal.k8sextension.1.260810.7.zip)  | - Model Evaluation support<br>- Model Catalog Expansion<br>- Bug Fixes          |
+| 1.260810.7 (Latest)     | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/1.260810.7/azurelocal.pxp.microsoft.foundrylocal.k8sextension.1.260810.7.zip)  | - Model Evaluation support<br>- Model Catalog Expansion<br>- Bug Fixes          |
 | 0.260630.27    | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/0.260630.27/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)  | - Model Catalog support<br>- Ingress deprecation and support in Gateway API<br>- Tool Calling Support          |
 | 0.260602.2     | June 2026    | 2604.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/1.2606.54/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)    | - Bring your own model support<br>- Model As A Serivce support<br>- Predictive/generative model API Supprot<br>- Control plane API Support           |
 
@@ -192,5 +192,5 @@ Agentic Retrieval brings agentic AI capabilities to disconnected edge and hybrid
 
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
-| 1.2608.66      | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2608.66/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2608.66.zip)  |         |
+| 1.2608.66 (Latest) | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2608.66/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2608.66.zip)  |         |
 | 1.2607.36 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2607.36/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2607.36.zip)  |         |
