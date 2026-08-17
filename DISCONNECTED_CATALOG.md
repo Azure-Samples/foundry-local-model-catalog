@@ -4,16 +4,10 @@ This document provides a snapshot of the Foundry Local extension expansion packs
 
 ## Foundry Local Extension Expansion Packs
 
-### Foundry Local Expansion Pack Latest Version
-
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
-| 0.260630.27 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/0.260630.27/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)  | - Model Catalog support<br>- Ingress deprecation and support in Gateway API<br>- Tool Calling Support          |
-
-### Foundry Local Expansion Pack Older Versions
-
-|   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
-|----------------|--------------|-----------------------|---------------|--------|
+| 1.260810.7     | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/1.260810.7/azurelocal.pxp.microsoft.foundrylocal.k8sextension.1.260810.7.zip)  | - Model Evaluation support<br>- Model Catalog Expansion<br>- Bug Fixes          |
+| 0.260630.27    | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/0.260630.27/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)  | - Model Catalog support<br>- Ingress deprecation and support in Gateway API<br>- Tool Calling Support          |
 | 0.260602.2     | June 2026    | 2604.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalExtension/1.2606.54/azurelocal.pxp.microsoft.foundrylocal.k8sextension.0.260630.27.zip)    | - Bring your own model support<br>- Model As A Serivce support<br>- Predictive/generative model API Supprot<br>- Control plane API Support           |
 
 ## Model Catalog for Azure Local Disconnected Operations
@@ -196,13 +190,7 @@ This document provides a snapshot of the Foundry Local extension expansion packs
 
 Agentic Retrieval brings agentic AI capabilities to disconnected edge and hybrid environments on Azure Local. You can deploy a secure, scalable, and intelligent AI agent platform that uses your own data in environments with limited or no internet connectivity. Based on your requirements, you can deploy the full Agentic Retrieval platform or independently deploy only the Agentic Layer or Knowledge Layer. See [Documentation](https://learn.microsoft.com/en-us/azure/azure-arc/agents-tools-foundry-local/disconnected-operations/deploy-disconnected) for additional information.
 
-### Agentic Retrieval Expansion Pack Latest Version
-
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
+| 1.2608.66      | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2608.66/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2608.66.zip)  |         |
 | 1.2607.36 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2607.36/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2607.36.zip)  |         |
-
-### Agentic Retrieval Expansion Pack Older Versions
-
-|   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
-|----------------|--------------|-----------------------|---------------|--------|
