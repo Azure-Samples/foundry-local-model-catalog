@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-07-28 |
-| **Catalog version** | `2026-07-28T00:52:21.181563+00:00` |
-| **Catalog last sync (UTC)** | `2026-07-28T00:52:15.362476+00:00` |
-| **Total entries** | 170 |
-| **ONNX entries** | 70 |
+| **Snapshot date (UTC)** | 2026-08-24 |
+| **Catalog version** | `2026-08-23T22:03:19.550853+00:00` |
+| **Catalog last sync (UTC)** | `2026-08-23T22:03:14.569263+00:00` |
+| **Total entries** | 172 |
+| **ONNX entries** | 72 |
 | **vLLM entries** | 100 |
 | **Chat-completion models** | 148 |
-| **Automatic-speech-recognition models** | 22 |
+| **Automatic-speech-recognition models** | 24 |
 
 ## Catalog Schema
 
@@ -67,6 +67,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:4 |
 | whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:4 |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:3 |
+| parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | parakeet-tdt-0.6b-v2-generic-cpu:1 |
 | gpt-oss-20b | gpt-oss-20b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | gpt-oss-20b-cuda-gpu:1 |
 | phi-4-mini-reasoning | Phi-4-mini-reasoning-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-reasoning-cuda-gpu:3 |
 | qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:4 |
@@ -102,6 +103,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:2 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:1 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:1 |
+| parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | parakeet-tdt-0.6b-v2-cuda-gpu:1 |
 | deepseek-r1-distill-qwen-1.5b | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B:1 |
 | deepseek-r1-distill-qwen-7b | deepseek-ai-DeepSeek-R1-Distill-Qwen-7B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-7B:4 |
 | whisper-tiny | openai-whisper-tiny | — | automatic-speech-recognition | vllm | — | — | openai-whisper-tiny:1 |
@@ -162,7 +164,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | deepseek-r1-distill-qwen-14b | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-14B:3 |
 | openreasoning-nemotron-14b | nvidia-OpenReasoning-Nemotron-14B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-14B:3 |
 | opencodereasoning-nemotron-1.1-32b | nvidia-OpenCodeReasoning-Nemotron-1.1-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-1.1-32B:2 |
-| mistral-small-4-119b-2603-nvfp4 | mistralai-Mistral-Small-4-119B-2603-NVFP4 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603-NVFP4:2 |
+| mistral-small-4-119b-2603-nvfp4 | mistralai-Mistral-Small-4-119B-2603-NVFP4 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603-NVFP4:3 |
 | opencodereasoning-nemotron-32b-ioi | nvidia-OpenCodeReasoning-Nemotron-32B-IOI | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B-IOI:2 |
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:2 |
 | openreasoning-nemotron-32b | nvidia-OpenReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-32B:2 |
@@ -179,7 +181,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | ministral-3-8b-instruct-2512 | mistralai-Ministral-3-8B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-8B-Instruct-2512:2 |
 | nemotron-3-super-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16:2 |
 | mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:2 |
-| mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:2 |
+| mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:3 |
 | magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:4 |
 | magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:3 |
 | deepseek-v3-0324 | deepseek-ai-DeepSeek-V3-0324 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3-0324:4 |
