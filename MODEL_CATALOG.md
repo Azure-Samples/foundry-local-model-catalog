@@ -4,9 +4,9 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-09-06 |
-| **Catalog version** | `2026-09-06T00:00:18.973041+00:00` |
-| **Catalog last sync (UTC)** | `2026-09-06T00:00:14.272992+00:00` |
+| **Snapshot date (UTC)** | 2026-09-09 |
+| **Catalog version** | `2026-09-09T02:54:19.260078+00:00` |
+| **Catalog last sync (UTC)** | `2026-09-09T02:54:14.022942+00:00` |
 | **Total entries** | 172 |
 | **ONNX entries** | 72 |
 | **vLLM entries** | 100 |
@@ -198,7 +198,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | phi-4-mini-reasoning | microsoft-Phi-4-mini-reasoning | — | chat-completion | vllm | — | — | microsoft-Phi-4-mini-reasoning:1 |
 | phi-4 | microsoft-phi-4 | — | chat-completion | vllm | — | — | microsoft-phi-4:1 |
 | phi-4-reasoning | microsoft-Phi-4-reasoning | — | chat-completion | vllm | — | — | microsoft-Phi-4-reasoning:1 |
-| gpt-oss-20b | openai-gpt-oss-20b | OpenAI | chat-completion | vllm | — | — | openai-gpt-oss-20b:6 |
+| gpt-oss-20b | openai-gpt-oss-20b | — | chat-completion | vllm | — | — | openai-gpt-oss-20b:7 |
 | mistral-7b-instruct-v0.2 | mistralai-Mistral-7B-Instruct-v0-2 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:2 |
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:4 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:8 |
