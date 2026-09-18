@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-09-17 |
-| **Catalog version** | `2026-09-16T22:59:18.999134+00:00` |
-| **Catalog last sync (UTC)** | `2026-09-16T22:59:14.611270+00:00` |
-| **Total entries** | 178 |
+| **Snapshot date (UTC)** | 2026-09-18 |
+| **Catalog version** | `2026-09-17T22:59:18.766210+00:00` |
+| **Catalog last sync (UTC)** | `2026-09-17T22:59:14.552763+00:00` |
+| **Total entries** | 179 |
 | **ONNX entries** | 72 |
-| **vLLM entries** | 106 |
+| **vLLM entries** | 107 |
 | **Chat-completion models** | 151 |
-| **Automatic-speech-recognition models** | 27 |
+| **Automatic-speech-recognition models** | 28 |
 
 ## Catalog Schema
 
@@ -115,7 +115,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-0.5b-instruct | Qwen-Qwen2.5-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-0.5B-Instruct:1 |
 | qwen2.5-coder-0.5b-instruct | Qwen-Qwen2.5-Coder-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-Coder-0.5B-Instruct:1 |
 | qwen2.5-1.5b-instruct | Qwen-Qwen2.5-1.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-1.5B-Instruct:1 |
-| nemotron-speech-streaming-en-0.6b | nvidia-nemotron-speech-streaming-en-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-speech-streaming-en-0.6b:1 |
 | qwen3-14b | Qwen-Qwen3-14B | — | chat-completion | vllm | — | — | Qwen-Qwen3-14B:1 |
 | qwen3-1.7b | Qwen-Qwen3-1.7B | — | chat-completion | vllm | — | — | Qwen-Qwen3-1.7B:1 |
 | qwen2.5-14b-instruct | Qwen-Qwen2.5-14B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-14B-Instruct:1 |
@@ -209,4 +208,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | mathstral-7b-v0.1 | mistralai-Mathstral-7B-v0-1 | — | chat-completion | vllm | — | — | mistralai-Mathstral-7B-v0-1:1 |
 | voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:2 |
 | voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:2 |
+| nemotron-speech-streaming-en-0.6b | nvidia-nemotron-speech-streaming-en-0-6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-speech-streaming-en-0-6b:1 |
 | nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3-5-asr-streaming-0-6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3-5-asr-streaming-0-6b:1 |
+| voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:1 |
