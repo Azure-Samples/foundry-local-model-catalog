@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-09-22 |
-| **Catalog version** | `2026-09-21T22:59:18.696839+00:00` |
-| **Catalog last sync (UTC)** | `2026-09-21T22:59:14.262876+00:00` |
-| **Total entries** | 179 |
-| **ONNX entries** | 72 |
-| **vLLM entries** | 107 |
-| **Chat-completion models** | 151 |
-| **Automatic-speech-recognition models** | 28 |
+| **Snapshot date (UTC)** | 2026-09-24 |
+| **Catalog version** | `2026-09-23T22:59:21.574108+00:00` |
+| **Catalog last sync (UTC)** | `2026-09-23T22:59:15.705407+00:00` |
+| **Total entries** | 186 |
+| **ONNX entries** | 76 |
+| **vLLM entries** | 110 |
+| **Chat-completion models** | 153 |
+| **Automatic-speech-recognition models** | 26 |
 
 ## Catalog Schema
 
@@ -55,6 +55,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen3-4b | qwen3-4b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-4b-generic-cpu:3 |
 | qwen3-0.6b | qwen3-0.6b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-0.6b-generic-cpu:4 |
 | qwen3-8b | qwen3-8b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-8b-generic-cpu:2 |
+| qwen3-embedding-0.6b | qwen3-embedding-0.6b-generic-cpu | Microsoft | embeddings | ONNX | CPU | CPUExecutionProvider | qwen3-embedding-0.6b-generic-cpu:1 |
+| qwen3-embedding-8b | qwen3-embedding-8b-generic-cpu | Microsoft | embeddings | ONNX | CPU | CPUExecutionProvider | qwen3-embedding-8b-generic-cpu:1 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-speech-streaming-en-0.6b-generic-cpu:3 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-generic-cpu:1 |
 | whisper-base | openai-whisper-base-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-base-generic-cpu:3 |
@@ -91,6 +93,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen3-0.6b | qwen3-0.6b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-0.6b-cuda-gpu:2 |
 | qwen3-4b | qwen3-4b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-4b-cuda-gpu:2 |
 | qwen3-8b | qwen3-8b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-8b-cuda-gpu:2 |
+| qwen3-embedding-0.6b | qwen3-embedding-0.6b-cuda-gpu | Microsoft | embeddings | ONNX | GPU | CUDAExecutionProvider | qwen3-embedding-0.6b-cuda-gpu:1 |
+| qwen3-embedding-8b | qwen3-embedding-8b-cuda-gpu | Microsoft | embeddings | ONNX | GPU | CUDAExecutionProvider | qwen3-embedding-8b-cuda-gpu:1 |
 | olmo-3-7b-instruct | olmo-3-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | olmo-3-7b-instruct-cuda-gpu:1 |
 | smollm3-3b | smollm3-3b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | smollm3-3b-cuda-gpu:1 |
 | mistral-nemo-12b-instruct | mistral-nemo-12b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | mistral-nemo-12b-instruct-cuda-gpu:1 |
@@ -206,8 +210,11 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:3 |
 | mistral-7b-instruct-v0.3 | mistralai-Mistral-7B-Instruct-v0-3 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-3:1 |
 | mathstral-7b-v0.1 | mistralai-Mathstral-7B-v0-1 | — | chat-completion | vllm | — | — | mistralai-Mathstral-7B-v0-1:1 |
-| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:2 |
-| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:2 |
+| nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:1 |
+| nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:1 |
+| nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:1 |
+| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | chat-completion | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:2 |
+| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | chat-completion | vllm | — | — | mistralai-Voxtral-Small-24B-2507:2 |
 | nemotron-speech-streaming-en-0.6b | nvidia-nemotron-speech-streaming-en-0-6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-speech-streaming-en-0-6b:1 |
 | nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3-5-asr-streaming-0-6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3-5-asr-streaming-0-6b:1 |
 | voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:1 |
