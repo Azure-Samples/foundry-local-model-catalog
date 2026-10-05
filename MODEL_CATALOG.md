@@ -4,13 +4,13 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-10-04 |
-| **Catalog version** | `2026-10-03T22:15:19.448171+00:00` |
-| **Catalog last sync (UTC)** | `2026-10-03T22:15:14.538507+00:00` |
-| **Total entries** | 177 |
+| **Snapshot date (UTC)** | 2026-10-05 |
+| **Catalog version** | `2026-10-04T22:15:19.357012+00:00` |
+| **Catalog last sync (UTC)** | `2026-10-04T22:15:14.370447+00:00` |
+| **Total entries** | 176 |
 | **ONNX entries** | 76 |
-| **vLLM entries** | 101 |
-| **Chat-completion models** | 149 |
+| **vLLM entries** | 100 |
+| **Chat-completion models** | 148 |
 | **Automatic-speech-recognition models** | 24 |
 
 ## Catalog Schema
@@ -180,11 +180,10 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:1 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-fp8 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8:1 |
 | olmo-3.1-32b-instruct | allenai-Olmo-3.1-32B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3.1-32B-Instruct:1 |
-| nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:1 |
 | opencodereasoning-nemotron-32b-ioi | nvidia-OpenCodeReasoning-Nemotron-32B-IOI | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B-IOI:1 |
 | opencodereasoning-nemotron-32b | nvidia-OpenCodeReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B:1 |
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:1 |
-| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:1 |
+| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:3 |
 | nemotron-terminal-32b | nvidia-Nemotron-Terminal-32B | — | chat-completion | vllm | — | — | nvidia-Nemotron-Terminal-32B:1 |
 | openmath-nemotron-32b | nvidia-OpenMath-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-32B:1 |
 | openreasoning-nemotron-32b | nvidia-OpenReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-32B:1 |
