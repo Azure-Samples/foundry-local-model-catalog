@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-10-05 |
-| **Catalog version** | `2026-10-04T22:15:19.357012+00:00` |
-| **Catalog last sync (UTC)** | `2026-10-04T22:15:14.370447+00:00` |
-| **Total entries** | 176 |
+| **Snapshot date (UTC)** | 2026-10-10 |
+| **Catalog version** | `2026-10-10T01:23:20.920216+00:00` |
+| **Catalog last sync (UTC)** | `2026-10-10T01:23:14.488032+00:00` |
+| **Total entries** | 183 |
 | **ONNX entries** | 76 |
-| **vLLM entries** | 100 |
+| **vLLM entries** | 107 |
 | **Chat-completion models** | 148 |
-| **Automatic-speech-recognition models** | 24 |
+| **Automatic-speech-recognition models** | 28 |
 
 ## Catalog Schema
 
@@ -208,3 +208,10 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:1 |
 | mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:1 |
 | ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:1 |
+| nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:1 |
+| nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3.5-asr-streaming-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3.5-asr-streaming-0.6b:1 |
+| nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:1 |
+| nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:1 |
+| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:1 |
+| voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:1 |
+| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:1 |
