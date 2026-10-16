@@ -4,13 +4,13 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-10-11 |
-| **Catalog version** | `2026-10-11T01:23:21.177649+00:00` |
-| **Catalog last sync (UTC)** | `2026-10-11T01:23:14.598467+00:00` |
-| **Total entries** | 183 |
-| **ONNX entries** | 76 |
+| **Snapshot date (UTC)** | 2026-10-16 |
+| **Catalog version** | `2026-10-16T01:23:21.812736+00:00` |
+| **Catalog last sync (UTC)** | `2026-10-16T01:23:15.339288+00:00` |
+| **Total entries** | 181 |
+| **ONNX entries** | 74 |
 | **vLLM entries** | 107 |
-| **Chat-completion models** | 148 |
+| **Chat-completion models** | 146 |
 | **Automatic-speech-recognition models** | 28 |
 
 ## Catalog Schema
@@ -43,7 +43,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:4 |
 | gpt-oss-20b | gpt-oss-20b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | gpt-oss-20b-generic-cpu:1 |
-| phi-3-mini-128k | Phi-3-mini-128k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-128k-instruct-generic-cpu:3 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3.5-mini-instruct-generic-cpu:2 |
 | phi-4 | Phi-4-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-generic-cpu:2 |
 | deepseek-r1-7b | deepseek-r1-distill-qwen-7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-7b-generic-cpu:4 |
@@ -81,7 +80,6 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:4 |
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:4 |
-| phi-3-mini-128k | Phi-3-mini-128k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-128k-instruct-cuda-gpu:2 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3.5-mini-instruct-cuda-gpu:2 |
 | deepseek-r1-14b | deepseek-r1-distill-qwen-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-14b-cuda-gpu:4 |
 | phi-3-mini-4k | Phi-3-mini-4k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-4k-instruct-cuda-gpu:2 |
