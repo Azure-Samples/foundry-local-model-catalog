@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-10-16 |
-| **Catalog version** | `2026-10-16T01:23:21.812736+00:00` |
-| **Catalog last sync (UTC)** | `2026-10-16T01:23:15.339288+00:00` |
-| **Total entries** | 181 |
-| **ONNX entries** | 74 |
-| **vLLM entries** | 107 |
-| **Chat-completion models** | 146 |
-| **Automatic-speech-recognition models** | 28 |
+| **Snapshot date (UTC)** | 2026-10-23 |
+| **Catalog version** | `2026-10-22T07:23:27.738499+00:00` |
+| **Catalog last sync (UTC)** | `2026-10-22T07:23:21.579728+00:00` |
+| **Total entries** | 208 |
+| **ONNX entries** | 76 |
+| **vLLM entries** | 132 |
+| **Chat-completion models** | 166 |
+| **Automatic-speech-recognition models** | 30 |
 
 ## Catalog Schema
 
@@ -43,6 +43,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:4 |
 | gpt-oss-20b | gpt-oss-20b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | gpt-oss-20b-generic-cpu:1 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-128k-instruct-generic-cpu:3 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3.5-mini-instruct-generic-cpu:2 |
 | phi-4 | Phi-4-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-generic-cpu:2 |
 | deepseek-r1-7b | deepseek-r1-distill-qwen-7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-7b-generic-cpu:4 |
@@ -80,6 +81,7 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:4 |
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:4 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-128k-instruct-cuda-gpu:2 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3.5-mini-instruct-cuda-gpu:2 |
 | deepseek-r1-14b | deepseek-r1-distill-qwen-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-14b-cuda-gpu:4 |
 | phi-3-mini-4k | Phi-3-mini-4k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-4k-instruct-cuda-gpu:2 |
@@ -205,11 +207,36 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | deepseek-v3.2 | deepseek-ai-DeepSeek-V3.2 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2:1 |
 | deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:1 |
 | mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:1 |
-| ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:1 |
-| nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:1 |
+| ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:2 |
+| nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:2 |
 | nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3.5-asr-streaming-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3.5-asr-streaming-0.6b:1 |
-| nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:1 |
-| nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:1 |
-| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:1 |
-| voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:1 |
-| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:1 |
+| nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:2 |
+| nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:2 |
+| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:2 |
+| voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:2 |
+| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:2 |
+| paddleocr-vl-1.6 | PaddlePaddle-PaddleOCR-VL-1.6 | — | chat-completion | vllm | — | — | PaddlePaddle-PaddleOCR-VL-1.6:1 |
+| qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 |
+| qwen3.5-9b | Qwen-Qwen3.5-9B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-9B:1 |
+| qwen3.5-27b | Qwen-Qwen3.5-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-27B:1 |
+| qwen3.5-35b-a3b | Qwen-Qwen3.5-35B-A3B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-35B-A3B:1 |
+| nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4 | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4:1 |
+| qwen3.6-27b | Qwen-Qwen3.6-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.6-27B:1 |
+| qwen3.6-35b-a3b | Qwen-Qwen3.6-35B-A3B | — | chat-completion | vllm | — | — | Qwen-Qwen3.6-35B-A3B:1 |
+| nvidia-nemotron-3.5-lightning-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16:1 |
+| vibethinker-3b | WeiboAI-VibeThinker-3B | — | chat-completion | vllm | — | — | WeiboAI-VibeThinker-3B:1 |
+| mellum2-12b-a2.5b-thinking | JetBrains-Mellum2-12B-A2.5B-Thinking | — | chat-completion | vllm | — | — | JetBrains-Mellum2-12B-A2.5B-Thinking:1 |
+| ministral-3-3b-reasoning-2512 | mistralai-Ministral-3-3B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-3B-Reasoning-2512:1 |
+| gemma-4-e2b-it | google-gemma-4-E2B-it | — | chat-completion | vllm | — | — | google-gemma-4-E2B-it:1 |
+| ministral-3-8b-reasoning-2512 | mistralai-Ministral-3-8B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-8B-Reasoning-2512:1 |
+| gemma-4-e4b-it | google-gemma-4-E4B-it | — | chat-completion | vllm | — | — | google-gemma-4-E4B-it:1 |
+| gemma-4-12b-it | google-gemma-4-12B-it | — | chat-completion | vllm | — | — | google-gemma-4-12B-it:1 |
+| qwen3-embedding-0.6b | Qwen-Qwen3-Embedding-0.6B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-0.6B:1 |
+| qwen3-embedding-4b | Qwen-Qwen3-Embedding-4B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-4B:1 |
+| qwen3-embedding-8b | Qwen-Qwen3-Embedding-8B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-8B:1 |
+| qwen3-vl-embedding-2b | Qwen-Qwen3-VL-Embedding-2B | — | embeddings | vllm | — | — | Qwen-Qwen3-VL-Embedding-2B:1 |
+| qwen3-vl-embedding-8b | Qwen-Qwen3-VL-Embedding-8B | — | embeddings | vllm | — | — | Qwen-Qwen3-VL-Embedding-8B:1 |
+| gemma-4-26b-a4b-it | google-gemma-4-26B-A4B-it | — | chat-completion | vllm | — | — | google-gemma-4-26B-A4B-it:1 |
+| gemma-4-31b-it | google-gemma-4-31B-it | — | chat-completion | vllm | — | — | google-gemma-4-31B-it:1 |
+| qwen3-asr-0.6b | Qwen-Qwen3-ASR-0.6B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-0.6B:1 |
+| qwen3-asr-1.7b | Qwen-Qwen3-ASR-1.7B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-1.7B:1 |
