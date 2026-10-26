@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-10-16 |
-| **Catalog version** | `2026-10-16T01:23:21.812736+00:00` |
-| **Catalog last sync (UTC)** | `2026-10-16T01:23:15.339288+00:00` |
-| **Total entries** | 181 |
-| **ONNX entries** | 74 |
-| **vLLM entries** | 107 |
-| **Chat-completion models** | 146 |
-| **Automatic-speech-recognition models** | 28 |
+| **Snapshot date (UTC)** | 2026-10-26 |
+| **Catalog version** | `2026-10-26T02:36:05.685698+00:00` |
+| **Catalog last sync (UTC)** | `2026-10-26T02:35:55.583174+00:00` |
+| **Total entries** | 350 |
+| **ONNX entries** | 184 |
+| **vLLM entries** | 164 |
+| **Chat-completion models** | 272 |
+| **Automatic-speech-recognition models** | 59 |
 
 ## Catalog Schema
 
@@ -32,6 +32,50 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 
 | Alias | Display Name | Publisher | Task | Framework | Compute | Execution Provider | Model ID |
 |-------|--------------|-----------|------|-----------|---------|--------------------|----------|
+| phi-4 | Phi-4-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-generic-cpu:1 |
+| phi-3.5-mini | Phi-3.5-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3.5-mini-instruct-generic-cpu:1 |
+| qwen2.5-14b | qwen2.5-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-14b-instruct-generic-cpu:1 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-1.5b-instruct-generic-cpu:1 |
+| qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:1 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:1 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-14b-instruct-generic-cpu:1 |
+| phi-4-mini-reasoning | Phi-4-mini-reasoning-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-reasoning-generic-cpu:1 |
+| deepseek-r1-14b | deepseek-r1-distill-qwen-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-14b-generic-cpu:2 |
+| deepseek-r1-1.5b | deepseek-r1-distill-qwen-1.5b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-1.5b-generic-cpu:2 |
+| deepseek-r1-7b | deepseek-r1-distill-qwen-7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-7b-generic-cpu:2 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-0.5b-instruct-generic-cpu:1 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-1.5b-instruct-generic-cpu:1 |
+| phi-4-mini | Phi-4-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-instruct-generic-cpu:2 |
+| deepseek-r1-8b | deepseek-r1-distill-llama-8b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-llama-8b-generic-cpu:2 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-0.5b-instruct-generic-cpu:1 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-128k-instruct-generic-cpu:2 |
+| phi-3-mini-4k | Phi-3-mini-4k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-4k-instruct-generic-cpu:2 |
+| mistral-7b-v0.2 | mistralai-Mistral-7B-Instruct-v0-2-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | mistralai-Mistral-7B-Instruct-v0-2-generic-cpu:2 |
+| deepseek-r1-14b | deepseek-r1-distill-qwen-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-14b-generic-cpu:3 |
+| deepseek-r1-7b | deepseek-r1-distill-qwen-7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-7b-generic-cpu:3 |
+| phi-4-mini | Phi-4-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-instruct-generic-cpu:3 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-0.5b-instruct-generic-cpu:2 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-0.5b-instruct-generic-cpu:2 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-1.5b-instruct-generic-cpu:2 |
+| qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:2 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-1.5b-instruct-generic-cpu:2 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:2 |
+| qwen2.5-14b | qwen2.5-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-14b-instruct-generic-cpu:2 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-14b-instruct-generic-cpu:2 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-0.5b-instruct-generic-cpu:3 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-1.5b-instruct-generic-cpu:3 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-0.5b-instruct-generic-cpu:3 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:3 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-1.5b-instruct-generic-cpu:3 |
+| phi-4-mini | Phi-4-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-instruct-generic-cpu:4 |
+| phi-4-mini-reasoning | Phi-4-mini-reasoning-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-reasoning-generic-cpu:2 |
+| qwen2.5-14b | qwen2.5-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-14b-instruct-generic-cpu:3 |
+| qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:3 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-14b-instruct-generic-cpu:3 |
+| whisper-base | openai-whisper-base-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-base-generic-cpu:1 |
+| whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:1 |
+| whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:1 |
+| whisper-tiny | openai-whisper-tiny-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-tiny-generic-cpu:2 |
 | qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-0.5b-instruct-generic-cpu:4 |
 | phi-4-mini-reasoning | Phi-4-mini-reasoning-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-reasoning-generic-cpu:3 |
 | qwen2.5-0.5b | qwen2.5-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-0.5b-instruct-generic-cpu:4 |
@@ -42,13 +86,21 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-14b-instruct-generic-cpu:4 |
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-7b-instruct-generic-cpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-7b-instruct-generic-cpu:4 |
+| whisper-large-v3-turbo | openai-whisper-large-v3-turbo-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-large-v3-turbo-generic-cpu:2 |
 | gpt-oss-20b | gpt-oss-20b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | gpt-oss-20b-generic-cpu:1 |
+| qwen3-0.6b | qwen3-0.6b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-0.6b-generic-cpu:2 |
+| qwen3-0.6b | qwen3-0.6b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-0.6b-generic-cpu:3 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-128k-instruct-generic-cpu:3 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3.5-mini-instruct-generic-cpu:2 |
 | phi-4 | Phi-4-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-generic-cpu:2 |
 | deepseek-r1-7b | deepseek-r1-distill-qwen-7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-7b-generic-cpu:4 |
+| whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:2 |
 | phi-3-mini-4k | Phi-3-mini-4k-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-3-mini-4k-instruct-generic-cpu:3 |
 | mistral-7b-v0.2 | mistralai-Mistral-7B-Instruct-v0-2-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | mistralai-Mistral-7B-Instruct-v0-2-generic-cpu:3 |
 | deepseek-r1-14b | deepseek-r1-distill-qwen-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-14b-generic-cpu:4 |
+| whisper-tiny | openai-whisper-tiny-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-tiny-generic-cpu:3 |
+| whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:2 |
+| whisper-base | openai-whisper-base-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-base-generic-cpu:2 |
 | qwen3-14b | qwen3-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-14b-generic-cpu:2 |
 | qwen3-1.7b | qwen3-1.7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-1.7b-generic-cpu:2 |
 | qwen3-4b | qwen3-4b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-4b-generic-cpu:3 |
@@ -59,6 +111,9 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-speech-streaming-en-0.6b-generic-cpu:3 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-generic-cpu:1 |
 | whisper-base | openai-whisper-base-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-base-generic-cpu:3 |
+| whisper-large-v3-turbo | openai-whisper-large-v3-turbo-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-large-v3-turbo-generic-cpu:3 |
+| whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:3 |
+| whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:3 |
 | whisper-tiny | openai-whisper-tiny-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-tiny-generic-cpu:4 |
 | olmo-3-7b-instruct | olmo-3-7b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | olmo-3-7b-instruct-generic-cpu:1 |
 | smollm3-3b | smollm3-3b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | smollm3-3b-generic-cpu:1 |
@@ -67,9 +122,54 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | whisper-large-v3-turbo | openai-whisper-large-v3-turbo-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-large-v3-turbo-generic-cpu:4 |
 | whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:4 |
 | whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:4 |
+| nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:2 |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:3 |
 | parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | parakeet-tdt-0.6b-v2-generic-cpu:1 |
+| phi-4 | Phi-4-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-cuda-gpu:1 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-128k-instruct-cuda-gpu:1 |
+| phi-3-mini-4k | Phi-3-mini-4k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-4k-instruct-cuda-gpu:1 |
+| mistral-7b-v0.2 | mistralai-Mistral-7B-Instruct-v0-2-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | mistralai-Mistral-7B-Instruct-v0-2-cuda-gpu:1 |
+| phi-3.5-mini | Phi-3.5-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3.5-mini-instruct-cuda-gpu:1 |
+| qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:1 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-1.5b-instruct-cuda-gpu:1 |
+| qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:1 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:1 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-14b-instruct-cuda-gpu:1 |
+| phi-4-mini-reasoning | Phi-4-mini-reasoning-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-reasoning-cuda-gpu:1 |
+| deepseek-r1-14b | deepseek-r1-distill-qwen-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-14b-cuda-gpu:2 |
+| deepseek-r1-1.5b | deepseek-r1-distill-qwen-1.5b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-1.5b-cuda-gpu:2 |
+| deepseek-r1-7b | deepseek-r1-distill-qwen-7b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-7b-cuda-gpu:2 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-0.5b-instruct-cuda-gpu:1 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-1.5b-instruct-cuda-gpu:1 |
+| phi-4-mini | Phi-4-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-instruct-cuda-gpu:2 |
+| deepseek-r1-8b | deepseek-r1-distill-llama-8b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-llama-8b-cuda-gpu:2 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:1 |
+| deepseek-r1-14b | deepseek-r1-distill-qwen-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-14b-cuda-gpu:3 |
+| deepseek-r1-7b | deepseek-r1-distill-qwen-7b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-7b-cuda-gpu:3 |
+| phi-4-mini | Phi-4-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-instruct-cuda-gpu:3 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:2 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-0.5b-instruct-cuda-gpu:2 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-1.5b-instruct-cuda-gpu:2 |
+| qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:2 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-1.5b-instruct-cuda-gpu:2 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:2 |
+| qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:2 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-14b-instruct-cuda-gpu:2 |
+| qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:3 |
+| qwen2.5-1.5b | qwen2.5-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-1.5b-instruct-cuda-gpu:3 |
+| qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:3 |
+| qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-0.5b-instruct-cuda-gpu:3 |
+| qwen2.5-coder-1.5b | qwen2.5-coder-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-1.5b-instruct-cuda-gpu:3 |
+| phi-4-mini | Phi-4-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-instruct-cuda-gpu:4 |
+| phi-4-mini-reasoning | Phi-4-mini-reasoning-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-reasoning-cuda-gpu:2 |
+| qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:3 |
+| qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:3 |
+| qwen2.5-coder-14b | qwen2.5-coder-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-14b-instruct-cuda-gpu:3 |
 | gpt-oss-20b | gpt-oss-20b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | gpt-oss-20b-cuda-gpu:1 |
+| whisper-base | openai-whisper-base-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-base-cuda-gpu:1 |
+| whisper-medium | openai-whisper-medium-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-medium-cuda-gpu:1 |
+| whisper-small | openai-whisper-small-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-small-cuda-gpu:1 |
+| whisper-tiny | openai-whisper-tiny-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-tiny-cuda-gpu:1 |
 | phi-4-mini-reasoning | Phi-4-mini-reasoning-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-reasoning-cuda-gpu:3 |
 | qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:4 |
 | qwen2.5-1.5b | qwen2.5-1.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-1.5b-instruct-cuda-gpu:4 |
@@ -80,12 +180,18 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | qwen2.5-14b | qwen2.5-14b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-14b-instruct-cuda-gpu:4 |
 | qwen2.5-coder-7b | qwen2.5-coder-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-coder-7b-instruct-cuda-gpu:4 |
 | qwen2.5-7b | qwen2.5-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-7b-instruct-cuda-gpu:4 |
+| whisper-large-v3-turbo | openai-whisper-large-v3-turbo-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-large-v3-turbo-cuda-gpu:2 |
+| phi-3-mini-128k | Phi-3-mini-128k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-128k-instruct-cuda-gpu:2 |
 | phi-3.5-mini | Phi-3.5-mini-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3.5-mini-instruct-cuda-gpu:2 |
 | deepseek-r1-14b | deepseek-r1-distill-qwen-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-14b-cuda-gpu:4 |
 | phi-3-mini-4k | Phi-3-mini-4k-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-3-mini-4k-instruct-cuda-gpu:2 |
 | phi-4 | Phi-4-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-cuda-gpu:2 |
 | deepseek-r1-7b | deepseek-r1-distill-qwen-7b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-7b-cuda-gpu:4 |
+| whisper-tiny | openai-whisper-tiny-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-tiny-cuda-gpu:2 |
 | mistral-7b-v0.2 | mistralai-Mistral-7B-Instruct-v0-2-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | mistralai-Mistral-7B-Instruct-v0-2-cuda-gpu:2 |
+| whisper-small | openai-whisper-small-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-small-cuda-gpu:2 |
+| whisper-base | openai-whisper-base-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-base-cuda-gpu:2 |
+| whisper-medium | openai-whisper-medium-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-medium-cuda-gpu:2 |
 | qwen3-1.7b | qwen3-1.7b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-1.7b-cuda-gpu:2 |
 | qwen3-14b | qwen3-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-14b-cuda-gpu:2 |
 | qwen3-0.6b | qwen3-0.6b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-0.6b-cuda-gpu:2 |
@@ -102,10 +208,15 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | whisper-medium | openai-whisper-medium-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-medium-cuda-gpu:3 |
 | whisper-small | openai-whisper-small-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-small-cuda-gpu:3 |
 | whisper-tiny | openai-whisper-tiny-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | openai-whisper-tiny-cuda-gpu:3 |
+| nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:1 |
+| nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:2 |
+| nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:1 |
+| nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:1 |
 | parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | parakeet-tdt-0.6b-v2-cuda-gpu:1 |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:3 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:2 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:2 |
+| qwen3-4b | Qwen-Qwen3-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3-4B:1 |
 | qwen2.5-0.5b-instruct | Qwen-Qwen2.5-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-0.5B-Instruct:1 |
 | deepseek-r1-distill-qwen-1.5b | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B:1 |
 | qwen3-0.6b | Qwen-Qwen3-0.6B | — | chat-completion | vllm | — | — | Qwen-Qwen3-0.6B:1 |
@@ -178,10 +289,11 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:1 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-fp8 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8:1 |
 | olmo-3.1-32b-instruct | allenai-Olmo-3.1-32B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3.1-32B-Instruct:1 |
+| nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:1 |
 | opencodereasoning-nemotron-32b-ioi | nvidia-OpenCodeReasoning-Nemotron-32B-IOI | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B-IOI:1 |
 | opencodereasoning-nemotron-32b | nvidia-OpenCodeReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B:1 |
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:1 |
-| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:3 |
+| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:1 |
 | nemotron-terminal-32b | nvidia-Nemotron-Terminal-32B | — | chat-completion | vllm | — | — | nvidia-Nemotron-Terminal-32B:1 |
 | openmath-nemotron-32b | nvidia-OpenMath-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-32B:1 |
 | openreasoning-nemotron-32b | nvidia-OpenReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenReasoning-Nemotron-32B:1 |
@@ -206,6 +318,9 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:1 |
 | mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:1 |
 | ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:1 |
+| qwen2.5-0.5b-instruct | Qwen-Qwen2.5-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-0.5B-Instruct:5 |
+| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:2 |
+| nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:3 |
 | nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:1 |
 | nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3.5-asr-streaming-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3.5-asr-streaming-0.6b:1 |
 | nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:1 |
@@ -213,3 +328,57 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:1 |
 | voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:1 |
 | voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:1 |
+| paddleocr-vl-1.6 | PaddlePaddle-PaddleOCR-VL-1.6 | — | chat-completion | vllm | — | — | PaddlePaddle-PaddleOCR-VL-1.6:1 |
+| qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 |
+| qwen3.5-9b | Qwen-Qwen3.5-9B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-9B:1 |
+| voxtral-mini-4b-realtime-2602 | mistralai-Voxtral-Mini-4B-Realtime-2602 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-4B-Realtime-2602:2 |
+| ministral-3-14b-instruct-2512 | mistralai-Ministral-3-14B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-14B-Instruct-2512:2 |
+| qwen3.5-27b | Qwen-Qwen3.5-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-27B:1 |
+| qwen3.5-35b-a3b | Qwen-Qwen3.5-35B-A3B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-35B-A3B:1 |
+| nvidia-nemotron-3.5-lightning-30b-a3b-nvfp4 | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4:1 |
+| qwen3.6-27b | Qwen-Qwen3.6-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.6-27B:1 |
+| qwen3.6-35b-a3b | Qwen-Qwen3.6-35B-A3B | — | chat-completion | vllm | — | — | Qwen-Qwen3.6-35B-A3B:1 |
+| nvidia-nemotron-3.5-lightning-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16:1 |
+| vibethinker-3b | WeiboAI-VibeThinker-3B | — | chat-completion | vllm | — | — | WeiboAI-VibeThinker-3B:1 |
+| voxtral-mini-3b-2507 | mistralai-Voxtral-Mini-3B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Mini-3B-2507:2 |
+| mellum2-12b-a2.5b-thinking | JetBrains-Mellum2-12B-A2.5B-Thinking | — | chat-completion | vllm | — | — | JetBrains-Mellum2-12B-A2.5B-Thinking:1 |
+| ministral-3-3b-reasoning-2512 | mistralai-Ministral-3-3B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-3B-Reasoning-2512:1 |
+| gemma-4-e2b-it | google-gemma-4-E2B-it | — | chat-completion | vllm | — | — | google-gemma-4-E2B-it:1 |
+| ministral-3-8b-reasoning-2512 | mistralai-Ministral-3-8B-Reasoning-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-8B-Reasoning-2512:1 |
+| voxtral-small-24b-2507 | mistralai-Voxtral-Small-24B-2507 | — | automatic-speech-recognition | vllm | — | — | mistralai-Voxtral-Small-24B-2507:2 |
+| gemma-4-e4b-it | google-gemma-4-E4B-it | — | chat-completion | vllm | — | — | google-gemma-4-E4B-it:1 |
+| gemma-4-12b-it | google-gemma-4-12B-it | — | chat-completion | vllm | — | — | google-gemma-4-12B-it:1 |
+| qwen3-embedding-0.6b | Qwen-Qwen3-Embedding-0.6B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-0.6B:1 |
+| qwen3-embedding-4b | Qwen-Qwen3-Embedding-4B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-4B:1 |
+| qwen3-embedding-8b | Qwen-Qwen3-Embedding-8B | — | embeddings | vllm | — | — | Qwen-Qwen3-Embedding-8B:1 |
+| qwen3-vl-embedding-2b | Qwen-Qwen3-VL-Embedding-2B | — | embeddings | vllm | — | — | Qwen-Qwen3-VL-Embedding-2B:1 |
+| qwen3-vl-embedding-8b | Qwen-Qwen3-VL-Embedding-8B | — | embeddings | vllm | — | — | Qwen-Qwen3-VL-Embedding-8B:1 |
+| gemma-4-26b-a4b-it | google-gemma-4-26B-A4B-it | — | chat-completion | vllm | — | — | google-gemma-4-26B-A4B-it:1 |
+| nemotron-3-embed-1b-nvfp4 | nvidia-Nemotron-3-Embed-1B-NVFP4 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-NVFP4:2 |
+| nemotron-3-embed-1b-bf16 | nvidia-Nemotron-3-Embed-1B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-1B-BF16:2 |
+| gemma-4-31b-it | google-gemma-4-31B-it | — | chat-completion | vllm | — | — | google-gemma-4-31B-it:1 |
+| nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:2 |
+| qwen3-asr-0.6b | Qwen-Qwen3-ASR-0.6B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-0.6B:1 |
+| qwen3-asr-1.7b | Qwen-Qwen3-ASR-1.7B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-1.7B:1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:2 |
+| cosmos-reason1-7b | nvidia-Cosmos-Reason1-7B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason1-7B:1 |
+| cosmos3-nano | nvidia-Cosmos3-Nano | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Nano:1 |
+| nvidia-nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:2 |
+| cosmos-reason2-32b | nvidia-Cosmos-Reason2-32B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason2-32B:1 |
+| cosmos-embed1-224p | nvidia-Cosmos-Embed1-224p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-224p:1 |
+| cosmos-embed1-336p | nvidia-Cosmos-Embed1-336p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-336p:1 |
+| cosmos-embed1-448p | nvidia-Cosmos-Embed1-448p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-448p:1 |
+| cosmos-embed1-448p-anomaly-detection | nvidia-Cosmos-Embed1-448p-anomaly-detection | — | embeddings | vllm | — | — | nvidia-Cosmos-Embed1-448p-anomaly-detection:1 |
+| cosmos3-super | nvidia-Cosmos3-Super | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Super:1 |
+| muse-glimmer-30b-nvfp4 | nvidia-Muse-Glimmer-30B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Muse-Glimmer-30B-NVFP4:1 |
+| ising-calibration-1.5-31b-nvfp4 | nvidia-Ising-Calibration-1.5-31B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Ising-Calibration-1.5-31B-NVFP4:1 |
+| glm-5.3-flash-nvfp4 | nvidia-GLM-5.3-Flash-NVFP4 | — | chat-completion | vllm | — | — | nvidia-GLM-5.3-Flash-NVFP4:1 |
+| nvidia-nemotronlabs-voicechat-11b | nvidia-NVIDIA-NemotronLabs-VoiceChat-11B | — | chat-completion | vllm | — | — | nvidia-NVIDIA-NemotronLabs-VoiceChat-11B:1 |
+| nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4 | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4:1 |
+| qwen3.8-flash-next-nvfp4 | nvidia-Qwen3.8-Flash-Next-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Qwen3.8-Flash-Next-NVFP4:1 |
+| nvidia-nemotron-3.5-bolt-74b-a9b-24gb | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB:1 |
+| ising-calibration-1.5-31b-bf16 | nvidia-Ising-Calibration-1.5-31B-BF16 | — | chat-completion | vllm | — | — | nvidia-Ising-Calibration-1.5-31B-BF16:1 |
+| nvidia-nemotron-3.5-bolt-74b-a9b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16:1 |
+| nvidia-nemotron-3.5-super-vl-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16:1 |
+| bge-m3 | BAAI-bge-m3 | — | embeddings | vllm | — | — | BAAI-bge-m3:1 |
