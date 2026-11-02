@@ -7,12 +7,12 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 | **Snapshot date (UTC)** | 2026-11-02 |
 | **Catalog version** | `2026-11-02T07:16:31.581493+00:00` |
 | **Catalog last sync (UTC)** | `2026-11-02T07:16:22.539336+00:00` |
-| **Total entries** | 355 |
+| **Total entries** | 353 |
 | **ONNX entries** | 184 |
 | **vLLM entries** | 169 |
 | **Automatic-speech-recognition models** | 59 |
 | **Chat-completion models** | 277 |
-| **Embeddings models** | 19 |
+| **Embeddings models** | 17 |
 
 ## Catalog Schema
 
