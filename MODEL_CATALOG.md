@@ -4,15 +4,15 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-11-02 |
-| **Catalog version** | `2026-11-02T07:16:31.581493+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-02T07:16:22.539336+00:00` |
-| **Total entries** | 353 |
+| **Snapshot date (UTC)** | 2026-11-03 |
+| **Catalog version** | `2026-11-03T01:16:34.086126+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-03T01:16:22.639138+00:00` |
+| **Total entries** | 355 |
 | **ONNX entries** | 184 |
 | **vLLM entries** | 169 |
 | **Automatic-speech-recognition models** | 59 |
 | **Chat-completion models** | 277 |
-| **Embeddings models** | 17 |
+| **Embeddings models** | 19 |
 
 ## Catalog Schema
 
@@ -362,6 +362,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-3-Embed-8B-BF16/versions/2 |
 | qwen3-asr-0.6b | Qwen-Qwen3-ASR-0.6B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-0.6B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-0.6B/versions/1 |
 | qwen3-asr-1.7b | Qwen-Qwen3-ASR-1.7B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-1.7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-1.7B/versions/1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:1 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3-onnx/versions/1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:2 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3-onnx/versions/2 |
 | cosmos-reason1-7b | nvidia-Cosmos-Reason1-7B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason1-7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Reason1-7B/versions/1 |
 | cosmos3-nano | nvidia-Cosmos3-Nano | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Nano:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Nano/versions/1 |
 | nvidia-nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16/versions/2 |
