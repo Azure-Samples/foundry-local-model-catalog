@@ -251,4 +251,10 @@ Agentic Retrieval brings agentic AI capabilities to disconnected edge and hybrid
 |   Version      | Release Date | Required ALDO Version | Download Link |  Notes |
 |----------------|--------------|-----------------------|---------------|--------|
 | 1.2608.66 (Latest) | August 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2608.66/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2608.66.zip)  |         |
-| 1.2607.36 (Latest) | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2607.36/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2607.36.zip)  |         |
+| 1.2607.36  | July 2026    | 2605.X.X              | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2607.36/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2607.36.zip)  |         |
+
+## Agents and Tools with Foundry Local Extension Expansion Packs
+ 
+| Version | Release Date | Required ALDO Version | Download Link | Notes |
+|---------|--------------|-----------------------|---------------|-------|
+| 1.2611.96 (Latest) | November 2026 | 2605.X.X | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2611.96/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2611.96.zip) | |
