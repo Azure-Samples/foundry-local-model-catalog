@@ -4,15 +4,15 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-11-02 |
-| **Catalog version** | `2026-11-02T07:16:31.581493+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-02T07:16:22.539336+00:00` |
-| **Total entries** | 353 |
+| **Snapshot date (UTC)** | 2026-11-11 |
+| **Catalog version** | `2026-11-11T01:16:27.974655+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-11T01:16:15.802892+00:00` |
+| **Total entries** | 367 |
 | **ONNX entries** | 184 |
-| **vLLM entries** | 169 |
+| **vLLM entries** | 181 |
 | **Automatic-speech-recognition models** | 59 |
-| **Chat-completion models** | 277 |
-| **Embeddings models** | 17 |
+| **Chat-completion models** | 286 |
+| **Embeddings models** | 22 |
 
 ## Catalog Schema
 
@@ -362,6 +362,8 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-3-Embed-8B-BF16/versions/2 |
 | qwen3-asr-0.6b | Qwen-Qwen3-ASR-0.6B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-0.6B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-0.6B/versions/1 |
 | qwen3-asr-1.7b | Qwen-Qwen3-ASR-1.7B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-1.7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-1.7B/versions/1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:1 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3-onnx/versions/1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:2 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3-onnx/versions/2 |
 | cosmos-reason1-7b | nvidia-Cosmos-Reason1-7B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason1-7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Reason1-7B/versions/1 |
 | cosmos3-nano | nvidia-Cosmos3-Nano | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Nano:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Nano/versions/1 |
 | nvidia-nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16/versions/2 |
@@ -387,3 +389,15 @@ Each row represents one runnable artifact: an ONNX variant for ONNX models, or a
 | north-mini-code-1.0 | CohereLabs-North-Mini-Code-1.0 | — | chat-completion | vllm | — | — | CohereLabs-North-Mini-Code-1.0:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-North-Mini-Code-1.0/versions/1 |
 | command-a-plus-05-2026-w4a4 | CohereLabs-command-a-plus-05-2026-w4a4 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-w4a4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-w4a4/versions/1 |
 | command-a-plus-05-2026-fp8 | CohereLabs-command-a-plus-05-2026-fp8 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-fp8/versions/1 |
+| qwen3.8-27b-nvfp4 | nvidia-Qwen3.8-27B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Qwen3.8-27B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Qwen3.8-27B-NVFP4/versions/1 |
+| qwen3.5-122b-a10b | Qwen-Qwen3.5-122B-A10B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-122B-A10B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.5-122B-A10B/versions/1 |
+| nvidia-nemotron-labs-3-competitive-coding-550b-a55b-nvfp4 | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4/versions/1 |
+| glm-5.3-nvfp4 | nvidia-GLM-5.3-NVFP4 | — | chat-completion | vllm | — | — | nvidia-GLM-5.3-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-GLM-5.3-NVFP4/versions/1 |
+| nvidia-nemotron-3-ultra-550b-a55b-nvfp4 | nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4/versions/1 |
+| command-a-plus-05-2026-bf16 | CohereLabs-command-a-plus-05-2026-bf16 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-bf16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-bf16/versions/1 |
+| cosmos3-edge | nvidia-Cosmos3-Edge | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Edge:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Edge/versions/1 |
+| kimi-k2.7-code-nvfp4 | nvidia-Kimi-K2.7-Code-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Kimi-K2.7-Code-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Kimi-K2.7-Code-NVFP4/versions/1 |
+| clip-vit-b-32-laion2b-s34b-b79k | laion-CLIP-ViT-B-32-laion2B-s34B-b79K | — | embeddings | vllm | — | — | laion-CLIP-ViT-B-32-laion2B-s34B-b79K:1 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-B-32-laion2B-s34B-b79K/versions/1 |
+| clip-vit-b-32-laion2b-s34b-b79k | laion-CLIP-ViT-B-32-laion2B-s34B-b79K | — | embeddings | vllm | — | — | laion-CLIP-ViT-B-32-laion2B-s34B-b79K:2 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-B-32-laion2B-s34B-b79K/versions/2 |
+| nemotron-mini-4b-instruct | nvidia-Nemotron-Mini-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-Mini-4B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-Mini-4B-Instruct/versions/1 |
+| clip-vit-l-14-laion2b-s32b-b82k | laion-CLIP-ViT-L-14-laion2B-s32B-b82K | — | embeddings | vllm | — | — | laion-CLIP-ViT-L-14-laion2B-s32B-b82K:1 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-L-14-laion2B-s32B-b82K/versions/1 |
