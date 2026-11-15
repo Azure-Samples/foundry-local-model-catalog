@@ -257,4 +257,5 @@ Agentic Retrieval brings agentic AI capabilities to disconnected edge and hybrid
  
 | Version | Release Date | Required ALDO Version | Download Link | Notes |
 |---------|--------------|-----------------------|---------------|-------|
-| 1.2611.96 (Latest) | November 2026 | 2605.X.X | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2611.96/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2611.96.zip) | |
+| 1.2611.101 (Latest) | November 2026 | 2605.X.X | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2611.101/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2611.101.zip) | |
+| 1.2611.96 | November 2026 | 2605.X.X | [Download](https://azurestackreleases.download.prss.microsoft.com/dbazure/ALDO/ExpansionPacks/FoundryLocalAgenticRetrieval/1.2611.96/azurelocal.pxp.microsoft.foundrylocal.agenticretrieval.k8sextension.1.2611.96.zip) | |
