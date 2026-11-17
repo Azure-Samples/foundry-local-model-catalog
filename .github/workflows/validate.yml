@@ -9,6 +9,8 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     strategy:
       matrix:
         python-version: ["3.9", "3.11", "3.12"]
