@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-11-16 |
-| **Catalog version** | `2026-11-16T13:16:29.140442+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-16T13:16:15.957424+00:00` |
-| **Total entries** | 251 |
+| **Snapshot date (UTC)** | 2026-11-18 |
+| **Catalog version** | `2026-11-18T01:16:29.047725+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-18T01:16:15.857407+00:00` |
+| **Total entries** | 257 |
 | **ONNX entries** | 80 |
-| **vLLM entries** | 170 |
+| **vLLM entries** | 176 |
 | **Automatic-speech-recognition models** | 30 |
-| **Chat-completion models** | 204 |
+| **Chat-completion models** | 210 |
 | **Embeddings models** | 17 |
 
 ## Catalog Schema
@@ -287,3 +287,9 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | nemotron-mini-4b-instruct | nvidia-Nemotron-Mini-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-Mini-4B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-Mini-4B-Instruct/versions/1 |
 | clip-vit-l-14-laion2b-s32b-b82k | laion-CLIP-ViT-L-14-laion2B-s32B-b82K | — | embeddings | vllm | — | — | laion-CLIP-ViT-L-14-laion2B-s32B-b82K:1 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-L-14-laion2B-s32B-b82K/versions/1 |
 | qwen3.8-27b | Qwen-Qwen3.8-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.8-27B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B/versions/1 |
+| nvidia-nemotron-3-nano-30b-a3b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8/versions/1 |
+| qwen3.8-27b-fp8 | Qwen-Qwen3.8-27B-FP8 | — | chat-completion | vllm | — | — | Qwen-Qwen3.8-27B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B-FP8/versions/1 |
+| sarvam-30b | sarvamai-sarvam-30b | — | chat-completion | vllm | — | — | sarvamai-sarvam-30b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-30b/versions/1 |
+| sarvam-105b | sarvamai-sarvam-105b | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b/versions/1 |
+| deepseek-v4.1-flash | deepseek-ai-DeepSeek-V4.1-Flash | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash/versions/1 |
+| deepseek-v4.1-flash-1017 | deepseek-ai-DeepSeek-V4.1-Flash-1017 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash-1017:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash-1017/versions/1 |
