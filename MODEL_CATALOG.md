@@ -5,15 +5,15 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 | Field | Value |
 |-------|-------|
 | **Snapshot date (UTC)** | 2026-11-19 |
-| **Catalog version** | `2026-11-19T14:41:36.150088+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-19T14:41:24.505244+00:00` |
+| **Catalog version** | `2026-11-19T18:03:54.575106+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-19T18:03:42.971040+00:00` |
 | **Total entries** | 258 |
 | **ONNX entries** | 80 |
 | **vLLM entries** | 177 |
 | **Automatic-speech-recognition models** | 30 |
-| **Chat-completion models** | 211 |
+| **Chat-completion models** | 209 |
 | **Embeddings models** | 17 |
-| **Vision-language-chat models** | 18 |
+| **Vision-language-chat models** | 2 |
 
 ## Catalog Schema
 
@@ -59,11 +59,9 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | deepseek-r1-14b | deepseek-r1-distill-qwen-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-14b-generic-cpu:4 | azureml://registries/azureml/models/deepseek-r1-distill-qwen-14b-generic-cpu/versions/4 |
 | qwen3-14b | qwen3-14b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-14b-generic-cpu:2 | azureml://registries/azureml/models/qwen3-14b-generic-cpu/versions/2 |
 | qwen3-1.7b | qwen3-1.7b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-1.7b-generic-cpu:2 | azureml://registries/azureml/models/qwen3-1.7b-generic-cpu/versions/2 |
-| qwen3-vl-2b-instruct | qwen3-vl-2b-instruct-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3-vl-2b-instruct-generic-cpu:2 | azureml://registries/azureml/models/qwen3-vl-2b-instruct-generic-cpu/versions/2 |
 | qwen3-4b | qwen3-4b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-4b-generic-cpu:3 | azureml://registries/azureml/models/qwen3-4b-generic-cpu/versions/3 |
 | qwen3-0.6b | qwen3-0.6b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-0.6b-generic-cpu:4 | azureml://registries/azureml/models/qwen3-0.6b-generic-cpu/versions/4 |
 | qwen3-8b | qwen3-8b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen3-8b-generic-cpu:2 | azureml://registries/azureml/models/qwen3-8b-generic-cpu/versions/2 |
-| qwen3-vl-8b-instruct | qwen3-vl-8b-instruct-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3-vl-8b-instruct-generic-cpu:2 | azureml://registries/azureml/models/qwen3-vl-8b-instruct-generic-cpu/versions/2 |
 | qwen3-embedding-0.6b | qwen3-embedding-0.6b-generic-cpu | Microsoft | embeddings | ONNX | CPU | CPUExecutionProvider | qwen3-embedding-0.6b-generic-cpu:1 | azureml://registries/azureml/models/qwen3-embedding-0.6b-generic-cpu/versions/1 |
 | qwen3-embedding-8b | qwen3-embedding-8b-generic-cpu | Microsoft | embeddings | ONNX | CPU | CPUExecutionProvider | qwen3-embedding-8b-generic-cpu:1 | azureml://registries/azureml/models/qwen3-embedding-8b-generic-cpu/versions/1 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-speech-streaming-en-0.6b-generic-cpu:3 | azureml://registries/azureml/models/nemotron-speech-streaming-en-0.6b-generic-cpu/versions/3 |
@@ -77,15 +75,8 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | whisper-large-v3-turbo | openai-whisper-large-v3-turbo-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-large-v3-turbo-generic-cpu:4 | azureml://registries/azureml/models/openai-whisper-large-v3-turbo-generic-cpu/versions/4 |
 | whisper-medium | openai-whisper-medium-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-medium-generic-cpu:4 | azureml://registries/azureml/models/openai-whisper-medium-generic-cpu/versions/4 |
 | whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:4 | azureml://registries/azureml/models/openai-whisper-small-generic-cpu/versions/4 |
-| qwen3-vl-4b-instruct | qwen3-vl-4b-instruct-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3-vl-4b-instruct-generic-cpu:3 | azureml://registries/azureml/models/qwen3-vl-4b-instruct-generic-cpu/versions/3 |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:3 | azureml://registries/azureml/models/nemotron-3.5-asr-streaming-0.6b-generic-cpu/versions/3 |
 | parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | parakeet-tdt-0.6b-v2-generic-cpu:1 | azureml://registries/azureml/models/parakeet-tdt-0.6b-v2-generic-cpu/versions/1 |
-| qwen3.5-9b | qwen3.5-9b-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3.5-9b-generic-cpu:3 | azureml://registries/azureml/models/qwen3.5-9b-generic-cpu/versions/3 |
-| qwen3.5-0.8b | qwen3.5-0.8b-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3.5-0.8b-generic-cpu:3 | azureml://registries/azureml/models/qwen3.5-0.8b-generic-cpu/versions/3 |
-| qwen3.5-2b | qwen3.5-2b-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3.5-2b-generic-cpu:3 | azureml://registries/azureml/models/qwen3.5-2b-generic-cpu/versions/3 |
-| qwen3.5-4b | qwen3.5-4b-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | qwen3.5-4b-generic-cpu:3 | azureml://registries/azureml/models/qwen3.5-4b-generic-cpu/versions/3 |
-| ministral-3-3b-instruct-2512 | ministral-3-3b-instruct-2512-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | ministral-3-3b-instruct-2512-generic-cpu:2 | azureml://registries/azureml/models/ministral-3-3b-instruct-2512-generic-cpu/versions/2 |
-| gemma-4-e2b-it | gemma-4-e2b-it-generic-cpu | Microsoft | vision-language-chat | ONNX | CPU | CPUExecutionProvider | gemma-4-e2b-it-generic-cpu:3 | azureml://registries/azureml/models/gemma-4-e2b-it-generic-cpu/versions/3 |
 | deepseek-r1-1.5b | deepseek-r1-distill-qwen-1.5b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-1.5b-cuda-gpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-qwen-1.5b-cuda-gpu/versions/2 |
 | deepseek-r1-8b | deepseek-r1-distill-llama-8b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-llama-8b-cuda-gpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-llama-8b-cuda-gpu/versions/2 |
 | gpt-oss-20b | gpt-oss-20b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | gpt-oss-20b-cuda-gpu:1 | azureml://registries/azureml/models/gpt-oss-20b-cuda-gpu/versions/1 |
@@ -109,11 +100,8 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | qwen3-1.7b | qwen3-1.7b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-1.7b-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-1.7b-cuda-gpu/versions/2 |
 | qwen3-14b | qwen3-14b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-14b-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-14b-cuda-gpu/versions/2 |
 | qwen3-0.6b | qwen3-0.6b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-0.6b-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-0.6b-cuda-gpu/versions/2 |
-| qwen3-vl-8b-instruct | qwen3-vl-8b-instruct-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3-vl-8b-instruct-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-vl-8b-instruct-cuda-gpu/versions/2 |
 | qwen3-4b | qwen3-4b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-4b-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-4b-cuda-gpu/versions/2 |
 | qwen3-8b | qwen3-8b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen3-8b-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-8b-cuda-gpu/versions/2 |
-| qwen3-vl-2b-instruct | qwen3-vl-2b-instruct-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3-vl-2b-instruct-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-vl-2b-instruct-cuda-gpu/versions/2 |
-| qwen3-vl-4b-instruct | qwen3-vl-4b-instruct-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3-vl-4b-instruct-cuda-gpu:2 | azureml://registries/azureml/models/qwen3-vl-4b-instruct-cuda-gpu/versions/2 |
 | qwen3-embedding-0.6b | qwen3-embedding-0.6b-cuda-gpu | Microsoft | embeddings | ONNX | GPU | CUDAExecutionProvider | qwen3-embedding-0.6b-cuda-gpu:1 | azureml://registries/azureml/models/qwen3-embedding-0.6b-cuda-gpu/versions/1 |
 | qwen3-embedding-8b | qwen3-embedding-8b-cuda-gpu | Microsoft | embeddings | ONNX | GPU | CUDAExecutionProvider | qwen3-embedding-8b-cuda-gpu:1 | azureml://registries/azureml/models/qwen3-embedding-8b-cuda-gpu/versions/1 |
 | olmo-3-7b-instruct | olmo-3-7b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | olmo-3-7b-instruct-cuda-gpu:1 | azureml://registries/azureml/models/olmo-3-7b-instruct-cuda-gpu/versions/1 |
@@ -129,12 +117,6 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:3 | azureml://registries/azureml/models/nemotron-3.5-asr-streaming-0.6b-cuda-gpu/versions/3 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:2 | azureml://registries/azureml/models/nemotron-speech-streaming-en-0.6b-cuda-gpu/versions/2 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:2 | azureml://registries/azureml/models/nemotron-speech-streaming-es-0.6b-ft-cuda-gpu/versions/2 |
-| ministral-3-3b-instruct-2512 | ministral-3-3b-instruct-2512-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | ministral-3-3b-instruct-2512-cuda-gpu:2 | azureml://registries/azureml/models/ministral-3-3b-instruct-2512-cuda-gpu/versions/2 |
-| gemma-4-e2b-it | gemma-4-e2b-it-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | gemma-4-e2b-it-cuda-gpu:3 | azureml://registries/azureml/models/gemma-4-e2b-it-cuda-gpu/versions/3 |
-| qwen3.5-0.8b | qwen3.5-0.8b-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3.5-0.8b-cuda-gpu:4 | azureml://registries/azureml/models/qwen3.5-0.8b-cuda-gpu/versions/4 |
-| qwen3.5-2b | qwen3.5-2b-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3.5-2b-cuda-gpu:4 | azureml://registries/azureml/models/qwen3.5-2b-cuda-gpu/versions/4 |
-| qwen3.5-4b | qwen3.5-4b-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3.5-4b-cuda-gpu:4 | azureml://registries/azureml/models/qwen3.5-4b-cuda-gpu/versions/4 |
-| qwen3.5-9b | qwen3.5-9b-cuda-gpu | Microsoft | vision-language-chat | ONNX | GPU | CUDAExecutionProvider | qwen3.5-9b-cuda-gpu:4 | azureml://registries/azureml/models/qwen3.5-9b-cuda-gpu/versions/4 |
 | qwen3-4b | Qwen-Qwen3-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3-4B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-4B/versions/1 |
 | deepseek-r1-distill-qwen-1.5b | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B/versions/1 |
 | qwen3-0.6b | Qwen-Qwen3-0.6B | — | chat-completion | vllm | — | — | Qwen-Qwen3-0.6B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-0.6B/versions/1 |
@@ -294,7 +276,7 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | north-mini-code-1.0 | CohereLabs-North-Mini-Code-1.0 | — | chat-completion | vllm | — | — | CohereLabs-North-Mini-Code-1.0:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-North-Mini-Code-1.0/versions/1 |
 | command-a-plus-05-2026-w4a4 | CohereLabs-command-a-plus-05-2026-w4a4 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-w4a4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-w4a4/versions/1 |
 | command-a-plus-05-2026-fp8 | CohereLabs-command-a-plus-05-2026-fp8 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-fp8/versions/1 |
-| qwen3.8-27b-nvfp4 | nvidia-Qwen3.8-27B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Qwen3.8-27B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Qwen3.8-27B-NVFP4/versions/1 |
+| qwen3.8-27b-nvfp4 | nvidia-Qwen3.8-27B-NVFP4 | — | vision-language-chat | vllm | — | — | nvidia-Qwen3.8-27B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Qwen3.8-27B-NVFP4/versions/1 |
 | qwen3.5-122b-a10b | Qwen-Qwen3.5-122B-A10B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-122B-A10B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.5-122B-A10B/versions/1 |
 | nvidia-nemotron-labs-3-competitive-coding-550b-a55b-nvfp4 | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4/versions/1 |
 | glm-5.3-nvfp4 | nvidia-GLM-5.3-NVFP4 | — | chat-completion | vllm | — | — | nvidia-GLM-5.3-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-GLM-5.3-NVFP4/versions/1 |
@@ -307,7 +289,7 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | clip-vit-l-14-laion2b-s32b-b82k | laion-CLIP-ViT-L-14-laion2B-s32B-b82K | — | embeddings | vllm | — | — | laion-CLIP-ViT-L-14-laion2B-s32B-b82K:1 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-L-14-laion2B-s32B-b82K/versions/1 |
 | qwen3.8-27b | Qwen-Qwen3.8-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.8-27B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B/versions/1 |
 | nvidia-nemotron-3-nano-30b-a3b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8/versions/1 |
-| qwen3.8-27b-fp8 | Qwen-Qwen3.8-27B-FP8 | — | chat-completion | vllm | — | — | Qwen-Qwen3.8-27B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B-FP8/versions/1 |
+| qwen3.8-27b-fp8 | Qwen-Qwen3.8-27B-FP8 | — | vision-language-chat | vllm | — | — | Qwen-Qwen3.8-27B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B-FP8/versions/1 |
 | sarvam-30b | sarvamai-sarvam-30b | — | chat-completion | vllm | — | — | sarvamai-sarvam-30b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-30b/versions/1 |
 | sarvam-105b | sarvamai-sarvam-105b | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b/versions/1 |
 | deepseek-v4.1-flash | deepseek-ai-DeepSeek-V4.1-Flash | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash/versions/1 |
