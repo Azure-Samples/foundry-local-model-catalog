@@ -4,14 +4,14 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-11-18 |
-| **Catalog version** | `2026-11-18T01:16:29.047725+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-18T01:16:15.857407+00:00` |
-| **Total entries** | 257 |
+| **Snapshot date (UTC)** | 2026-11-19 |
+| **Catalog version** | `2026-11-19T14:41:36.150088+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-19T14:41:24.505244+00:00` |
+| **Total entries** | 258 |
 | **ONNX entries** | 80 |
-| **vLLM entries** | 176 |
+| **vLLM entries** | 177 |
 | **Automatic-speech-recognition models** | 30 |
-| **Chat-completion models** | 210 |
+| **Chat-completion models** | 211 |
 | **Embeddings models** | 17 |
 
 ## Catalog Schema
@@ -293,3 +293,4 @@ Only the latest numeric AML asset version per registry, model, and framework is 
 | sarvam-105b | sarvamai-sarvam-105b | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b/versions/1 |
 | deepseek-v4.1-flash | deepseek-ai-DeepSeek-V4.1-Flash | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash/versions/1 |
 | deepseek-v4.1-flash-1017 | deepseek-ai-DeepSeek-V4.1-Flash-1017 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash-1017:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash-1017/versions/1 |
+| sarvam-105b-fp8 | sarvamai-sarvam-105b-fp8 | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b-fp8/versions/1 |
