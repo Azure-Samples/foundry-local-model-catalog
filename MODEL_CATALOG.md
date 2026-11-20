@@ -4,22 +4,22 @@ This document is a snapshot of the model catalog available on Foundry Local on A
 
 | Field | Value |
 |-------|-------|
-| **Snapshot date (UTC)** | 2026-11-19 |
-| **Catalog version** | `2026-11-19T18:03:54.575106+00:00` |
-| **Catalog last sync (UTC)** | `2026-11-19T18:03:42.971040+00:00` |
-| **Total entries** | 213 |
-| **ONNX entries** | 76 |
-| **vLLM entries** | 137 |
-| **Automatic-speech-recognition models** | 28 |
-| **Chat-completion models** | 170 |
-| **Embeddings models** | 14 |
-| **Vision-language-chat models** | 1 |
+| **Snapshot date (UTC)** | 2026-11-20 |
+| **Catalog version** | `2026-11-20T01:16:30.649692+00:00` |
+| **Catalog last sync (UTC)** | `2026-11-20T01:16:17.038108+00:00` |
+| **Total entries** | 258 |
+| **ONNX entries** | 80 |
+| **vLLM entries** | 177 |
+| **Automatic-speech-recognition models** | 30 |
+| **Chat-completion models** | 209 |
+| **Embeddings models** | 17 |
+| **Vision-language-chat models** | 2 |
 
 ## Catalog Schema
 
 Each row represents one runnable artifact: an ONNX variant for ONNX models, or a single vLLM entry per vLLM model.
 
-Archived models are excluded. Only the latest non-archived numeric AML asset version per registry, model, and framework is shown. All runnable variants of that version are retained; non-archived entries without a comparable asset version are shown unchanged. Entries with unknown archive status are retained.
+Only the latest numeric AML asset version per registry, model, and framework is shown. All runnable variants of that version are retained; entries without a comparable asset version are shown unchanged.
 
 | Field | Source | Notes |
 |-------|--------|-------|
@@ -37,6 +37,8 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 
 | Alias | Display Name | Publisher | Task | Framework | Compute | Execution Provider | Model ID | Asset ID |
 |-------|--------------|-----------|------|-----------|---------|--------------------|----------|----------|
+| deepseek-r1-1.5b | deepseek-r1-distill-qwen-1.5b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-qwen-1.5b-generic-cpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-qwen-1.5b-generic-cpu/versions/2 |
+| deepseek-r1-8b | deepseek-r1-distill-llama-8b-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | deepseek-r1-distill-llama-8b-generic-cpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-llama-8b-generic-cpu/versions/2 |
 | qwen2.5-coder-0.5b | qwen2.5-coder-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-coder-0.5b-instruct-generic-cpu:4 | azureml://registries/azureml/models/qwen2.5-coder-0.5b-instruct-generic-cpu/versions/4 |
 | phi-4-mini-reasoning | Phi-4-mini-reasoning-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | Phi-4-mini-reasoning-generic-cpu:3 | azureml://registries/azureml/models/Phi-4-mini-reasoning-generic-cpu/versions/3 |
 | qwen2.5-0.5b | qwen2.5-0.5b-instruct-generic-cpu | Microsoft | chat-completion | ONNX | CPU | CPUExecutionProvider | qwen2.5-0.5b-instruct-generic-cpu:4 | azureml://registries/azureml/models/qwen2.5-0.5b-instruct-generic-cpu/versions/4 |
@@ -75,6 +77,8 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | whisper-small | openai-whisper-small-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | openai-whisper-small-generic-cpu:4 | azureml://registries/azureml/models/openai-whisper-small-generic-cpu/versions/4 |
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | nemotron-3.5-asr-streaming-0.6b-generic-cpu:3 | azureml://registries/azureml/models/nemotron-3.5-asr-streaming-0.6b-generic-cpu/versions/3 |
 | parakeet-tdt-0.6b-v2 | parakeet-tdt-0.6b-v2-generic-cpu | Microsoft | automatic-speech-recognition | ONNX | CPU | CPUExecutionProvider | parakeet-tdt-0.6b-v2-generic-cpu:1 | azureml://registries/azureml/models/parakeet-tdt-0.6b-v2-generic-cpu/versions/1 |
+| deepseek-r1-1.5b | deepseek-r1-distill-qwen-1.5b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-qwen-1.5b-cuda-gpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-qwen-1.5b-cuda-gpu/versions/2 |
+| deepseek-r1-8b | deepseek-r1-distill-llama-8b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | deepseek-r1-distill-llama-8b-cuda-gpu:2 | azureml://registries/azureml/models/deepseek-r1-distill-llama-8b-cuda-gpu/versions/2 |
 | gpt-oss-20b | gpt-oss-20b-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | gpt-oss-20b-cuda-gpu:1 | azureml://registries/azureml/models/gpt-oss-20b-cuda-gpu/versions/1 |
 | phi-4-mini-reasoning | Phi-4-mini-reasoning-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | Phi-4-mini-reasoning-cuda-gpu:3 | azureml://registries/azureml/models/Phi-4-mini-reasoning-cuda-gpu/versions/3 |
 | qwen2.5-0.5b | qwen2.5-0.5b-instruct-cuda-gpu | Microsoft | chat-completion | ONNX | GPU | CUDAExecutionProvider | qwen2.5-0.5b-instruct-cuda-gpu:4 | azureml://registries/azureml/models/qwen2.5-0.5b-instruct-cuda-gpu/versions/4 |
@@ -113,7 +117,7 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | nemotron-3.5-asr-streaming-0.6b | nemotron-3.5-asr-streaming-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-3.5-asr-streaming-0.6b-cuda-gpu:3 | azureml://registries/azureml/models/nemotron-3.5-asr-streaming-0.6b-cuda-gpu/versions/3 |
 | nemotron-speech-streaming-en-0.6b | nemotron-speech-streaming-en-0.6b-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-en-0.6b-cuda-gpu:2 | azureml://registries/azureml/models/nemotron-speech-streaming-en-0.6b-cuda-gpu/versions/2 |
 | nemotron-speech-streaming-es-0.6b | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu | Microsoft | automatic-speech-recognition | ONNX | GPU | CUDAExecutionProvider | nemotron-speech-streaming-es-0.6b-ft-cuda-gpu:2 | azureml://registries/azureml/models/nemotron-speech-streaming-es-0.6b-ft-cuda-gpu/versions/2 |
-| qwen2.5-0.5b-instruct | Qwen-Qwen2.5-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-0.5B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen2.5-0.5B-Instruct/versions/1 |
+| qwen3-4b | Qwen-Qwen3-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3-4B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-4B/versions/1 |
 | deepseek-r1-distill-qwen-1.5b | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-R1-Distill-Qwen-1.5B/versions/1 |
 | qwen3-0.6b | Qwen-Qwen3-0.6B | — | chat-completion | vllm | — | — | Qwen-Qwen3-0.6B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-0.6B/versions/1 |
 | qwen3-1.7b | Qwen-Qwen3-1.7B | — | chat-completion | vllm | — | — | Qwen-Qwen3-1.7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-1.7B/versions/1 |
@@ -138,6 +142,7 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | openmath-nemotron-7b | nvidia-OpenMath-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenMath-Nemotron-7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-OpenMath-Nemotron-7B/versions/1 |
 | opencodereasoning-nemotron-7b | nvidia-OpenCodeReasoning-Nemotron-7B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-OpenCodeReasoning-Nemotron-7B/versions/1 |
 | mathstral-7b-v0.1 | mistralai-Mathstral-7B-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mathstral-7B-v0.1:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mathstral-7B-v0.1/versions/1 |
+| nemotron-speech-streaming-en-0.6b | nvidia-nemotron-speech-streaming-en-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-speech-streaming-en-0.6b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-nemotron-speech-streaming-en-0.6b/versions/1 |
 | nemotron-3-nano-4b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-4B-FP8/versions/1 |
 | ministral-3-3b-instruct-2512 | mistralai-Ministral-3-3B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Ministral-3-3B-Instruct-2512:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Ministral-3-3B-Instruct-2512/versions/1 |
 | nemotron-4-mini-hindi-4b-instruct | nvidia-Nemotron-4-Mini-Hindi-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-4-Mini-Hindi-4B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-4-Mini-Hindi-4B-Instruct/versions/1 |
@@ -180,8 +185,10 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | devstral-small-2505 | mistralai-Devstral-Small-2505 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2505:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Devstral-Small-2505/versions/1 |
 | magistral-small-2506 | mistralai-Magistral-Small-2506 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2506:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Magistral-Small-2506/versions/1 |
 | devstral-small-2507 | mistralai-Devstral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Devstral-Small-2507:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Devstral-Small-2507/versions/1 |
+| magistral-small-2507 | mistralai-Magistral-Small-2507 | — | chat-completion | vllm | — | — | mistralai-Magistral-Small-2507:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Magistral-Small-2507/versions/1 |
 | mistral-small-24b-instruct-2501 | mistralai-Mistral-Small-24B-Instruct-2501 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-24B-Instruct-2501:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-Small-24B-Instruct-2501/versions/1 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-fp8 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8/versions/1 |
+| olmo-3.1-32b-instruct | allenai-Olmo-3.1-32B-Instruct | — | chat-completion | vllm | — | — | allenai-Olmo-3.1-32B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/allenai-Olmo-3.1-32B-Instruct/versions/1 |
 | opencodereasoning-nemotron-32b-ioi | nvidia-OpenCodeReasoning-Nemotron-32B-IOI | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B-IOI:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-OpenCodeReasoning-Nemotron-32B-IOI/versions/1 |
 | opencodereasoning-nemotron-32b | nvidia-OpenCodeReasoning-Nemotron-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-32B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-OpenCodeReasoning-Nemotron-32B/versions/1 |
 | qwen3-32b | Qwen-Qwen3-32B | — | chat-completion | vllm | — | — | Qwen-Qwen3-32B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-32B/versions/1 |
@@ -191,6 +198,7 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | nemotron-3-super-120b-a12b-nvfp4 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4/versions/1 |
 | mistral-small-4-119b-2603-nvfp4 | mistralai-Mistral-Small-4-119B-2603-NVFP4 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-Small-4-119B-2603-NVFP4/versions/1 |
 | mixtral-8x7b-instruct-v0.1 | mistralai-Mixtral-8x7B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x7B-Instruct-v0.1:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mixtral-8x7B-Instruct-v0.1/versions/1 |
+| mistral-small-3.1-24b-instruct-2503 | mistralai-Mistral-Small-3-1-24B-Instruct-2503 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-3-1-24B-Instruct-2503:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-Small-3-1-24B-Instruct-2503/versions/1 |
 | mistral-small-3.2-24b-instruct-2506 | mistralai-mistral-small-3-2-24b-instruct-2506 | — | chat-completion | vllm | — | — | mistralai-mistral-small-3-2-24b-instruct-2506:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-mistral-small-3-2-24b-instruct-2506/versions/1 |
 | phi-3.5-mini-instruct | microsoft-Phi-3-5-mini-instruct | — | chat-completion | vllm | — | — | microsoft-Phi-3-5-mini-instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/microsoft-Phi-3-5-mini-instruct/versions/1 |
 | mistral-7b-instruct-v0.2 | mistralai-Mistral-7B-Instruct-v0-2 | — | chat-completion | vllm | — | — | mistralai-Mistral-7B-Instruct-v0-2:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-7B-Instruct-v0-2/versions/1 |
@@ -199,7 +207,17 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | opencodereasoning-nemotron-1.1-32b | nvidia-OpenCodeReasoning-Nemotron-1.1-32B | — | chat-completion | vllm | — | — | nvidia-OpenCodeReasoning-Nemotron-1.1-32B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-OpenCodeReasoning-Nemotron-1.1-32B/versions/1 |
 | gpt-oss-120b | openai-gpt-oss-120b | — | chat-completion | vllm | — | — | openai-gpt-oss-120b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/openai-gpt-oss-120b/versions/1 |
 | mistral-small-4-119b-2603 | mistralai-Mistral-Small-4-119B-2603 | — | chat-completion | vllm | — | — | mistralai-Mistral-Small-4-119B-2603:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-Small-4-119B-2603/versions/1 |
+| nemotron-3-super-120b-a12b-fp8 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-FP8/versions/1 |
+| nemotron-3-super-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Super-120B-A12B-BF16/versions/1 |
+| mixtral-8x22b-instruct-v0.1 | mistralai-Mixtral-8x22B-Instruct-v0.1 | — | chat-completion | vllm | — | — | mistralai-Mixtral-8x22B-Instruct-v0.1:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mixtral-8x22B-Instruct-v0.1/versions/1 |
+| deepseek-v3-0324 | deepseek-ai-DeepSeek-V3-0324 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3-0324:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V3-0324/versions/1 |
+| deepseek-v3.1 | deepseek-ai-DeepSeek-V3.1 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.1:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V3.1/versions/1 |
+| deepseek-v3.2 | deepseek-ai-DeepSeek-V3.2 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V3.2/versions/1 |
+| deepseek-v3.2-speciale | deepseek-ai-DeepSeek-V3.2-Speciale | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V3.2-Speciale:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V3.2-Speciale/versions/1 |
+| mistral-large-3-675b-instruct-2512 | mistralai-Mistral-Large-3-675B-Instruct-2512 | — | chat-completion | vllm | — | — | mistralai-Mistral-Large-3-675B-Instruct-2512:1 | azureml://registries/azure-foundrylocalonazurelocal/models/mistralai-Mistral-Large-3-675B-Instruct-2512/versions/1 |
+| qwen2.5-0.5b-instruct | Qwen-Qwen2.5-0.5B-Instruct | — | chat-completion | vllm | — | — | Qwen-Qwen2.5-0.5B-Instruct:5 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen2.5-0.5B-Instruct/versions/5 |
 | nemotron-3-nano-omni-30b-a3b-reasoning-bf16 | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16 | — | chat-completion | vllm | — | — | nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16:3 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16/versions/3 |
+| nemotron-3.5-asr-streaming-0.6b | nvidia-nemotron-3.5-asr-streaming-0.6b | — | automatic-speech-recognition | vllm | — | — | nvidia-nemotron-3.5-asr-streaming-0.6b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-nemotron-3.5-asr-streaming-0.6b/versions/1 |
 | paddleocr-vl-1.6 | PaddlePaddle-PaddleOCR-VL-1.6 | — | chat-completion | vllm | — | — | PaddlePaddle-PaddleOCR-VL-1.6:1 | azureml://registries/azure-foundrylocalonazurelocal/models/PaddlePaddle-PaddleOCR-VL-1.6/versions/1 |
 | qwen3.5-4b | Qwen-Qwen3.5-4B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-4B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.5-4B/versions/1 |
 | qwen3.5-9b | Qwen-Qwen3.5-9B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-9B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.5-9B/versions/1 |
@@ -232,21 +250,48 @@ Archived models are excluded. Only the latest non-archived numeric AML asset ver
 | nemotron-3-embed-8b-bf16 | nvidia-Nemotron-3-Embed-8B-BF16 | — | embeddings | vllm | — | — | nvidia-Nemotron-3-Embed-8B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-3-Embed-8B-BF16/versions/2 |
 | qwen3-asr-0.6b | Qwen-Qwen3-ASR-0.6B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-0.6B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-0.6B/versions/1 |
 | qwen3-asr-1.7b | Qwen-Qwen3-ASR-1.7B | — | automatic-speech-recognition | vllm | — | — | Qwen-Qwen3-ASR-1.7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3-ASR-1.7B/versions/1 |
+| bge-m3-onnx | BAAI-bge-m3-onnx | Microsoft | embeddings | Custom | — | — | BAAI-bge-m3-onnx:2 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3-onnx/versions/2 |
 | cosmos-reason1-7b | nvidia-Cosmos-Reason1-7B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason1-7B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Reason1-7B/versions/1 |
 | cosmos3-nano | nvidia-Cosmos3-Nano | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Nano:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Nano/versions/1 |
 | nvidia-nemotron-3-nano-30b-a3b-bf16 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16:2 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-BF16/versions/2 |
 | cosmos-reason2-32b | nvidia-Cosmos-Reason2-32B | — | chat-completion | vllm | — | — | nvidia-Cosmos-Reason2-32B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Reason2-32B/versions/1 |
+| cosmos-embed1-224p | nvidia-Cosmos-Embed1-224p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-224p:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Embed1-224p/versions/1 |
+| cosmos-embed1-336p | nvidia-Cosmos-Embed1-336p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-336p:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Embed1-336p/versions/1 |
+| cosmos-embed1-448p | nvidia-Cosmos-Embed1-448p | — | chat-completion | vllm | — | — | nvidia-Cosmos-Embed1-448p:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Embed1-448p/versions/1 |
+| cosmos-embed1-448p-anomaly-detection | nvidia-Cosmos-Embed1-448p-anomaly-detection | — | embeddings | vllm | — | — | nvidia-Cosmos-Embed1-448p-anomaly-detection:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos-Embed1-448p-anomaly-detection/versions/1 |
+| cosmos3-super | nvidia-Cosmos3-Super | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Super:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Super/versions/1 |
 | muse-glimmer-30b-nvfp4 | nvidia-Muse-Glimmer-30B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Muse-Glimmer-30B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Muse-Glimmer-30B-NVFP4/versions/1 |
 | ising-calibration-1.5-31b-nvfp4 | nvidia-Ising-Calibration-1.5-31B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Ising-Calibration-1.5-31B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Ising-Calibration-1.5-31B-NVFP4/versions/1 |
+| glm-5.3-flash-nvfp4 | nvidia-GLM-5.3-Flash-NVFP4 | — | chat-completion | vllm | — | — | nvidia-GLM-5.3-Flash-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-GLM-5.3-Flash-NVFP4/versions/1 |
+| nvidia-nemotronlabs-voicechat-11b | nvidia-NVIDIA-NemotronLabs-VoiceChat-11B | — | chat-completion | vllm | — | — | nvidia-NVIDIA-NemotronLabs-VoiceChat-11B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-NemotronLabs-VoiceChat-11B/versions/1 |
 | nvidia-nemotron-3.5-super-vl-120b-a12b-nvfp4 | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4/versions/1 |
+| qwen3.8-flash-next-nvfp4 | nvidia-Qwen3.8-Flash-Next-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Qwen3.8-Flash-Next-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Qwen3.8-Flash-Next-NVFP4/versions/1 |
+| nvidia-nemotron-3.5-bolt-74b-a9b-24gb | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB/versions/1 |
 | ising-calibration-1.5-31b-bf16 | nvidia-Ising-Calibration-1.5-31B-BF16 | — | chat-completion | vllm | — | — | nvidia-Ising-Calibration-1.5-31B-BF16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Ising-Calibration-1.5-31B-BF16/versions/1 |
 | nvidia-nemotron-3.5-bolt-74b-a9b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3.5-Bolt-74B-A9B-BF16/versions/1 |
+| nvidia-nemotron-3.5-super-vl-120b-a12b-bf16 | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16/versions/1 |
 | bge-m3 | BAAI-bge-m3 | — | embeddings | vllm | — | — | BAAI-bge-m3:1 | azureml://registries/azure-foundrylocalonazurelocal/models/BAAI-bge-m3/versions/1 |
 | north-mini-code-1.0-w4a16 | CohereLabs-North-Mini-Code-1.0-w4a16 | — | chat-completion | vllm | — | — | CohereLabs-North-Mini-Code-1.0-w4a16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-North-Mini-Code-1.0-w4a16/versions/1 |
 | north-mini-code-1.0-fp8 | CohereLabs-North-Mini-Code-1.0-fp8 | — | chat-completion | vllm | — | — | CohereLabs-North-Mini-Code-1.0-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-North-Mini-Code-1.0-fp8/versions/1 |
 | north-mini-code-1.0 | CohereLabs-North-Mini-Code-1.0 | — | chat-completion | vllm | — | — | CohereLabs-North-Mini-Code-1.0:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-North-Mini-Code-1.0/versions/1 |
 | command-a-plus-05-2026-w4a4 | CohereLabs-command-a-plus-05-2026-w4a4 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-w4a4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-w4a4/versions/1 |
+| command-a-plus-05-2026-fp8 | CohereLabs-command-a-plus-05-2026-fp8 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-fp8/versions/1 |
 | qwen3.8-27b-nvfp4 | nvidia-Qwen3.8-27B-NVFP4 | — | vision-language-chat | vllm | — | — | nvidia-Qwen3.8-27B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Qwen3.8-27B-NVFP4/versions/1 |
+| qwen3.5-122b-a10b | Qwen-Qwen3.5-122B-A10B | — | chat-completion | vllm | — | — | Qwen-Qwen3.5-122B-A10B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.5-122B-A10B/versions/1 |
+| nvidia-nemotron-labs-3-competitive-coding-550b-a55b-nvfp4 | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-Labs-3-Competitive-Coding-550B-A55B-NVFP4/versions/1 |
+| glm-5.3-nvfp4 | nvidia-GLM-5.3-NVFP4 | — | chat-completion | vllm | — | — | nvidia-GLM-5.3-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-GLM-5.3-NVFP4/versions/1 |
+| nvidia-nemotron-3-ultra-550b-a55b-nvfp4 | nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4/versions/1 |
+| command-a-plus-05-2026-bf16 | CohereLabs-command-a-plus-05-2026-bf16 | — | chat-completion | vllm | — | — | CohereLabs-command-a-plus-05-2026-bf16:1 | azureml://registries/azure-foundrylocalonazurelocal/models/CohereLabs-command-a-plus-05-2026-bf16/versions/1 |
 | cosmos3-edge | nvidia-Cosmos3-Edge | — | chat-completion | vllm | — | — | nvidia-Cosmos3-Edge:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Cosmos3-Edge/versions/1 |
+| kimi-k2.7-code-nvfp4 | nvidia-Kimi-K2.7-Code-NVFP4 | — | chat-completion | vllm | — | — | nvidia-Kimi-K2.7-Code-NVFP4:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Kimi-K2.7-Code-NVFP4/versions/1 |
 | clip-vit-b-32-laion2b-s34b-b79k | laion-CLIP-ViT-B-32-laion2B-s34B-b79K | — | embeddings | vllm | — | — | laion-CLIP-ViT-B-32-laion2B-s34B-b79K:2 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-B-32-laion2B-s34B-b79K/versions/2 |
 | nemotron-mini-4b-instruct | nvidia-Nemotron-Mini-4B-Instruct | — | chat-completion | vllm | — | — | nvidia-Nemotron-Mini-4B-Instruct:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-Nemotron-Mini-4B-Instruct/versions/1 |
+| clip-vit-l-14-laion2b-s32b-b82k | laion-CLIP-ViT-L-14-laion2B-s32B-b82K | — | embeddings | vllm | — | — | laion-CLIP-ViT-L-14-laion2B-s32B-b82K:1 | azureml://registries/azure-foundrylocalonazurelocal/models/laion-CLIP-ViT-L-14-laion2B-s32B-b82K/versions/1 |
+| qwen3.8-27b | Qwen-Qwen3.8-27B | — | chat-completion | vllm | — | — | Qwen-Qwen3.8-27B:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B/versions/1 |
+| nvidia-nemotron-3-nano-30b-a3b-fp8 | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8 | — | chat-completion | vllm | — | — | nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/nvidia-NVIDIA-Nemotron-3-Nano-30B-A3B-FP8/versions/1 |
+| qwen3.8-27b-fp8 | Qwen-Qwen3.8-27B-FP8 | — | vision-language-chat | vllm | — | — | Qwen-Qwen3.8-27B-FP8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/Qwen-Qwen3.8-27B-FP8/versions/1 |
+| sarvam-30b | sarvamai-sarvam-30b | — | chat-completion | vllm | — | — | sarvamai-sarvam-30b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-30b/versions/1 |
+| sarvam-105b | sarvamai-sarvam-105b | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b/versions/1 |
+| deepseek-v4.1-flash | deepseek-ai-DeepSeek-V4.1-Flash | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash/versions/1 |
+| deepseek-v4.1-flash-1017 | deepseek-ai-DeepSeek-V4.1-Flash-1017 | — | chat-completion | vllm | — | — | deepseek-ai-DeepSeek-V4.1-Flash-1017:1 | azureml://registries/azure-foundrylocalonazurelocal/models/deepseek-ai-DeepSeek-V4.1-Flash-1017/versions/1 |
+| sarvam-105b-fp8 | sarvamai-sarvam-105b-fp8 | — | chat-completion | vllm | — | — | sarvamai-sarvam-105b-fp8:1 | azureml://registries/azure-foundrylocalonazurelocal/models/sarvamai-sarvam-105b-fp8/versions/1 |
